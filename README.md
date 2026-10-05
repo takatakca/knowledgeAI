@@ -52,4 +52,4 @@ TAKATAK / Claude / Codex / other authorized agents
 
 GitHub is the human-reviewable source of truth for curated knowledge. A backend retrieval service can later index this repository into PostgreSQL/pgvector or another search layer without making Git the runtime database.
 
-Start with `docs/00-MASTER-INDEX.md`.
+Live portal: https://knowledgeai-nu.vercel.app\n\nStart with `docs/00-MASTER-INDEX.md`.
