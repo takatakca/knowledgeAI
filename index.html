@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Knowledge TakaTak</title>
+  <meta name="description" content="Knowledge TakaTak — project, architecture, deployment, design and integration knowledge for TAKATAK AI agents." />
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#f8fafc;background:#07111f}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#16355e 0,#0b1728 38%,#050b13 100%);color:#f8fafc}
+    a{color:inherit;text-decoration:none}.shell{max-width:1180px;margin:0 auto;padding:48px 24px 72px}
+    .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#8fd3ff;font-weight:800}
+    h1{font-size:clamp(42px,7vw,76px);line-height:.96;margin:14px 0 18px;letter-spacing:-.055em}
+    .lead{max-width:820px;color:#b7c4d5;font-size:18px;line-height:1.65}
+    .topbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:46px}
+    .brand{font-weight:900;letter-spacing:-.02em}.badge{font-size:12px;border:1px solid #355071;background:#0f2036;border-radius:999px;padding:8px 11px;color:#c9e8ff}
+    .panel{margin-top:34px;border:1px solid rgba(147,197,253,.17);background:rgba(8,18,31,.78);backdrop-filter:blur(14px);border-radius:24px;padding:20px;box-shadow:0 30px 90px rgba(0,0,0,.28)}
+    .search{width:100%;padding:16px 18px;border-radius:14px;border:1px solid #29415f;background:#08111e;color:white;font-size:16px;outline:none}
+    .search:focus{border-color:#67c3ff;box-shadow:0 0 0 3px rgba(103,195,255,.12)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:16px}
+    .card{display:block;padding:18px;border-radius:16px;border:1px solid #203954;background:linear-gradient(180deg,#0f2035,#0a1524);transition:.18s ease}
+    .card:hover{transform:translateY(-2px);border-color:#4aaeea;background:linear-gradient(180deg,#133051,#0b1a2d)}
+    .kicker{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#7fd5ff;font-weight:800}.card h3{font-size:18px;margin:8px 0 6px}.card p{margin:0;color:#96a8bc;line-height:1.5;font-size:14px}
+    .section-title{font-size:14px;color:#d9e8f6;margin:28px 0 8px;text-transform:uppercase;letter-spacing:.08em}.muted{color:#7f91a6;font-size:13px}
+    .footer{margin-top:34px;color:#718399;font-size:13px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <div class="brand">GROUPE TAKATAK · knowledgeAI</div>
+      <div class="badge">Canonical project knowledge</div>
+    </div>
+
+    <div class="eyebrow">Knowledge TakaTak</div>
+    <h1>The project brain<br/>for TAKATAK agents.</h1>
+    <p class="lead">Architecture, websites, product decisions, deployment standards, integrations, reusable prompts and project history — organized so Claude, Codex and future TAKATAK agents can start with context instead of starting from zero.</p>
+
+    <section class="panel">
+      <input id="q" class="search" placeholder="Filter knowledge…" autocomplete="off" />
+      <div class="section-title">Core standards</div>
+      <div class="grid" id="cards">
+        <a class="card" data-search="master index architecture projects" href="https://github.com/takatakca/knowledgeAI/blob/main/docs/00-MASTER-INDEX.md"><span class="kicker">Index</span><h3>Master Index</h3><p>Canonical navigation across standards, sources and projects.</p></a>
+        <a class="card" data-search="architecture platform central authority" href="https://github.com/takatakca/knowledgeAI/blob/main/docs/02-ARCHITECTURE.md"><span class="kicker">Architecture</span><h3>Platform Architecture</h3><p>Central TAKATAK authority, shared services and product isolation.</p></a>
+        <a class="card" data-search="identity auth multisite otp child apps" href="https://github.com/takatakca/knowledgeAI/blob/main/docs/05-IDENTITY-AND-MULTISITE.md"><span class="kicker">Identity</span><h3>Identity & Multi-Site</h3><p>Master identity, entitlements and child-application boundaries.</p></a>
+        <a class="card" data-search="deployment coolify contabo ci cd github" href="https://github.com/takatakca/knowledgeAI/blob/main/docs/04-DEPLOYMENT-STANDARDS.md"><span class="kicker">Infrastructure</span><h3>Deployment Standards</h3><p>GitHub → CI → Coolify → Docker → health checks.</p></a>
+        <a class="card" data-search="design ui ux visual lovable" href="https://github.com/takatakca/knowledgeAI/blob/main/docs/07-DESIGN-SYSTEM-PREFERENCES.md"><span class="kicker">Design</span><h3>Design Preferences</h3><p>Reusable visual direction for polished TAKATAK products.</p></a>
+        <a class="card" data-search="integrations oauth api webhook provider" href="https://github.com/takatakca/knowledgeAI/blob/main/docs/08-INTEGRATION-STANDARDS.md"><span class="kicker">Integration</span><h3>Integration Standards</h3><p>Official APIs, OAuth, webhook security and live-vs-mock rules.</p></a>
+        <a class="card" data-search="agents claude codex cursor lovable rules" href="https://github.com/takatakca/knowledgeAI/blob/main/docs/06-AGENT-OPERATING-RULES.md"><span class="kicker">Agents</span><h3>Agent Operating Rules</h3><p>How Claude, Codex, Cursor and Lovable fit into the workflow.</p></a>
+        <a class="card" data-search="prompt master child app takatak auth dashboard" href="https://github.com/takatakca/knowledgeAI/blob/main/prompts/MASTER-TAKATAK-CHILD-APP-STANDARD.md"><span class="kicker">Prompt</span><h3>Child-App Master Prompt</h3><p>Reusable TAKATAK Auth / Dashboard standard for future sites.</p></a>
+      </div>
+
+      <div class="section-title">Project dossiers</div>
+      <div class="grid">
+        <a class="card project" data-search="takatak core dashboard platform" href="https://github.com/takatakca/knowledgeAI/blob/main/projects/TAKATAK-CORE.md"><span class="kicker">Project</span><h3>TAKATAK Core</h3><p>Central control plane and shared platform capabilities.</p></a>
+        <a class="card project" data-search="social meta facebook instagram linkedin bluesky" href="https://github.com/takatakca/knowledgeAI/blob/main/projects/SOCIAL-CORE.md"><span class="kicker">Project</span><h3>Social Core</h3><p>Native social platform architecture and verified current state.</p></a>
+        <a class="card project" data-search="mimt telecom sim esim voip twilio" href="https://github.com/takatakca/knowledgeAI/blob/main/projects/MIMT.md"><span class="kicker">Project</span><h3>MIMT</h3><p>SIM/eSIM, VoIP, numbers and telecom boundary.</p></a>
+        <a class="card project" data-search="on2go restaurants directory open late montreal" href="https://github.com/takatakca/knowledgeAI/blob/main/projects/ON2GO.md"><span class="kicker">Project</span><h3>ON2GO</h3><p>Montréal local discovery and late-night directory architecture.</p></a>
+        <a class="card project" data-search="accounting control tower clover doordash uber skip urbanpiper" href="https://github.com/takatakca/knowledgeAI/blob/main/projects/ACCOUNTING-CONTROL-TOWER.md"><span class="kicker">Project</span><h3>Accounting Control Tower</h3><p>Reconciliation, payouts, ledger and restaurant channels.</p></a>
+        <a class="card project" data-search="ahmv hockey verdun entitlement" href="https://github.com/takatakca/knowledgeAI/blob/main/projects/AHMV.md"><span class="kicker">Project</span><h3>AHMV</h3><p>Independent hockey product using TAKATAK shared services.</p></a>
+        <a class="card project" data-search="alkao tickets ticketing qr events" href="https://github.com/takatakca/knowledgeAI/blob/main/projects/ALKAO.md"><span class="kicker">Project</span><h3>ALKAO</h3><p>Ticket-center architecture and reusable event-ticketing rules.</p></a>
+        <a class="card project" data-search="emploi direct employment candidate master identity" href="https://github.com/takatakca/knowledgeAI/blob/main/projects/EMPLOI-DIRECT.md"><span class="kicker">Project</span><h3>EMPLOI DIRECT</h3><p>Employment vertical on top of TAKATAK master identity.</p></a>
+      </div>
+
+      <div class="footer">
+        <span>Source of truth: github.com/takatakca/knowledgeAI</span>
+        <span>Curated knowledge · source-aware · backend-ready</span>
+      </div>
+    </section>
+  </main>
+<script>
+const q=document.getElementById('q');
+const cards=[...document.querySelectorAll('.card')];
+q.addEventListener('input',()=>{const v=q.value.toLowerCase().trim();for(const c of cards){const t=(c.textContent+' '+(c.dataset.search||'')).toLowerCase();c.style.display=!v||t.includes(v)?'block':'none';}});
+</script>
+</body>
+</html>
