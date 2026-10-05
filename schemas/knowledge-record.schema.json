@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Knowledge TakaTak Record",
+  "type": "object",
+  "required": ["id", "project", "domain", "kind", "content", "provenance"],
+  "properties": {
+    "id": { "type": "string" },
+    "project": { "type": "string" },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "product",
+        "website",
+        "design",
+        "engineering",
+        "integration",
+        "infrastructure",
+        "deployment",
+        "marketing-system",
+        "business-system",
+        "prompt",
+        "agent-instruction",
+        "project-history"
+      ]
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["source", "summary", "decision", "requirement", "standard", "status", "conflict"]
+    },
+    "content": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["current", "historical", "superseded", "unknown"],
+      "default": "current"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source_type"],
+      "properties": {
+        "source_type": { "type": "string" },
+        "source_id": { "type": ["string", "null"] },
+        "source_uri": { "type": ["string", "null"] },
+        "source_timestamp": { "type": ["string", "null"], "format": "date-time" },
+        "content_hash": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "supersedes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "conflicts_with": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": true
+}
