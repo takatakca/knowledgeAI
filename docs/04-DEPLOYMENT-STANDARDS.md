@@ -1,42 +1,166 @@
 # Deployment Standards
 
+## Source precedence
+
+Primary infrastructure source snapshot:
+- `GROUPE TAKATAK — Plan maître Contabo VPS - Coolify - Migration A→Z.md`
+- reference date: **2026-09-30**
+
 ## Principle
 
-Build in CI, deploy artifacts, health-check, and preserve rollback.
+GitHub validates. Coolify deploys.
 
-Avoid doing heavyweight dependency installation or builds on constrained production hosting unless the target architecture explicitly requires it.
+A server must not become the place where broken builds are repaired manually.
 
-## Current TAKATAK direction
+## Central TAKATAK target
 
-Primary central-platform target:
+The Contabo VPS becomes the central heavy application runtime for TAKATAK while other infrastructure can continue serving responsibilities that fit it.
+
+High-level flow:
 
 ```
+Developer / Lovable
+        ↓
 GitHub
- → CI quality gates
- → approved branch
- → Coolify
- → Docker build/deploy
- → health checks
+        ↓
+CI
+        ↓
+approved branch
+        ↓
+Coolify
+        ↓
+Docker build
+        ↓
+health check
+        ↓
+release
 ```
-
-TAKATAK staging is organized under the Coolify TAKATAK environment. Production secrets must be copied from their authoritative secure stores, never regenerated casually and never written into knowledge files.
 
 ## Required CI gates
 
-Typical release gates:
+Before production:
 - typecheck
 - lint
 - tests
 - production build
 - security checks
-- artifact verification
-- migration checks when database changes exist
+- artifact checks when present
+- migration/rebuild validation when applicable
 
-A failed release gate means no production promotion.
+**FAILED CI → NO PRODUCTION DEPLOYMENT**
 
-## Versioned release pattern for shared hosting
+## Branch/release direction
 
-For Node apps deployed to constrained cPanel/MochaHost environments:
+Preferred flow:
+
+```
+feature branch
+  ↓
+PR
+  ↓
+CI
+  ↓
+staging
+  ↓
+QA
+  ↓
+main
+  ↓
+production
+```
+
+Never develop directly inside a production container.
+
+## Runtime-isolation target
+
+The platform should not become one giant Node process.
+
+Target runtime responsibilities include:
+- `takatak-web`
+- `takatak-api`
+- `takatak-worker`
+- `takatak-social`
+- `takatak-webhooks`
+- Redis
+- `qmaps-api`
+- `flexs-api`
+
+These may initially originate from one monorepo. The important objective is runtime isolation, not repository proliferation.
+
+## TAKATAK Web
+
+Responsibilities:
+- Dashboard/UI
+- SSR/public pages
+- auth presentation
+- account/billing UI
+- marketplace UI
+- social UI
+
+## Central API direction
+
+A central TAKATAK API should own shared contracts such as:
+- customer/site API
+- integration API
+- master identity
+- QMAPS/FLEXS integration
+- orders
+- invoices
+- services
+- permissions
+- organizations
+
+Connected TAKATAK sites should speak to the central API rather than directly to each other.
+
+## Workers
+
+Background workers handle:
+- analytics sync
+- social sync
+- email
+- notifications
+- report generation
+- site synchronization
+- CRM events
+- background imports
+- scheduled tasks
+- retry jobs
+
+A worker crash must not take down the Dashboard.
+
+## Webhooks
+
+Webhook service requirements:
+- signature verification
+- idempotency
+- timestamp/replay validation
+- logging without secrets
+- retry handling
+- quick HTTP acknowledgement
+- heavy work pushed to a queue
+
+## Redis
+
+Redis is for:
+- queues
+- locks
+- rate limiting
+- temporary caching
+- job coordination
+
+Redis should remain private to the service network unless a specific external need exists.
+
+## Secret handling
+
+Do not commit secrets.
+
+Existing encryption/token keys that protect live data must be copied exactly during migration and never casually regenerated.
+
+Critical infrastructure decryption material must be backed up securely outside the server and never stored in GitHub, chat logs, Slack or ordinary email.
+
+## Shared-hosting release pattern
+
+For Node apps that remain on constrained cPanel/MochaHost environments, use CI-built Linux artifacts and versioned releases:
 
 ```
 releases/<commit-sha>/
@@ -45,15 +169,15 @@ PREVIOUS
 shared/
 ```
 
-CI builds on Linux, uploads the production artifact, atomically switches the active release, performs a health check and rolls back when validation fails.
+Deploy artifact → switch active release → health check → rollback on failure.
 
-## Static/Vite pattern
+## Static/Vite deployments
 
 For client-only apps:
-- build in CI or trusted development environment,
-- deploy the generated client artifact only,
-- never publish source secrets, .env files, node_modules or server-only code to the public document root.
+- build in CI or a trusted development environment
+- deploy generated client artifacts only
+- do not publish `.env`, source secrets, private server code or development-only files to the public document root
 
 ## Health endpoints
 
-Every deployable backend should expose a lightweight health endpoint such as `/healthz` that can be checked during promotion and rollback.
+Every deployable backend should provide a lightweight health endpoint such as `/healthz` for promotion and rollback checks.
