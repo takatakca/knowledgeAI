@@ -20,3 +20,9 @@ This file tracks source material used to build curated Knowledge TakaTak records
 ## Provenance rule
 
 Source files remain authoritative evidence. Curated Markdown files summarize implementation-relevant knowledge for agents and should link back to source names/dates. When exact source archives are later imported into a private retrieval system, source IDs/hashes should replace filename-only references.
+
+
+### TAKATAK child-app master standard
+- source: Library `Pasted text(3).txt`
+- purpose: reusable GROUPE TAKATAK / TAKATAK Auth / TAKATAK Dashboard standard for future child sites/apps
+- curated destination: `prompts/MASTER-TAKATAK-CHILD-APP-STANDARD.md`
