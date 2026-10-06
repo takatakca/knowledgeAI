@@ -24,7 +24,7 @@ Rules:
 - Facturations logic is **not ported** into TAKATAK V1, and the databases are **never shared**. This is required by Facturations AGENTS.md and README, and by the TAKATAK contract-only integration standard.
 - The browser never holds the integration secret and never calls Facturations directly.
 - TAKATAK platform `owner` acts as Facturations `OWNER`, and platform `admin` acts as `STAFF`. Roles are always derived server-side. The token `sub` is the MasterIdentity id (profile id as fallback), never an email.
-- From TAKATAK, the v1 integration can only read state and create drafts. Approval, issuance, delivery, publication and payment capabilities stay `false`.
+- From TAKATAK, the v1 integration can only read state and create drafts. Approval, issuance, delivery and publication stay in Facturations (capabilities `false`). TAKATAK can also read an issued invoice's status by draft id (`/integration/v1/drafts/:id/issuance`, OWNER).
 - Facturations labels dashboard values **DRAFTS ONLY**. Never present them as revenue, receivables or payments.
 
 TAKATAK V1 implementation:
@@ -58,3 +58,23 @@ TAKATAK V1 implementation:
 - Facturations: in development, not deployed. No real invoices, Wave writes, emails or payments are authorized.
 - Activation requires isolated Facturations staging: HTTPS, dedicated PostgreSQL, least-privilege role, backup/restore proof, and integration secrets configured outside GitHub.
 - TAKATAK V1 integration: foundation built and tested end-to-end against a local Facturations instance. Disabled by default (`FACTURATIONS_INTEGRATION_ENABLED=0`). Its migration is not yet in the approved staging/production migration trains.
+
+## Client dashboard and payments (2026-10-06)
+- **One invoice per sale, from one issuer.** Stripe charges and invoices subscriptions (Social, Ads). Facturations issues custom invoices (Wave numbering). The client sees both on `/dashboard/invoices` ("Factures").
+- **Paying a Facturations invoice.**
+  1. TAKATAK opens a one-time CAD Stripe Checkout session for the Facturations **balance**, with metadata `facturations_business_id` and `facturations_issued_invoice_id`.
+  2. Stripe sends the signed `checkout.session.completed` to **Facturations** (`POST /webhooks/stripe/payments`).
+  3. Facturations verifies the signature itself and records `VERIFIED_PROVIDER_WEBHOOK` evidence (migration 046 enforces provenance in PostgreSQL).
+- **Only verified payments count.** TAKATAK never marks an invoice paid. "Payée" appears only when Facturations reports `proofScope = VERIFIED_PROVIDER_PRESENT`. `SYNTHETIC_ONLY` is never real money.
+- **PRs:**
+  - takatak-v1: #107 gateway, #108 Stripe invoices, #109 Facturations invoices, #110 Payer;
+  - Facturations: #158 browser login fix, #159 Coolify kit, #160 issuance status, #161 verified Stripe webhook.
+
+## Clients billing their own customers (decision 2026-10-06)
+- This runs on **Stripe Connect with the client's own Stripe account**, not on a multi-tenant Facturations. Each client is its own legal issuer: its own tax numbers, numbering, bank and liability.
+  - The account has a Stripe-hosted dashboard. Stripe collects identity requirements and carries losses; the client pays Stripe fees.
+  - Funds never pass through GROUPE TAKATAK.
+- Facturations remains the invoicing authority **for GROUPE TAKATAK itself**.
+- Tax rates are explicit client inputs. No jurisdiction is assumed.
+- **PRs (takatak-v1):** #111 connect the account (table `client_stripe_connect_accounts`, immutable link), #112 create, send and list invoices. Off by default (`CLIENT_INVOICING_ENABLED`). Guide: `docs/CLIENT_INVOICING_STRIPE_CONNECT.md`.
+
