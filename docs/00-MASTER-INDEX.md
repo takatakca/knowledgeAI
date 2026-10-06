@@ -20,6 +20,7 @@ Build a durable, searchable, provenance-aware brain for TAKATAK product creation
 - [Deployment standards](./04-DEPLOYMENT-STANDARDS.md)
 - [Identity and multi-site standard](./05-IDENTITY-AND-MULTISITE.md)
 - [Agent operating rules](./06-AGENT-OPERATING-RULES.md)
+- [Ecosystem integration map](./10-ECOSYSTEM-INTEGRATION-MAP.md) — live state, Layer A/B vision, contracts, build order (2026-10-06)
 
 ## Project dossiers
 

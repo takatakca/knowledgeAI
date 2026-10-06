@@ -26,3 +26,8 @@ Source files remain authoritative evidence. Curated Markdown files summarize imp
 - source: Library `Pasted text(3).txt`
 - purpose: reusable GROUPE TAKATAK / TAKATAK Auth / TAKATAK Dashboard standard for future child sites/apps
 - curated destination: `prompts/MASTER-TAKATAK-CHILD-APP-STANDARD.md`
+
+### Ecosystem integration map
+- source: owner instructions in Claude Code session (2026-10-06) + read-only inspection of takatak-v1 (`8adfa23`), Facturations, takatak-automate, takatak, takatakbackend, child-app integration docs, and live `takatak.ca` endpoints
+- reference date: 2026-10-06
+- curated destination: `docs/10-ECOSYSTEM-INTEGRATION-MAP.md`
