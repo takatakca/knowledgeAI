@@ -20,7 +20,7 @@ This repository is public. Security items are described without exploitable deta
 
 | ID | P | Who | Repo | Item | Done when |
 |---|---|---|---|---|---|
-| TK-001 | P0 | Built | takatak-v1 | Merge `claude/website-lead-capture`. Domain, "Post a project" and marketplace checkout requests become Leads in `/dashboard/leads` (includes TK-010, TK-011, TK-017) | merged + `WEBSITE_LEADS_ENABLED=true`, `WEBSITE_LEADS_CLIENT_ID=<TAKATAK agency workspace UUID>` set on the server in the same deploy; optional `WEBSITE_LEADS_NOTIFY_EMAIL=<internal team address>` |
+| TK-001 | P0 | Built | takatak-v1 | Merge `claude/website-lead-capture`. Domain, "Post a project" and marketplace checkout requests become Leads in `/dashboard/leads` (includes TK-010, TK-011, TK-017, TK-062) | merged + `WEBSITE_LEADS_ENABLED=true`, `WEBSITE_LEADS_CLIENT_ID=<TAKATAK agency workspace UUID>` set on the server in the same deploy; optional `WEBSITE_LEADS_NOTIFY_EMAIL=<internal team address>` |
 | TK-002 | P1 | Built | takatak-v1 | Merge `claude/qmaps-listings-reviews-sync` (QMAPS → Local Listings & Reviews receiver + migration `20261006120000`) | merged, migration deployed, `QMAPS_SYNC_*` set |
 | TK-003 | P1 | Built | qmaps | Merge `claude/takatak-listings-reviews-sync` (outbox, triggers, `takatak-sync-outbox` function) | migration applied, function deployed with `TAKATAK_QMAPS_SYNC_*` + `TAKATAK_SYNC_RUNNER_SECRET`, scheduled every minute, `takatak_sync_settings.enabled=true` |
 | TK-004 | P1 | Owner | takatak-v1 | Link each QMAPS business to its client workspace | `npm run qmaps:link -- --client <uuid> --business <uuid>` done per business; then `SELECT public.takatak_backfill();` in QMAPS |
@@ -46,7 +46,8 @@ This repository is public. Security items are described without exploitable deta
 | TK-017 | P1 | Built (`claude/website-lead-capture`) | takatak-v1 | Lead notification: nobody is alerted when a website lead arrives | **Built:** in-app notification per new lead (no contact details), real `/dashboard/notifications` page with mark-read, optional internal email (`WEBSITE_LEADS_NOTIFY_EMAIL`). SMS not built |
 | TK-019 | P1 | Owner | takatak-v1 | Marketplace copy promises "escrowed payments", but no payment or escrow exists (checkout records an order; nothing is charged) | wording changed, or escrow built |
 | TK-018 | P2 | Built (`claude/repo-hygiene`) | takatak-v1 | Remove stray `*.before-lint-fix` backup files (9 under `src/`) | removed + ignored. The `fallback.hosting.*` keys are **kept**: they belong to TK-062 |
-| TK-062 | P1 | Dev | takatak-v1 | Hosting has no fallback request form when the Upmind widget is unavailable (translations `fallback.hosting.*` exist in EN/FR, no component uses them); the domain page has one | hosting fallback posts a `hosting_request` lead like the domain fallback |
+| TK-062 | P1 | Built (`claude/website-lead-capture`) | takatak-v1 | Hosting has no fallback request form when the Upmind widget is unavailable (translations `fallback.hosting.*` exist in EN/FR, no component uses them); the domain page has one | **Built:** after 10 s without Upmind, `/checkout` shows a hosting request form → `hosting_request` lead + notification; browser-tested |
+| TK-064 | P1 | Dev | takatak-v1 | On phones, the "New client offer / 10% off" popup covers about half the screen over page content and forms (seen while testing `/checkout`). The email it collects goes to the promotions stub (TK-013) | popup is dismissible, does not cover forms on small screens, and stores the email server-side or is removed |
 | TK-063 | P2 | Dev | takatak-v1 | Unread count badge on the sidebar "Notifications" link | badge shows unread count for the workspace |
 
 ## C. Agency stack (Layer A) still to build
@@ -99,3 +100,4 @@ This repository is public. Security items are described without exploitable deta
 - **2026-10-06:** backlog created. Built on branches: TK-001, 002, 003, 005, 006, 009.
 - **2026-10-06:** TK-010, TK-011 built on `claude/website-lead-capture` (checkout orders recorded as leads, priced server-side; dead links removed; 15 checks). TK-015, TK-016 built on new branch `claude/website-seo-https` (TK-060; 9 checks). TK-016 corrected: only `og:image` was missing. Added TK-019, 027, 028, 054.
 - **2026-10-06:** TK-017 built (lead notifications, notifications page, opt-in internal email; 18 checks; verified on real PostgreSQL incl. cross-workspace isolation). TK-018 built on `claude/repo-hygiene` (TK-061). Added TK-062, 063.
+- **2026-10-06:** TK-062 built (hosting request form; 20 checks; Playwright test with Upmind blocked). Added TK-064.
