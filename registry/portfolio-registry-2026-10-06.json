@@ -1,0 +1,483 @@
+{
+  "snapshotDate": "2026-10-06",
+  "purpose": "Professional TAKATAK portfolio cleanup registry. Discovery baseline only; verify live registrar/DNS/deployment/contract state before changes.",
+  "evidenceLevels": {
+    "OBSERVED_GITHUB": "Visible in connected takatakca GitHub organization.",
+    "OBSERVED_HOSTING": "Observed in professional MochaHost/domain/hosting evidence.",
+    "KNOWN_PROJECT": "Established in professional project context but live state still requires verification.",
+    "NEEDS_AUDIT": "Identity, purpose, canonical domain, deployment, contract or ownership incomplete."
+  },
+  "repositories": [
+    "takatak-v1",
+    "takatak-automate",
+    "knowledgeAI",
+    "takatak",
+    "compassion-connect",
+    "r2neet",
+    "cake-concierge",
+    "revers-canada-hope",
+    "rentautoca",
+    "1lv-marketplace-hub",
+    "haste-mart",
+    "Facturations",
+    "taxichambly",
+    "takatakbackend",
+    "pppmtl",
+    "r2fca",
+    "Alkao.ca",
+    "CCC-CANADIEN-CONNEXION-CUBA",
+    "flexsca",
+    "deli-aden-online",
+    "foodhubca",
+    "isexy",
+    "cubafoodca",
+    "ahmverdunca",
+    "droneair",
+    "ocarinaspa",
+    "co-work.ca-montreal-launch",
+    "qmaps",
+    "festiiceca",
+    "promohavanaca",
+    "cuban-coin-cad"
+  ],
+  "assets": [
+    {
+      "domain": "1lv.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "1LV",
+      "repository": "1lv-marketplace-hub",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "actionavocat.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Legal lead generation",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "ahmverdun.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "AHMV",
+      "repository": "ahmverdunca",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "alkao.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "ALKAO",
+      "repository": "Alkao.ca",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "bardosh.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Unmapped/historical",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "besoinavocat.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Legal lead generation",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "bioles.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Unmapped/historical",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "bmbd.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Bin Molle Bin Dure",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "bolon.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Bolon / Café Bolon",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "boloncafe.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Bolon / Café Bolon",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "co-work.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "CO WORK.CA",
+      "repository": "co-work.ca-montreal-launch",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "cubafood.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "CUBAFOOD.CA",
+      "repository": "cubafoodca",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "cubaresort.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Cuba travel/hospitality context",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "deliaden.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Délices d'Aden",
+      "repository": "deli-aden-online",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "drone-air.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "DRONE AIR / DRONE R'AIR",
+      "repository": "droneair",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "emploidirect.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "EMPLOI DIRECT",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "eyeclean.net",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Unmapped/historical",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "flexs.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "FLEX'S",
+      "repository": "flexsca",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "globesecure.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Unmapped",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "havanapromo.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Havana promotion",
+      "repository": "promohavanaca",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "inntime.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Pizza Inntime",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "locactif.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Unmapped WordPress",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "mielaissa.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "MIELAISSA",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "mimt.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "MIMT",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "nutrishake.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Nutri/Nutrition Shake",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "ocarinaspa.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Ocarina Spa",
+      "repository": "ocarinaspa",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "ocrepe.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "O'Crêpe",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "on2go.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "ON2GO",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "ooeuf.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "O'Œufs Déjeuner",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "pipita.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Pi Pita",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "popoulet.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Po Poulet",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "pppmtl.com",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "PPP Pizzeria",
+      "repository": "pppmtl",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "promohavana.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Havana promotion",
+      "repository": "promohavanaca",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "qmaps.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "QMAPS",
+      "repository": "qmaps",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "r2f.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "R2F / Rapid Fix",
+      "repository": "r2fca",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "r2nette.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "R2NETTE",
+      "repository": "r2neet",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "ramassedebris.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Unmapped",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "rentauto.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "RentAuto",
+      "repository": "rentautoca",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "reverscanada.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "REVERS CANADA",
+      "repository": "revers-canada-hope",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "rttransport.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Unmapped/historical",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "tacomontreal.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Taco Mexican / Taco Montréal",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "takatak.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "TAKATAK Core",
+      "repository": "takatak-v1",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "taxichambly.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Taxi Chambly",
+      "repository": "taxichambly",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "viennoise.ca",
+      "evidence": "OBSERVED_HOSTING",
+      "project": "Viennoise / Gâteau-related",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "havanaresort.ca",
+      "evidence": "KNOWN_PROJECT",
+      "project": "Havana hospitality",
+      "repository": "promohavanaca",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "clubhavanacamping.com",
+      "evidence": "KNOWN_PROJECT",
+      "project": "Havana camping/hospitality",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "6241.ca",
+      "evidence": "KNOWN_PROJECT",
+      "project": "Managed client site",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "festiice.ca",
+      "evidence": "KNOWN_PROJECT",
+      "project": "FESTI-ICE",
+      "repository": "festiiceca",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "facturations.bolon.ca",
+      "evidence": "KNOWN_PROJECT",
+      "project": "Facturations",
+      "repository": "Facturations",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "voice.ahmverdun.ca",
+      "evidence": "KNOWN_PROJECT",
+      "project": "AHMV voice service",
+      "repository": "ahmverdunca",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "foodhub.takatak.ca",
+      "evidence": "KNOWN_PROJECT",
+      "project": "FoodHub",
+      "repository": "foodhubca",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "staging.takatak.ca",
+      "evidence": "KNOWN_PROJECT",
+      "project": "TAKATAK staging",
+      "repository": "takatak-v1",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "dashboard.takatak.ca",
+      "evidence": "KNOWN_PROJECT",
+      "project": "TAKATAK dashboard",
+      "repository": "takatak-v1",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "api.takatak.ca",
+      "evidence": "KNOWN_PROJECT",
+      "project": "TAKATAK API",
+      "repository": "takatak-v1",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "coolify.takatak.ca",
+      "evidence": "KNOWN_PROJECT",
+      "project": "TAKATAK infrastructure",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "qmaps.app",
+      "evidence": "KNOWN_PROJECT",
+      "project": "QMAPS alternate/documented domain",
+      "repository": "qmaps",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "dronair.ca",
+      "evidence": "KNOWN_PROJECT",
+      "project": "DRONE naming/contact reference",
+      "repository": "droneair",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "canadatoken.ca",
+      "evidence": "KNOWN_PROJECT",
+      "project": "Canada/Cuba token concept",
+      "repository": "cuban-coin-cad",
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    },
+    {
+      "domain": "donatecuba.ca",
+      "evidence": "KNOWN_PROJECT",
+      "project": "Historical/planned Cuba fundraising concept",
+      "repository": null,
+      "currentStatus": "UNKNOWN_NEEDS_AUDIT"
+    }
+  ],
+  "campaignsToReconcile": [
+    "REVERS CANADA Canada-wide fundraising/crowdfunding",
+    "CUBAFOOD Canada-Cuba agricultural/food-development",
+    "Historical DONATECUBA concept",
+    "Havana Google/Meta campaigns including Halloween/Promo Havana work",
+    "Restaurant Canada Post/direct-mail menu campaigns",
+    "TAKATAK Ads local/multi-site campaigns",
+    "Legal lead-generation campaigns only after scope verification"
+  ],
+  "unknownOrConflicting": [
+    "locactif.ca project/repository mapping",
+    "globesecure.ca project/repository mapping",
+    "bardosh.ca current status",
+    "bioles.ca project mapping",
+    "eyeclean.net project mapping",
+    "ramassedebris.ca project mapping",
+    "rttransport.ca project mapping",
+    "cake-concierge canonical brand/domain",
+    "isexy canonical brand/domain",
+    "compassion-connect vs revers-canada-hope vs REVpère scope overlap",
+    "qmaps.ca vs qmaps.app canonical production domain",
+    "drone-air.ca vs dronair.ca canonical identity",
+    "FESTI-ICE canonical domain/social spelling",
+    "takatak vs takatakbackend vs takatak-v1 legacy/current boundaries"
+  ]
+}
