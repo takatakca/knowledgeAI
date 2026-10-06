@@ -20,28 +20,30 @@ This repository is public. Security items are described without exploitable deta
 
 | ID | P | Who | Repo | Item | Done when |
 |---|---|---|---|---|---|
-| TK-001 | P0 | Built | takatak-v1 | Merge `claude/website-lead-capture`. Domain and "Post a project" requests become Leads in `/dashboard/leads` | merged + `WEBSITE_LEADS_ENABLED=true`, `WEBSITE_LEADS_CLIENT_ID=<TAKATAK agency workspace UUID>` set on the server in the same deploy |
+| TK-001 | P0 | Built | takatak-v1 | Merge `claude/website-lead-capture`. Domain, "Post a project" and marketplace checkout requests become Leads in `/dashboard/leads` (includes TK-010, TK-011) | merged + `WEBSITE_LEADS_ENABLED=true`, `WEBSITE_LEADS_CLIENT_ID=<TAKATAK agency workspace UUID>` set on the server in the same deploy |
 | TK-002 | P1 | Built | takatak-v1 | Merge `claude/qmaps-listings-reviews-sync` (QMAPS → Local Listings & Reviews receiver + migration `20261006120000`) | merged, migration deployed, `QMAPS_SYNC_*` set |
 | TK-003 | P1 | Built | qmaps | Merge `claude/takatak-listings-reviews-sync` (outbox, triggers, `takatak-sync-outbox` function) | migration applied, function deployed with `TAKATAK_QMAPS_SYNC_*` + `TAKATAK_SYNC_RUNNER_SECRET`, scheduled every minute, `takatak_sync_settings.enabled=true` |
 | TK-004 | P1 | Owner | takatak-v1 | Link each QMAPS business to its client workspace | `npm run qmaps:link -- --client <uuid> --business <uuid>` done per business; then `SELECT public.takatak_backfill();` in QMAPS |
 | TK-005 | P1 | Built | takatak-v1 | Merge `claude/seo-site-audit` (`/dashboard/seo`, migration `20261006140000`) | merged, migration deployed, an audit runs from the dashboard |
 | TK-006 | P1 | Built | takatak-v1 | Merge `claude/facturations-billing-integration` (read-only invoice drafts) | merged; stays off until TK-030 |
-| TK-007 | P1 | Dev | takatak-v1 | Resolve merge overlaps between the four V1 branches | merged cleanly. Each branch adds lines after the same anchors in `package.json` scripts, `.github/workflows/ci.yml`, `.env.example`, and (two of them) `scripts/reconcile-*-migrations.mjs`. Keep all lines; keep migrations in timestamp order |
+| TK-007 | P1 | Dev | takatak-v1 | Resolve merge overlaps between the five V1 branches | merged cleanly. Each branch adds lines after the same anchors in `package.json` scripts, `.github/workflows/ci.yml`, `.env.example`, and (two of them) `scripts/reconcile-*-migrations.mjs`. Keep all lines; keep migrations in timestamp order |
 | TK-008 | P1 | Dev | qmaps | Run the `takatak-sync-outbox` Deno function once on staging (it was verified only through an equivalent Node sender) | one real delivery returns `PROCESSED` |
+| TK-060 | P0 | Built | takatak-v1 | Merge `claude/website-seo-https` (HTTPS redirect, canonical URLs, og:image, JSON-LD, titles; includes TK-015, TK-016) | merged; `http://takatak.ca` returns 308 to `https://`; re-audit from `/dashboard/seo` |
 | TK-009 | P2 | Built | knowledgeAI | Merge `claude/ecosystem-integration-map` (this backlog + the map) | merged to `main` |
 
 ## B. Live website (takatak.ca) problems found
 
 | ID | P | Who | Repo | Item | Done when |
 |---|---|---|---|---|---|
-| TK-010 | P0 | Dev | takatak-v1 | **Marketplace checkout loses orders.** "Continue in dashboard" goes to `/dashboard/marketplace` (no such page); the order is never recorded | checkout creates a Lead/order in V1 and shows a confirmation with a reference |
-| TK-011 | P0 | Dev | takatak-v1 | Dead links to `/dashboard/marketplace`: `SiteFooter.tsx`, `checkout-client.tsx`, `lib/website/public-services.ts` (post-project fixed in TK-001) | no link to a missing page |
+| TK-010 | P0 | Built (`claude/website-lead-capture`) | takatak-v1 | **Marketplace checkout loses orders.** "Continue in dashboard" goes to `/dashboard/marketplace` (no such page); the order is never recorded | checkout creates a Lead/order in V1 and shows a confirmation with a reference. **Built:** orders priced server-side from the catalog (browser totals ignored), stored as high-priority leads, "Order received" + reference; no payment taken |
+| TK-011 | P0 | Built (`claude/website-lead-capture`) | takatak-v1 | Dead links to `/dashboard/marketplace`: `SiteFooter.tsx`, `checkout-client.tsx`, `lib/website/public-services.ts` (post-project fixed in TK-001) | no link to a missing page |
 | TK-012 | P1 | Dev | takatak-v1 | "Post a project" file uploads (`FileUploadPanel`) are kept in the browser only, never uploaded | files stored in private storage, attached to the lead, size and type limits enforced |
 | TK-013 | P1 | Dev | takatak-v1 | `src/lib/website/api-client.ts` is a stub; promo codes (`lib/website/promotions.ts`) are not server-backed | promotions validated server-side, or the promo UI is hidden |
 | TK-014 | P2 | Dev | takatak-v1 | Website prices hard-coded (`lib/website/pricing.ts`, `marketplace-packages.ts`) although `ProductCatalog`/`ProductPrice` exist | prices read from the catalog with the current values as fallback, plus an admin way to edit them |
-| TK-015 | P0 | Dev/Owner | takatak-v1 / hosting | **`http://takatak.ca` does not redirect to `https://`** (HTTP 200 on port 80) | 301 to `https://` for every path (Apache/MochaHost rule or app proxy) |
-| TK-016 | P1 | Dev | takatak-v1 | SEO audit of takatak.ca (79/100): homepage title too long; no canonical on 9 pages; no Open Graph tags; no JSON-LD | re-audit ≥ 95 |
+| TK-015 | P0 | Built (`claude/website-seo-https`) | takatak-v1 / hosting | **`http://takatak.ca` does not redirect to `https://`** (HTTP 200 on port 80) | 308 to `https://` for every path. **Built** in the app proxy (only when the host's `x-forwarded-proto` says `http`) |
+| TK-016 | P1 | Built (`claude/website-seo-https`) | takatak-v1 | SEO audit of takatak.ca (79/100): homepage title 76 chars; no canonical on 9 pages; **no `og:image`** (other Open Graph tags exist); no JSON-LD; titles with doubled "— TAKATAK" | re-audit ≥ 95 after deploy |
 | TK-017 | P1 | Dev | takatak-v1 | Lead notification: nobody is alerted when a website lead arrives | email/SMS/dashboard notification to the assigned team |
+| TK-019 | P1 | Owner | takatak-v1 | Marketplace copy promises "escrowed payments", but no payment or escrow exists (checkout records an order; nothing is charged) | wording changed, or escrow built |
 | TK-018 | P2 | Dev | takatak-v1 | Remove stray `*.before-lint-fix` backup files (9 under `src/`) and unused `fallback.hosting.*` translation keys | removed |
 
 ## C. Agency stack (Layer A) still to build
@@ -55,6 +57,8 @@ This repository is public. Security items are described without exploitable deta
 | TK-024 | P1 | Dev | takatak-v1 | Reviews: reply to reviews from TAKATAK (QMAPS-side API needed); Google Business reviews | replies flow back to the source |
 | TK-025 | P2 | Dev | takatak-v1 | Admin UI to link QMAPS businesses to workspaces (today a CLI script) | link/unlink from `/dashboard/admin` |
 | TK-026 | P2 | Dev | takatak-v1 | Reports: export/delivery not active | PDF export + scheduled delivery |
+| TK-027 | P1 | Dev | takatak-v1 / Facturations | An accepted checkout order (lead) should become a Facturations **draft** invoice awaiting owner approval | "Create draft invoice" action on an order lead |
+| TK-028 | P2 | Owner | takatak-v1 | `brand.ts` has no street address or phone, so the site cannot publish `LocalBusiness` structured data or match a Google Business profile | address/phone provided, added to `brand.ts` and JSON-LD |
 
 ## D. Billing (Facturations)
 
@@ -82,6 +86,7 @@ This repository is public. Security items are described without exploitable deta
 | TK-050 | P0 | Owner | takatakbackend | **Credential material is committed in a public legacy repository.** Owner has the details | material removed, any affected key rotated, repo private or archived |
 | TK-051 | P1 | Owner | takatak-v1 | `main` deploys to takatak.ca but is not branch-protected (owner deferred this on 2026-10-06 while uploads are ongoing) | PR + CI required on `main` |
 | TK-052 | P1 | Dev | qmaps | `bun run lint` fails on `main` (pre-existing `no-explicit-any` errors in `src/components/...`), so CI is red | lint green |
+| TK-054 | P2 | Dev | takatak-v1 | Add HSTS (`Strict-Transport-Security`) once every takatak.ca subdomain serves HTTPS (after TK-060 is live) | header present |
 | TK-053 | P2 | Dev | takatak-v1 | Lint warning: unused `CheckCircle2` in `src/components/rentauto/rentauto-host-verifications-card.tsx` | clean |
 
 ---
@@ -89,3 +94,4 @@ This repository is public. Security items are described without exploitable deta
 ## Changelog
 
 - **2026-10-06:** backlog created. Built on branches: TK-001, 002, 003, 005, 006, 009.
+- **2026-10-06:** TK-010, TK-011 built on `claude/website-lead-capture` (checkout orders recorded as leads, priced server-side; dead links removed; 15 checks). TK-015, TK-016 built on new branch `claude/website-seo-https` (TK-060; 9 checks). TK-016 corrected: only `og:image` was missing. Added TK-019, 027, 028, 054.
