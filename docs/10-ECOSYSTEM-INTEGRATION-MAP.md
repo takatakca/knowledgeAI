@@ -90,7 +90,7 @@ Every vertical follows the same rule: **child app → TAKATAK V1 → authorized 
 
 ## 7. Known gaps (2026-10-06)
 
-- **Website not wired**
+- **Website not wired** (forms partly fixed on `takatak-v1` branch `claude/website-lead-capture`: domain and project requests now become Leads in `/dashboard/leads`, off until `WEBSITE_LEADS_ENABLED=true`)
   - In `takatak-v1`, `src/lib/website/api-client.ts` throws `not_configured` for every call.
   - Website forms (signup, post-project, checkout) have no backend.
   - Pricing and packages are hard-coded (`src/lib/website/pricing.ts`, `marketplace-packages.ts`), although `ProductCatalog`/`ProductPrice` exist in the database.
