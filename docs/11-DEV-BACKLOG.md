@@ -26,9 +26,11 @@ This repository is public. Security items are described without exploitable deta
 | TK-004 | P1 | Owner | takatak-v1 | Link each QMAPS business to its client workspace | `npm run qmaps:link -- --client <uuid> --business <uuid>` done per business; then `SELECT public.takatak_backfill();` in QMAPS |
 | TK-005 | P1 | Built | takatak-v1 | Merge `claude/seo-site-audit` (`/dashboard/seo`, migration `20261006140000`) | merged, migration deployed, an audit runs from the dashboard |
 | TK-006 | P1 | Built | takatak-v1 | Merge `claude/facturations-billing-integration` (read-only invoice drafts) | merged; stays off until TK-030 |
-| TK-007 | P1 | Dev | takatak-v1 | Resolve merge overlaps between the five V1 branches | merged cleanly. Each branch adds lines after the same anchors in `package.json` scripts, `.github/workflows/ci.yml`, `.env.example`, and (two of them) `scripts/reconcile-*-migrations.mjs`. Keep all lines; keep migrations in timestamp order (`20261006120000` QMAPS, `20261006140000` SEO, `20261006150000` lead attachments) |
+| TK-007 | P1 | Dev | takatak-v1 | Resolve merge overlaps between the five V1 branches | merged cleanly. Each branch adds lines after the same anchors in `package.json` scripts, `.github/workflows/ci.yml`, `.env.example`, and (two of them) `scripts/reconcile-*-migrations.mjs`. Keep all lines; keep migrations in timestamp order (`20261006120000` QMAPS, `20261006140000` SEO, `20261006150000` lead attachments, `20261006160000` AI provider enum) |
 | TK-008 | P1 | Dev | qmaps | Run the `takatak-sync-outbox` Deno function once on staging (it was verified only through an equivalent Node sender) | one real delivery returns `PROCESSED` |
 | TK-060 | P0 | Built | takatak-v1 | Merge `claude/website-seo-https` (HTTPS redirect, canonical URLs, og:image, JSON-LD, titles; includes TK-015, TK-016) | merged; `http://takatak.ca` returns 308 to `https://`; re-audit from `/dashboard/seo` |
+| TK-067 | P1 | Built | takatak-v1 | Merge `claude/ai-studio-generation` (live AI Studio drafts; migration `20261006160000`; includes TK-023) | merged, migration deployed; stays off until TK-068 |
+| TK-068 | P1 | Owner | takatak-v1 | Choose the AI provider and create an **API key** (a ChatGPT subscription is not an API key): OpenAI (platform.openai.com, also choose the model) or Anthropic (console.anthropic.com) | `AI_STUDIO_GENERATION_ENABLED=true`, `AI_STUDIO_PROVIDER`, key and model set on the server; one draft generated from `/dashboard/ai-studio/content-generator` |
 | TK-061 | P2 | Built | takatak-v1 | Merge `claude/repo-hygiene` (removes 9 stray backup files; includes TK-018) | merged |
 | TK-009 | P2 | Built | knowledgeAI | Merge `claude/ecosystem-integration-map` (this backlog + the map) | merged to `main` |
 
@@ -59,7 +61,8 @@ This repository is public. Security items are described without exploitable deta
 | TK-020 | P1 | Owner | takatak-v1 | Confirm Upmind credentials on the production server (domains/hosting sync code exists and runs on page view) | `/dashboard/web-hosting/domains` shows real client domains |
 | TK-021 | P1 | Owner+Dev | takatak-v1 | SEO keywords and backlinks: Google Search Console OAuth (owner creates the Google Cloud OAuth app) | `/dashboard/seo/keywords` shows real queries, clicks and positions |
 | TK-022 | P2 | Dev | takatak-v1 | SEO: scheduled weekly re-audits, score history, white-label PDF report | done |
-| TK-023 | P1 | Dev | takatak-v1 | AI Studio: no live generation yet | provider connected with approval-before-publish |
+| TK-023 | P1 | Built (`claude/ai-studio-generation`) | takatak-v1 | AI Studio: no live generation yet | **Built:** Content Generator → `ai_generated` drafts (OpenAI or Anthropic), daily cap, never publishes; verified against both real endpoints (auth path). **Still open:** TK-069 |
+| TK-069 | P1 | Dev | takatak-v1 | AI Studio: "send draft to approval" and handoff to Social publishing; campaign builder and video-ideas pages still foundations; usage/cost view | approved drafts can be scheduled in Social with a human approval step |
 | TK-024 | P1 | Dev | takatak-v1 | Reviews: reply to reviews from TAKATAK (QMAPS-side API needed); Google Business reviews | replies flow back to the source |
 | TK-025 | P2 | Dev | takatak-v1 | Admin UI to link QMAPS businesses to workspaces (today a CLI script) | link/unlink from `/dashboard/admin` |
 | TK-026 | P2 | Dev | takatak-v1 | Reports: export/delivery not active | PDF export + scheduled delivery |
@@ -104,4 +107,5 @@ This repository is public. Security items are described without exploitable deta
 - **2026-10-06:** TK-017 built (lead notifications, notifications page, opt-in internal email; 18 checks; verified on real PostgreSQL incl. cross-workspace isolation). TK-018 built on `claude/repo-hygiene` (TK-061). Added TK-062, 063.
 - **2026-10-06:** TK-062 built (hosting request form; 20 checks; Playwright test with Upmind blocked). Added TK-064.
 - **2026-10-06:** TK-012 built (private uploads + lead detail page; 24 checks; HTTP, real-PostgreSQL and browser tests). Added TK-065, 066.
+- **2026-10-06:** TK-023 built on new branch `claude/ai-studio-generation` (TK-067; 8 checks; migration verified; real-endpoint test). Added TK-068, 069.
 - **2026-10-06:** TK-066 built (lead updates + history; `qa:lead-actions`, 5 checks; verified on real PostgreSQL).

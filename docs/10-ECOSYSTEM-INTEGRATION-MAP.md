@@ -48,9 +48,9 @@ Every client dashboard has two layers.
 | Local listings | `/dashboard/local-listings/*` | QMAPS | QMAPS sync built (branches), off by default |
 | SEO | `/dashboard/seo`, `/seo/backlinks`, `/seo/keywords` | Native technical audit; Search Console later | Site audit built on `takatak-v1` branch `claude/seo-site-audit` (takatak.ca scored 79/100 in a live test); keywords/backlinks still placeholders |
 | Reviews | `/dashboard/local-listings/reviews` | QMAPS / Google Business | QMAPS reviews sync built (branches), off by default; Google Business not connected |
-| AI Studio | `/dashboard/ai-studio/*` | OpenAI (configured_untested), TryHolo (disabled) | No live generation |
+| AI Studio | `/dashboard/ai-studio/*` | OpenAI or Anthropic (Claude), selected by server config; TryHolo (disabled) | Live draft generation built on branch `claude/ai-studio-generation` (drafts only, off until a provider API key is set) |
 | Ads | `/dashboard/advertising` | TAKATAK ADS | Foundation (see `projects/TAKATAK-ADS.md`) |
-| Leads | `/dashboard/leads/*` | FLEXS | Not connected |
+| Leads | `/dashboard/leads/*` | takatak.ca website forms (FLEXS later) | On branch `claude/website-lead-capture`: website requests/orders become leads with notifications, attachments, a detail page and status/notes; FLEXS not connected |
 | Reports | `/dashboard/reports/*` | Internal | Foundation; no export/delivery |
 | Invoices | `/dashboard/invoices` | Facturations | Read-only draft integration on branch `claude/facturations-billing-integration` (off by default) |
 
