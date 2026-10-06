@@ -45,9 +45,9 @@ Every client dashboard has two layers.
 | --- | --- | --- | --- |
 | Domains / Hosting / SSL | `/dashboard/web-hosting/*`, `/dashboard/hosting/*` | Upmind | Adapter + signed webhook exist; widgets live on website; dashboard sync not connected |
 | Social media | `/dashboard/social/*` | Native TAKATAK Social (Meta first) | Foundation + OAuth security done; provider connections in progress (see `projects/SOCIAL-CORE.md`) |
-| Local listings | `/dashboard/local-listings/*` | QMAPS | Internal tracking only; QMAPS not connected |
+| Local listings | `/dashboard/local-listings/*` | QMAPS | QMAPS sync built (branches), off by default |
 | SEO | `/dashboard/seo`, `/seo/backlinks`, `/seo/keywords` | n/a | Planned placeholders |
-| Reviews | `/dashboard/local-listings/reviews` | QMAPS / Google Business | Internal demo only |
+| Reviews | `/dashboard/local-listings/reviews` | QMAPS / Google Business | QMAPS reviews sync built (branches), off by default; Google Business not connected |
 | AI Studio | `/dashboard/ai-studio/*` | OpenAI (configured_untested), TryHolo (disabled) | No live generation |
 | Ads | `/dashboard/advertising` | TAKATAK ADS | Foundation (see `projects/TAKATAK-ADS.md`) |
 | Leads | `/dashboard/leads/*` | FLEXS | Not connected |
@@ -65,7 +65,7 @@ Every vertical follows the same rule: **child app → TAKATAK V1 → authorized 
 | R2NETTE | `r2neet` | R2NETTE → V1 | Signed events (`src/lib/integrations/r2nette`) | Receiver exists in V1 |
 | AHMV hockey | `ahmverdunca` | Both | Control plane, schedule/team feeds, memberships (`/dashboard/hockey`) | Most advanced vertical |
 | ALKAO ticket hub | `Alkao.ca` | ALKAO ← V1 control | Detachable ticketing engine; FESTI-ICE and Havana Resort as Clients/Brands | Phase A in progress |
-| QMAPS | `qmaps` | Future | Own auth/listings; must integrate through an adapter | Not connected |
+| QMAPS | `qmaps` | QMAPS → V1 | Outbox + signed events (`/api/integrations/qmaps/events`) → linked client's Local Listings & Reviews | Built both sides on branches (`takatak-v1` `claude/qmaps-listings-reviews-sync`, `qmaps` `claude/takatak-listings-reviews-sync`); off by default; verified end-to-end |
 | CubaFood, Deli Aden | `cubafoodca`, `deli-aden-online` | Future | Local TAKATAK auth helpers present | To verify |
 | Facturations | `Facturations` | V1 → Facturations | Short-lived HS256 service token → `/integration/v1/*` | Read-only drafts on branch; staging gate pending |
 
