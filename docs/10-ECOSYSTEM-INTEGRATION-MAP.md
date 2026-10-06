@@ -46,7 +46,7 @@ Every client dashboard has two layers.
 | Domains / Hosting / SSL | `/dashboard/web-hosting/*`, `/dashboard/hosting/*` | Upmind | Adapter + signed webhook exist; widgets live on website; dashboard sync not connected |
 | Social media | `/dashboard/social/*` | Native TAKATAK Social (Meta first) | Foundation + OAuth security done; provider connections in progress (see `projects/SOCIAL-CORE.md`) |
 | Local listings | `/dashboard/local-listings/*` | QMAPS | QMAPS sync built (branches), off by default |
-| SEO | `/dashboard/seo`, `/seo/backlinks`, `/seo/keywords` | n/a | Planned placeholders |
+| SEO | `/dashboard/seo`, `/seo/backlinks`, `/seo/keywords` | Native technical audit; Search Console later | Site audit built on `takatak-v1` branch `claude/seo-site-audit` (takatak.ca scored 79/100 in a live test); keywords/backlinks still placeholders |
 | Reviews | `/dashboard/local-listings/reviews` | QMAPS / Google Business | QMAPS reviews sync built (branches), off by default; Google Business not connected |
 | AI Studio | `/dashboard/ai-studio/*` | OpenAI (configured_untested), TryHolo (disabled) | No live generation |
 | Ads | `/dashboard/advertising` | TAKATAK ADS | Foundation (see `projects/TAKATAK-ADS.md`) |
