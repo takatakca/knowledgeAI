@@ -27,6 +27,7 @@ Build a durable, searchable, provenance-aware professional brain for TAKATAK pro
 - [Portfolio domains/repos snapshot — 2026-10-06](./10-PORTFOLIO-DOMAINS-REPOS-2026-10-06.md)
 - [Client independence and transfer architecture](./11-CLIENT-INDEPENDENCE-TRANSFER-ARCHITECTURE.md)
 - [Annual portfolio cleanup plan](./12-ANNUAL-PORTFOLIO-CLEANUP-PLAN.md)
+- [Machine-readable portfolio registry](../registry/portfolio-registry-2026-10-06.json)
 
 ## Core TAKATAK dossiers
 
@@ -78,6 +79,7 @@ Build a durable, searchable, provenance-aware professional brain for TAKATAK pro
 
 - [TAKATAK child-app standard](../prompts/MASTER-TAKATAK-CHILD-APP-STANDARD.md)
 - [TAKATAK AI Nexus + independent client platforms](../prompts/MASTER-TAKATAK-AI-NEXUS-INDEPENDENT-CLIENTS.md)
+- [Master portfolio audit — Codex / Claude Code](../prompts/MASTER-PORTFOLIO-AUDIT-CODEX.md)
 
 ## Repository principle
 
