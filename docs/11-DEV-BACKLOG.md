@@ -31,7 +31,8 @@ This repository is public. Security items are described without exploitable deta
 | TK-060 | P0 | Built | takatak-v1 | Merge `claude/website-seo-https` (HTTPS redirect, canonical URLs, og:image, JSON-LD, titles; includes TK-015, TK-016) | merged; `http://takatak.ca` returns 308 to `https://`; re-audit from `/dashboard/seo` |
 | TK-067 | P1 | Built | takatak-v1 | Merge `claude/ai-studio-generation` (live AI Studio drafts; migration `20261006160000`; includes TK-023) | merged, migration deployed; stays off until TK-068 |
 | TK-068 | P1 | Owner | takatak-v1 | Choose the AI provider and create an **API key** (a ChatGPT subscription is not an API key): OpenAI (platform.openai.com, also choose the model) or Anthropic (console.anthropic.com) | `AI_STUDIO_GENERATION_ENABLED=true`, `AI_STUDIO_PROVIDER`, key and model set on the server; one draft generated from `/dashboard/ai-studio/content-generator` |
-| TK-061 | P2 | Built | takatak-v1 | Merge `claude/repo-hygiene` (removes 9 stray backup files; includes TK-018) | merged |
+| TK-070 | P0 | Built | takatak-v1 | Merge `claude/website-theme-colors`: **about 700 colour classes on the live website render colourless**; primary buttons ("Get started", "Claim offer", "Talk to TAKATAK"), green accents, muted text and error text are transparent or plain; the signup button shows dark text on green. Cause: tokens declared in `website.css`, which does not import Tailwind | merged; `npm run qa:website-theme` green; spot-check home, signup, marketplace |
+| TK-061 | P2 | Built | takatak-v1 | Merge `claude/repo-hygiene` (removes 9 stray backup files; compact, form-safe promo invite; unused import; includes TK-018, TK-053, TK-064) | merged |
 | TK-009 | P2 | Built | knowledgeAI | Merge `claude/ecosystem-integration-map` (this backlog + the map) | merged to `main` |
 
 ## B. Live website (takatak.ca) problems found
@@ -51,7 +52,7 @@ This repository is public. Security items are described without exploitable deta
 | TK-019 | P1 | Owner | takatak-v1 | Marketplace copy promises "escrowed payments", but no payment or escrow exists (checkout records an order; nothing is charged) | wording changed, or escrow built |
 | TK-018 | P2 | Built (`claude/repo-hygiene`) | takatak-v1 | Remove stray `*.before-lint-fix` backup files (9 under `src/`) | removed + ignored. The `fallback.hosting.*` keys are **kept**: they belong to TK-062 |
 | TK-062 | P1 | Built (`claude/website-lead-capture`) | takatak-v1 | Hosting has no fallback request form when the Upmind widget is unavailable (translations `fallback.hosting.*` exist in EN/FR, no component uses them); the domain page has one | **Built:** after 10 s without Upmind, `/checkout` shows a hosting request form → `hosting_request` lead + notification; browser-tested |
-| TK-064 | P1 | Dev | takatak-v1 | On phones, the "New client offer / 10% off" popup covers about half the screen over page content and forms (seen while testing `/checkout`). The email it collects goes to the promotions stub (TK-013) | popup is dismissible, does not cover forms on small screens, and stores the email server-side or is removed |
+| TK-064 | P1 | Built (`claude/repo-hygiene`) | takatak-v1 | On phones, the "New client offer / 10% off" invite covered about half the screen and appeared over forms | **Built:** hidden on form pages, waits while the visitor is typing, compact on phones (≈290 → 167 px). (Correction: its email is passed to the signup form, not lost.) |
 | TK-063 | P2 | Dev | takatak-v1 | Unread count badge on the sidebar "Notifications" link | badge shows unread count for the workspace |
 
 ## C. Agency stack (Layer A) still to build
@@ -96,9 +97,24 @@ This repository is public. Security items are described without exploitable deta
 | TK-051 | P1 | Owner | takatak-v1 | `main` deploys to takatak.ca but is not branch-protected (owner deferred this on 2026-10-06 while uploads are ongoing) | PR + CI required on `main` |
 | TK-052 | P1 | Dev | qmaps | `bun run lint` fails on `main` (pre-existing `no-explicit-any` errors in `src/components/...`), so CI is red | lint green |
 | TK-054 | P2 | Dev | takatak-v1 | Add HSTS (`Strict-Transport-Security`) once every takatak.ca subdomain serves HTTPS (after TK-060 is live) | header present |
-| TK-053 | P2 | Dev | takatak-v1 | Lint warning: unused `CheckCircle2` in `src/components/rentauto/rentauto-host-verifications-card.tsx` | clean |
+| TK-053 | P2 | Built (`claude/repo-hygiene`) | takatak-v1 | Lint warning: unused `CheckCircle2` in `src/components/rentauto/rentauto-host-verifications-card.tsx` | clean |
 
 ---
+
+## Suggested merge order (takatak-v1)
+
+Each branch is independent and based on `main`. Merge one at a time, letting CI pass between merges (TK-007 covers the small overlaps in `package.json`, `ci.yml`, `.env.example` and the reconcile lists):
+
+1. `claude/website-theme-colors` (TK-070): CSS only, the biggest visible improvement
+2. `claude/repo-hygiene` (TK-061)
+3. `claude/website-seo-https` (TK-060)
+4. `claude/website-lead-capture` (TK-001): migration `20261006150000`
+5. `claude/seo-site-audit` (TK-005): migration `20261006140000`
+6. `claude/qmaps-listings-reviews-sync` (TK-002): migration `20261006120000`
+7. `claude/ai-studio-generation` (TK-067): migration `20261006160000`
+8. `claude/facturations-billing-integration` (TK-006)
+
+Migrations have different timestamps and touch different tables, so merge order does not matter for the database. Prisma applies them in timestamp order.
 
 ## Changelog
 
@@ -107,5 +123,6 @@ This repository is public. Security items are described without exploitable deta
 - **2026-10-06:** TK-017 built (lead notifications, notifications page, opt-in internal email; 18 checks; verified on real PostgreSQL incl. cross-workspace isolation). TK-018 built on `claude/repo-hygiene` (TK-061). Added TK-062, 063.
 - **2026-10-06:** TK-062 built (hosting request form; 20 checks; Playwright test with Upmind blocked). Added TK-064.
 - **2026-10-06:** TK-012 built (private uploads + lead detail page; 24 checks; HTTP, real-PostgreSQL and browser tests). Added TK-065, 066.
+- **2026-10-07:** Found and fixed TK-070 (website theme colours missing on live site; new branch `claude/website-theme-colors`, before/after screenshots, CI guard). TK-053, TK-064 built on `claude/repo-hygiene`.
 - **2026-10-06:** TK-023 built on new branch `claude/ai-studio-generation` (TK-067; 8 checks; migration verified; real-endpoint test). Added TK-068, 069.
 - **2026-10-06:** TK-066 built (lead updates + history; `qa:lead-actions`, 5 checks; verified on real PostgreSQL).
