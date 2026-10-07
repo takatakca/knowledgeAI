@@ -53,7 +53,7 @@ This repository is public. Security items are described without exploitable deta
 | TK-018 | P2 | Built (`claude/repo-hygiene`) | takatak-v1 | Remove stray `*.before-lint-fix` backup files (9 under `src/`) | removed + ignored. The `fallback.hosting.*` keys are **kept**: they belong to TK-062 |
 | TK-062 | P1 | Built (`claude/website-lead-capture`) | takatak-v1 | Hosting has no fallback request form when the Upmind widget is unavailable (translations `fallback.hosting.*` exist in EN/FR, no component uses them); the domain page has one | **Built:** after 10 s without Upmind, `/checkout` shows a hosting request form → `hosting_request` lead + notification; browser-tested |
 | TK-064 | P1 | Built (`claude/repo-hygiene`) | takatak-v1 | On phones, the "New client offer / 10% off" invite covered about half the screen and appeared over forms | **Built:** hidden on form pages, waits while the visitor is typing, compact on phones (≈290 → 167 px). (Correction: its email is passed to the signup form, not lost.) |
-| TK-063 | P2 | Dev | takatak-v1 | Unread count badge on the sidebar "Notifications" link | badge shows unread count for the workspace |
+| TK-063 | P2 | Done (already existed) | takatak-v1 | Unread count badge for notifications | The top-bar bell already shows the workspace's unread count and links to `/dashboard/notifications` (now a real page via TK-017) |
 
 ## C. Agency stack (Layer A) still to build
 
