@@ -9,7 +9,9 @@ One VPS, two websites, all the AI brands on **API keys**:
 
 ## Install tonight (about 20 minutes)
 
-1. **Get a VPS:** Ubuntu 24.04, 4 vCPU, 8 GB RAM, 80 GB disk (for example a Contabo Cloud VPS). Use a **fresh** server, not the one running Coolify, because this kit needs ports 80 and 443.
+1. **Get a server:** Ubuntu 24.04, at least 4 CPU, 8 GB RAM and 80 GB of disk. Use a **fresh** server, not the one running Coolify, because this kit needs ports 80 and 443.
+   - **Oracle Cloud (free):** follow [the Oracle steps](#oracle-cloud-free-server) below.
+   - **Paid option:** any VPS, for example a Contabo Cloud VPS.
 2. **Get API keys.** At least one is required; skip any brand you don't use. Put a monthly spending limit on each account.
    - Claude: https://console.anthropic.com/settings/keys
    - ChatGPT: https://platform.openai.com/api-keys
@@ -24,6 +26,22 @@ One VPS, two websites, all the AI brands on **API keys**:
    ```
 4. **DNS** (where takatak.ca is managed): add two **A** records, `knowledge` and `lab`, pointing to the VPS IP. The installer prints the IP. HTTPS turns on by itself a few minutes after DNS points there.
 5. **First login:** `cat /opt/knowledgeAI/deploy/ai-studio/.admin-first-login`. Save it in your password manager, then delete the file.
+
+## Oracle Cloud free server
+
+Oracle's Always Free tier includes an ARM server with **4 CPU and 24 GB of RAM** at no cost. Every part of this kit has an ARM build, checked on 2026-10-08.
+
+1. Sign up at https://cloud.oracle.com. A card is asked for identity but not charged. Pick the home region closest to you; it can't be changed later.
+2. Go to **Compute → Instances → Create instance**.
+   - **Image:** Canonical Ubuntu 24.04.
+   - **Shape:** Ampere `VM.Standard.A1.Flex`, 4 OCPU, 24 GB memory.
+   - **Networking:** create a new virtual cloud network with a public subnet, and keep "Assign a public IPv4 address" on.
+   - **SSH keys:** click "Save private key" and keep the file safe.
+   - **Boot volume:** 100 GB.
+3. **Open the web ports in Oracle's network:** open the instance's subnet, then **Security List → Add Ingress Rules**. Set source `0.0.0.0/0`, protocol TCP and destination port `80,443`. The installer opens the same ports in the server's own firewall.
+4. **Connect:** `ssh -i <your-key-file> ubuntu@<public-IP>`, then `sudo -i`. Then run step 3 of the install above.
+
+If Oracle says **"Out of capacity"**, try another availability domain in the same form, or try again later. Upgrading the account to Pay As You Go usually fixes it, and Always Free resources stay free. On a free account, Oracle may stop a server that stays almost idle for 7 days; daily use avoids this.
 
 ## Daily use (from `/opt/knowledgeAI/deploy/ai-studio`)
 

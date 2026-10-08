@@ -22,6 +22,20 @@ if ! command -v docker >/dev/null || ! docker compose version >/dev/null 2>&1; t
 fi
 command -v openssl >/dev/null || { apt-get update -y && apt-get install -y openssl; }
 
+# Oracle Cloud Ubuntu images reject every port except SSH in iptables. Open web ports.
+if command -v iptables >/dev/null && iptables -S INPUT 2>/dev/null | grep -q -- '-j REJECT'; then
+  say "Opening ports 80 and 443 in this server's firewall"
+  for rule in "-p tcp --dport 80" "-p tcp --dport 443" "-p udp --dport 443"; do
+    # shellcheck disable=SC2086
+    if ! iptables -C INPUT $rule -j ACCEPT 2>/dev/null; then
+      n=$(iptables -L INPUT --line-numbers -n | awk '$2 == "REJECT" { print $1; exit }')
+      # shellcheck disable=SC2086
+      iptables -I INPUT "${n:-1}" $rule -j ACCEPT
+    fi
+  done
+  command -v netfilter-persistent >/dev/null && netfilter-persistent save >/dev/null 2>&1 || true
+fi
+
 if [ ! -f .env ]; then
   if ss -ltn 2>/dev/null | grep -qE ':(80|443)\s'; then
     die "Ports 80/443 are already used on this server (Coolify or another web server?). Use a fresh VPS, or stop that service first."
