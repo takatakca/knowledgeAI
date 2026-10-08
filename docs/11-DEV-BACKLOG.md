@@ -32,6 +32,10 @@ This repository is public. Security items are described without exploitable deta
 | TK-067 | P1 | Built | takatak-v1 | Merge `claude/ai-studio-generation` (live AI Studio drafts; migration `20261006160000`; includes TK-023) | merged, migration deployed; stays off until TK-068 |
 | TK-068 | P1 | Owner | takatak-v1 | Choose the AI provider and create an **API key** (a ChatGPT subscription is not an API key): OpenAI (platform.openai.com, also choose the model) or Anthropic (console.anthropic.com) | `AI_STUDIO_GENERATION_ENABLED=true`, `AI_STUDIO_PROVIDER`, key and model set on the server; one draft generated from `/dashboard/ai-studio/content-generator` |
 | TK-070 | P0 | Built | takatak-v1 | Merge `claude/website-theme-colors`: **about 700 colour classes on the live website render colourless**; primary buttons ("Get started", "Claim offer", "Talk to TAKATAK"), green accents, muted text and error text are transparent or plain; the signup button shows dark text on green. Cause: tokens declared in `website.css`, which does not import Tailwind | merged; `npm run qa:website-theme` green; spot-check home, signup, marketplace |
+| TK-071 | P1 | Open | knowledgeAI + Facturations | AI Studio credits are added by hand (`./admin.sh credits`). When a Facturations invoice for an AI Studio plan is paid, add the plan's credits to that person automatically (webhook or nightly job on the AI server) | paid test invoice adds credits once; replay does not double |
+| TK-072 | P2 | Open | knowledgeAI | AI Studio shows the default LibreChat / Open WebUI logo. Put the official GROUPE TAKATAK logo and colours on both apps (`data/images`, Open WebUI branding) after the owner uploads files to `brand/` | screenshots of both login pages |
+| TK-073 | P2 | Open | knowledgeAI | AI Studio: LibreChat shows only 2 models side by side; admins use the Lab for many. Decide whether clients also need more than 2 (custom view or Lab accounts with a credit cap) | owner decision |
+| TK-074 | P2 | Open | knowledgeAI | AI Studio: document search (RAG) is off in both apps. Turn on with an embeddings key and the rag_api service if clients need to chat with their files | upload a PDF, ask about it |
 | TK-061 | P2 | Built | takatak-v1 | Merge `claude/repo-hygiene` (removes 9 stray backup files; compact, form-safe promo invite; unused import; includes TK-018, TK-053, TK-064) | merged |
 | TK-009 | P2 | Built | knowledgeAI | Merge `claude/ecosystem-integration-map` (this backlog + the map) | merged to `main` |
 
@@ -123,6 +127,7 @@ Migrations have different timestamps and touch different tables, so merge order 
 - **2026-10-06:** TK-017 built (lead notifications, notifications page, opt-in internal email; 18 checks; verified on real PostgreSQL incl. cross-workspace isolation). TK-018 built on `claude/repo-hygiene` (TK-061). Added TK-062, 063.
 - **2026-10-06:** TK-062 built (hosting request form; 20 checks; Playwright test with Upmind blocked). Added TK-064.
 - **2026-10-06:** TK-012 built (private uploads + lead detail page; 24 checks; HTTP, real-PostgreSQL and browser tests). Added TK-065, 066.
+- **2026-10-08:** AI Studio server kit on main (`deploy/ai-studio/`), tested locally; follow-ups TK-071 to TK-074.
 - **2026-10-07:** Found and fixed TK-070 (website theme colours missing on live site; new branch `claude/website-theme-colors`, before/after screenshots, CI guard). TK-053, TK-064 built on `claude/repo-hygiene`.
 - **2026-10-06:** TK-023 built on new branch `claude/ai-studio-generation` (TK-067; 8 checks; migration verified; real-endpoint test). Added TK-068, 069.
 - **2026-10-06:** TK-066 built (lead updates + history; `qa:lead-actions`, 5 checks; verified on real PostgreSQL).
