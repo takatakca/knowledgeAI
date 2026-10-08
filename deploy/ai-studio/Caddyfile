@@ -1,0 +1,13 @@
+{
+	email {$ACME_EMAIL}
+}
+
+{$KNOWLEDGE_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy studio:3080
+}
+
+{$LAB_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy lab:8080
+}

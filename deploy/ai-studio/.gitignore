@@ -1,0 +1,6 @@
+.env
+.admin-first-login
+librechat.yaml
+data/
+backups/
+docker-compose.override.yml

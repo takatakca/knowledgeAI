@@ -1,0 +1,27 @@
+# TAKATAK AI Studio settings (LibreChat). install.sh writes librechat.yaml
+# from this file and appends the extra AI brands whose keys were given.
+version: 1.3.17
+cache: true
+
+interface:
+  customWelcome: 'Welcome to TAKATAK AI Studio. Digital Solutions. Real Results.'
+  multiConvo: true
+  agents: true
+  prompts: true
+  bookmarks: true
+  presets: true
+  parameters: true
+  modelSelect: true
+
+registration:
+  socialLogins: []
+
+# Credits: 1,000,000 credits = 1 USD of AI usage at the providers' list price.
+# New accounts start at 0; give credits with ./admin.sh credits <email> <amount>.
+balance:
+  enabled: true
+  startBalance: 0
+  autoRefillEnabled: false
+
+transactions:
+  enabled: true

@@ -1,0 +1,74 @@
+# TAKATAK AI Studio: multi-user AI workspace on one VPS.
+#   studio (LibreChat)  → https://$KNOWLEDGE_DOMAIN  team and clients, per-user credits
+#   lab (Open WebUI)    → https://$LAB_DOMAIN        admins, one prompt to many models
+# Secrets and API keys live only in .env on the server (made by install.sh).
+
+services:
+  studio:
+    image: registry.librechat.ai/librechat-ai/librechat:v0.8.8
+    restart: unless-stopped
+    depends_on: [mongodb, meilisearch]
+    env_file: .env
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3080
+      NODE_ENV: production
+      MONGO_URI: mongodb://mongodb:27017/LibreChat
+      MEILI_HOST: http://meilisearch:7700
+    volumes:
+      - ./librechat.yaml:/app/librechat.yaml:ro
+      - ./data/images:/app/client/public/images
+      - ./data/uploads:/app/uploads
+      - ./data/logs:/app/api/logs
+
+  mongodb:
+    image: mongo:8.0.20
+    restart: unless-stopped
+    command: mongod --noauth --bind_ip_all
+    volumes:
+      - ./data/mongo:/data/db
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.35.1
+    restart: unless-stopped
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - ./data/meili:/meili_data
+
+  lab:
+    image: ghcr.io/open-webui/open-webui:v0.11.4
+    restart: unless-stopped
+    environment:
+      WEBUI_URL: https://${LAB_DOMAIN}
+      WEBUI_NAME: TAKATAK Lab
+      WEBUI_SECRET_KEY: ${LAB_SECRET_KEY}
+      WEBUI_ADMIN_EMAIL: ${ADMIN_EMAIL}
+      WEBUI_ADMIN_PASSWORD: ${LAB_ADMIN_PASSWORD}
+      WEBUI_ADMIN_NAME: TAKATAK Admin
+      ENABLE_SIGNUP: "false"
+      DEFAULT_USER_ROLE: pending
+      ENABLE_OLLAMA_API: "false"
+      OFFLINE_MODE: "true"
+      ENABLE_OPENAI_API: "true"
+      OPENAI_API_BASE_URLS: ${LAB_API_BASE_URLS}
+      OPENAI_API_KEYS: ${LAB_API_KEYS}
+    volumes:
+      - ./data/lab:/app/backend/data
+
+  caddy:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
+    depends_on: [studio, lab]
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      KNOWLEDGE_DOMAIN: ${KNOWLEDGE_DOMAIN}
+      LAB_DOMAIN: ${LAB_DOMAIN}
+      ACME_EMAIL: ${ADMIN_EMAIL}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./data/caddy:/data
