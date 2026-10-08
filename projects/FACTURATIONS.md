@@ -78,3 +78,26 @@ TAKATAK V1 implementation:
 - Tax rates are explicit client inputs. No jurisdiction is assumed.
 - **PRs (takatak-v1):** #111 connect the account (table `client_stripe_connect_accounts`, immutable link), #112 create, send and list invoices. Off by default (`CLIENT_INVOICING_ENABLED`). Guide: `docs/CLIENT_INVOICING_STRIPE_CONNECT.md`.
 
+## Status (2026-10-08)
+**Merged:**
+- takatak-v1 `main`:
+  - #124 (2026-10-07) shipped the whole billing release in one merge: gateway, client invoice center, "Payer", Stripe Connect client invoicing, signed ecosystem feed. It replaces the separate PRs #107–#113.
+  - #125 approved the three billing migrations for staging reconciliation.
+  - #127 fixed the production artifact, whose validation now passes.
+- Facturations `main`: #161, verified Stripe payments, refunds and disputes (migration 046).
+
+**Waiting:**
+- Facturations #158 (login fix), #159 (Coolify kit) and #160 (issuance status by draft) are green and up to date with `main`. Each needs one approval from `takatakmtl`; GitHub does not let the author approve.
+- takatak-v1 staging: reconcile and deploy stop because the GitHub `staging` environment secret `TAKATAK_STAGING_DATABASE_URL` is empty.
+
+**Do not merge `claude/facturations-billing-integration` (backlog TK-006).**
+- It is superseded by #124: it rewrites the same `src/lib/integrations/facturations/*` files and `/dashboard/invoices`.
+- It would show unissued drafts to clients, which breaks the rule that clients only see issued invoices.
+
+**Migration timestamps:** the open branches `claude/qmaps-listings-reviews-sync`, `claude/seo-site-audit` and `claude/website-lead-capture` reuse the timestamps `20261006120000`, `…140000` and `…150000` of the billing migrations already on `main`. The folder names differ, so Prisma applies them all. Each still needs its own entry in `scripts/reconcile-staging-migrations.mjs`.
+
+**Next:** client billing dashboard follow-ups.
+- Summary figures.
+- Remind / void / mark paid actions.
+- Sidebar entry.
+- TK-027: turn an accepted order lead into a Facturations draft. This needs `claude/website-lead-capture` merged first.
