@@ -49,5 +49,5 @@ MIMT has been designed around typed API boundaries and a Canadian bilingual cust
 
 ## Code and website (2026-10-09)
 
-- Code repository: `takatakca/MIMTCA` (private monorepo: API, mobile app, website, DB schema).
+- Code repository: [`takatakca/mimtcaapp`](https://github.com/takatakca/mimtcaapp) (monorepo: API, mobile app, website, DB schema). Visibility chosen by the owner (public at creation; private recommended).
 - **The live mimt.ca (checked 2026-10-09) is a copy of Fongo's website**: it names Fongo and Waterloo, uses Fongo's product names, and lists home phone and internet prices for services MIMT does not offer. It must be replaced by the original site in `MIMTCA/apps/web`, or taken offline.
