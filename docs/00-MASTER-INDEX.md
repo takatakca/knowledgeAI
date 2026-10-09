@@ -41,7 +41,7 @@ Build a durable, searchable, provenance-aware professional brain for TAKATAK pro
 
 ## Product / marketplace dossiers
 
-- [MIMT](../projects/MIMT.md)
+- [MIMT](../projects/MIMT.md) · [regulatory brief](../projects/MIMT-REGULATORY.md) · [stack and costs](../projects/MIMT-STACK.md) · [MVP plan](../projects/MIMT-MVP.md)
 - [ON2GO](../projects/ON2GO.md)
 - [QMAPS](../projects/QMAPS.md)
 - [R2NETTE](../projects/R2NETTE.md)
