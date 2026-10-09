@@ -36,13 +36,13 @@ Build a durable, searchable, provenance-aware professional brain for TAKATAK pro
 - [TAKATAK Social](../projects/SOCIAL-CORE.md)
 - [TAKATAK Ads](../projects/TAKATAK-ADS.md)
 - [TAKATAK Accounting Control Tower](../projects/ACCOUNTING-CONTROL-TOWER.md)
-- [TAKATAK FoodHub](../projects/FOODHUB.md)
+- [TAKATAK FoodHub](../projects/FOODHUB.md) · now [ON2GO Hub](../projects/ON2GO-HUB.md)
 - [Facturations](../projects/FACTURATIONS.md)
 
 ## Product / marketplace dossiers
 
 - [MIMT](../projects/MIMT.md) · [regulatory brief](../projects/MIMT-REGULATORY.md) · [stack and costs](../projects/MIMT-STACK.md) · [MVP plan](../projects/MIMT-MVP.md)
-- [ON2GO](../projects/ON2GO.md)
+- [ON2GO](../projects/ON2GO.md) · [ON2GO Hub (merchant platform)](../projects/ON2GO-HUB.md)
 - [QMAPS](../projects/QMAPS.md)
 - [R2NETTE](../projects/R2NETTE.md)
 - [R2F](../projects/R2F.md)
