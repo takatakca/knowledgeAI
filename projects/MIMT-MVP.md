@@ -102,11 +102,13 @@ Prices in CAD, before GST/QST. Numbers below come from the cost model in `MIMT-S
 
 | Plan | Price | What you get | Cost guardrails |
 | --- | --- | --- | --- |
-| **Gratuit** (free, ads) | 0 $ | 1 Canadian number, unlimited app-to-app calls and texts, SMS to Canada/US, voicemail (no transcription), **100 outbound minutes/month** to Canada/US, more minutes earned by watching rewarded ads. 9-1-1 included. | Number reclaimed after 30 days without activity (warning at day 20 and 27). Hard daily caps. No international. |
-| **Verrouillage du numéro** (number lock) | 4,99 $/mo or 39,99 $/yr | Keeps the number even with no activity. Ads stay. | Pure margin product; covers the number's monthly cost several times over. |
-| **Premium** | 9,99 $/mo | No ads, number lock included, unlimited Canada/US calling (fair-use 3 000 min), voicemail transcription, call forwarding, MMS. | Fair-use cap; usage alerts. |
-| **Add-ons** | Extra number 4,99 $/mo · International credits (prepaid, from 5 $) | Second number; pay-as-you-go international at Twilio cost + margin. | International is **prepaid only**. |
-| **Affaires** (business, per line) | 24,99 $/line/mo (min. 1); Pro 34,99 $ with recording + call-center features | Extension, DID, voicemail-to-email + transcription, auto-attendant, ring groups, business hours, mobile + desktop apps, admin portal. Recording on Pro. | Per-business Twilio subaccount and spend cap. |
+| **Gratuit** (free, ads) | 0 $ | 1 Canadian number, unlimited app-to-app calls and texts, voicemail (no transcription), **30 outbound minutes and 50 SMS/month** to Canada/US, more minutes earned by watching rewarded ads. 9-1-1 included. | Costs about C$6/user/month on Twilio (see `MIMT-STACK.md` §2), so it stays a limited tier until ad revenue per user is measured. Number reclaimed after 30 days without activity (warnings at day 20 and 27). Hard daily caps. No international. |
+| **Verrouillage du numéro** (number lock) | 4,99 $/mo or 39,99 $/yr | Keeps the number even with no activity. Ads stay. | Covers the number + 9-1-1 cost (C$2.64) with margin. |
+| **Premium** | 19,99 $/mo | No ads, number lock included, **500 outbound min + 500 SMS** Canada/US, unlimited app-to-app, 1 000 inbound min, voicemail transcription, call forwarding, MMS. | Typical cost about C$16/month on Twilio; about C$45 at full caps. Overage packs; usage alerts at 80%. |
+| **Add-ons** | Extra number 4,99 $/mo · International credits (prepaid, from 5 $) · Extra 250 min 7,99 $ | Second number; pay-as-you-go international at carrier cost + margin. | International is **prepaid only**. Cuba needs a second carrier (not on Twilio). |
+| **Affaires** (business, per line) | 34,99 $/line/mo; **Affaires Pro** 44,99 $ with recording + transcription | Extension, DID, 1 000 pooled outbound min per line, voicemail-to-email, auto-attendant, ring groups, business hours, mobile + desktop apps, admin portal. | Per-business Twilio subaccount and spend cap. |
+
+The Quebec 9-1-1 municipal tax (C$0.55/number/month in 2026) and GST/QST are added on the bill.
 
 Notes:
 - Selling through Apple/Google: in-app digital subscriptions must use their billing (15% fee under the small-business programs). Telecom service sold to businesses and international credits that are consumed outside the app may qualify for external payment; **confirm with each store's current rules before launch**. Business plans are sold on the web (Stripe) from the TAKATAK dashboard to avoid store fees.
