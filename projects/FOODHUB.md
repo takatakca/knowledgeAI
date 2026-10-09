@@ -1,5 +1,7 @@
 # TAKATAK FoodHub
 
+Now offered to other merchants as **ON2GO Hub**: see [ON2GO-HUB.md](ON2GO-HUB.md).
+
 ## Goal
 Order-aggregation/integration layer connecting supported marketplace orders into restaurant operations and POS workflows.
 
