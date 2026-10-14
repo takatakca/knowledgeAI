@@ -1,5 +1,16 @@
 # Agent handoff — knowledgeAI
 
+## Latest verified checkpoint — client version export (2026-10-14)
+
+- Repository: `takatakca/knowledgeAI` PUBLIC, `main`. Beginning-of-checkpoint SHA: `a078f2a9841a018bf48f7a60bd2c4229823903ab` (later docs and catalog regeneration update SHA; inspect `main`).
+- Last completed milestone: scoped inventory/delete with read and delete audit, and scoped paginated **version export** guarded by `knowledge:export`. Migration `003_export_audit.sql` extends operation audit constraints. All source bodies stay in the isolated private backend and are **never imported into the public Vercel API**.
+- Modified this iteration: `private-knowledge/src/{service,server}.cjs`, `private-knowledge/migrations/{002_source_lifecycle,003_export_audit}.sql`, `private-knowledge/tests/{private.test.cjs,postgres.integration.test.cjs,rls.sql,lifecycle-audit.sql}`, `.github/workflows/private-knowledge-tests.yml`, `private-knowledge/README.md`, all five continuity documents, `WORKLOG.md`.
+- Verified tests: private CI `38629828659` SUCCESS for inventory/deletion and private CI `38630318645` SUCCESS for export, full JWT/HTTP tests, PostgreSQL 17 restricted-role RLS, audit-owner checks, npm ci/locked dependencies and npm audit. Public CI validated preceding code changes; verify this documentation commit's own run.
+- Deployment: Vercel public only; code SHA `4f4151ba305e12d068fc2a5534a9de92a27e38c1` previously READY. **No live private backend**, because authentic TAKATAK issuer/entitlements, dedicated private database, confidential service secrets and gateway are NOT configured or approved. No existing Supabase project was repurposed. Open PR #3/#4/#5 preserved.
+- Blocking gaps: approval of issuer workspace/entitlement contract, dedicated private DB/runtime, revocation semantics, audit/receipt/backup retention, monitoring, client export approval, production TLS and two-workspace access checks.
+- NEXT EXACT ACTION: in TAKATAK core verify or implement trusted short-lived KnowledgeAI issuer (never Bluesky JWKS); obtain explicit dedicated private PostgreSQL provisioning and authorize production rollout. Apply migrations 001→002→003 as migration owner, grant only necessary permissions to non-owner service role, configure secrets privately, verify two real test workspaces including delete/export denial and signed revocation, then deploy separately from Vercel. Do not ingest client data before these conditions.
+
+
 ## Most recent checkpoint — private source lifecycle (2026-10-14)
 
 - Repository: takatakca/knowledgeAI, PUBLIC, branch main. At checkpoint start: `4f4151ba305e12d068fc2a5534a9de92a27e38c1`. **This documentation commit and catalog refresh will change HEAD; always read it again.**

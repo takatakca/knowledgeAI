@@ -46,3 +46,7 @@ Use pinned pg dependency plus committed package-lock.json and npm ci; fail CI on
 ## 2026-10-14 — tenant-only deletion with audit-preserving lifecycle
 
 Permit knowledge:read to list only current source metadata; require a separate knowledge:delete authorization for irreversible deletion of all source versions. Both operations resolve workspace from verified signed claims and use database RLS. Keep audit metadata and anti-replay receipts outside deletion until a documented retention/offboarding policy is approved. Limit list results at the database and reject repeated or missing source IDs. Private CI proves cross-tenant isolation and audits as the migration owner without granting audit read privileges to the runtime login.
+
+## 2026-10-14 — explicit private source portability scope
+
+Provide full original source revisions only with a separate signed `knowledge:export` scope; never elevate a standard `knowledge:read` token to bulk export. Enforce workspace filtering through PostgreSQL RLS, SQL pagination capped at ten revisions, no cache and metadata-only audit. All related operations remain in the undeployed private service pending a verified TAKATAK identity/entitlement authority.

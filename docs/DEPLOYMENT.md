@@ -57,3 +57,7 @@ CI run 38627614637 succeeded. The separate Private Knowledge Security CI checks 
 ## Private lifecycle migration 002
 
 After applying migration 001 in a separately approved private PostgreSQL DB, apply `private-knowledge/migrations/002_source_lifecycle.sql`. Provision the restricted runtime role with SELECT/INSERT/DELETE on documents, SELECT/INSERT on write_receipts, INSERT on audit (not SELECT), plus sequence and schema permissions. Verify all tenant cross-access tests. There is **no automatic private production deployment**; public Vercel remains a separate read-only service. Evidence: Private Knowledge Security CI run 38629828659.
+
+## New private export migration (2026-10-14)
+
+Apply `private-knowledge/migrations/003_export_audit.sql` after 001 and 002. Export is served only by the isolated private server, using `knowledge:export`, 10-version maximum pagination and audit. CI run `38630318645` passes synthetic two-tenant export isolation; **there is no production deployment** for this API. Public Vercel remains independent and cannot access confidential records.

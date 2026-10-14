@@ -31,3 +31,7 @@ The private-knowledge/ package contains JWT-verified tenant backend, SQL schema,
 ## Lifecycle/security extension (2026-10-14)
 
 The separate private backend now supports tenant-only source inventory and all-version deletion, requires knowledge:delete for destructive operations, writes search/list/delete audit events, and sets a transaction-local SQL statement timeout. The first complete private CI for this extension: run 38629828659 SUCCESS (Node security tests, real PostgreSQL 17 RLS/deletion isolation, audit-owner checks, npm CI and dependency audit). **Not deployed:** there is no approved dedicated private database, trusted TAKATAK token issuer, production gateway, or backup/retention service. Public Vercel remains unchanged.
+
+## Scoped export milestone (2026-10-14)
+
+Versioned source export from `/v1/knowledge/export` implemented in the isolated backend with separate `knowledge:export` permission, SQL pagination, audit event and tenant-isolation regression tests. Private Knowledge Security CI run `38630318645` **SUCCESS**. This is **not deployed**; the only Vercel production surface remains public documents and public read-only search.

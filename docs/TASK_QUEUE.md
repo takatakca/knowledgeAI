@@ -18,3 +18,5 @@ Statuses: DONE = implemented with evidence; PENDING = executable next; BLOCKED =
 **Do not** ingest private source material merely because a build succeeds.
 
 Further production gates: implement approved export/data portability; defined retention for audit/receipts/backups; authoritative token revocation and membership checks; private runtime observability, backup/restore and separate hosting. The source lifecycle code and migration 002 are tested but **not live**.
+
+Private version export: **code and synthetic CI integration DONE**, production BLOCKED. New `knowledge:export` scope, SQL-bound 10-version pagination, audit event, and tenant isolation. Requires migration 003 and a real approved trusted issuer before deployment. Remaining high-priority gaps: authoritative revocation, retention/deletion of backups and audit, secure private runtime and live end-to-end tests.

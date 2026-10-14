@@ -9,6 +9,7 @@ This directory contains independent backend code for a future APPROVED confident
 - POST /v1/knowledge/documents accepts JSON fields: source_id, title, content and HTTPS source_url. Server calculates SHA-256 and deduplicates by workspace/source/hash. Write token jti can only be used once.
 - GET /v1/knowledge/search?q=term&limit=20 returns only source records from the workspace authenticated by the JWT.
 - GET /v1/knowledge/sources?limit=20 returns latest source metadata only for that workspace (no full body). Requires knowledge:read; result sets are bounded at SQL level.
+- GET /v1/knowledge/export?source_id=...&limit=10&offset=0 returns complete original content for up to 10 source versions per page, **only** within the verified workspace and only with a JWT scope of knowledge:export. All successful exports create an audit entry; export is intended for an approved client transfer, not public search.
 - DELETE /v1/knowledge/sources?source_id=... removes every version of that source **only** for the verified workspace; requires dedicated knowledge:delete scope and a single-use JWT jti.
 - Successful search, source-list and source-deletion operations are logged as scoped audit events without storing search terms.
 - GET /healthz checks the private database connection (not a full identity-provider readiness check).
@@ -24,12 +25,12 @@ From the repository root:
     node --check private-knowledge/src/service.cjs
     node --check private-knowledge/src/server.cjs
 
-The CI PostgreSQL job applies migrations/001_private_knowledge.sql AND 002_source_lifecycle.sql, runs tests/rls.sql and tests/lifecycle-audit.sql, and checks migration reapplication. CI test data is synthetic, never real client content. An additional integration test runs ingestion and tenant-scoped retrieval against real PostgreSQL 17 as a restricted login, including cross-workspace and replay checks.
+The CI PostgreSQL job applies migrations/001_private_knowledge.sql, 002_source_lifecycle.sql AND 003_export_audit.sql, runs tests/rls.sql and tests/lifecycle-audit.sql, and checks migration reapplication. CI test data is synthetic, never real client content. An additional integration test runs ingestion and tenant-scoped retrieval against real PostgreSQL 17 as a restricted login, including cross-workspace and replay checks.
 
 ## NOT YET production-ready: required rollout steps
 
 1. Approve and provision a dedicated confidential PostgreSQL database. Do not reuse unrelated TAKATAK or client databases.
-2. Apply BOTH migrations in order (001_private_knowledge.sql, then 002_source_lifecycle.sql) as a migration-owner role, then create a separate app login without SUPERUSER/BYPASSRLS and which does not own these tables.
+2. Apply ALL THREE migrations in order (001_private_knowledge.sql, then 002_source_lifecycle.sql, then 003_export_audit.sql) as a migration-owner role, then create a separate app login without SUPERUSER/BYPASSRLS and which does not own these tables.
 3. Grant that login the least privilege required: USAGE on schema; SELECT/INSERT/DELETE on documents, SELECT/INSERT on write_receipts; INSERT on audit; USAGE/SELECT on schema sequences.
 4. Have TAKATAK's trusted server verify a real authenticated user's workspace membership, active product entitlement, and least-privilege permission. Only then issue a short-lived KnowledgeAI-specific RS256 JWT. This repository does not implement the trusted issuer. The unrelated Bluesky JWKS endpoint in TAKATAK is NOT suitable.
 5. Configure the confidential runtime through its secret manager, never GitHub:
@@ -55,3 +56,7 @@ The target architecture remains TAKATAK-managed identity federation with indepen
 ## Lifecycle operations and data-retention caveats
 
 A scoped delete removes source revisions within one workspace in a single transaction; it does not erase source identifiers from the immutable audit log or delete separately managed backups. Client privacy/offboarding policies must define audit and backup retention, legal holds, and secure export before any production customer data is ingested. The service does not grant audit-table SELECT to its runtime SQL login; the disposable PostgreSQL test verifies audit evidence as the migration owner. No production removal/retention job is installed.
+
+## Client source transfer / export (not live)
+
+An authorized client export requires a dedicated `knowledge:export` signed scope and the workspace from the token, not an HTTP parameter. Call `GET /v1/knowledge/export?source_id=...&limit=10&offset=0`; advance offset by page size. The response contains full original document version bodies and provenance, so transmit only through a verified private gateway; never enable public caching, log bodies, or send exports to the public KnowledgeAI search API. This feature has **synthetic PostgreSQL 17 integration evidence only**; it is not available to live clients until the actual TAKATAK issuer, revocation, private DB, encryption, tenant data rights and retention requirements are verified.
