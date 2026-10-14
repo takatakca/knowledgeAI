@@ -76,3 +76,44 @@ jobs:
       - name: Remove disposable DB
         if: always()
         run: docker rm -f knowledge-private-ci || true
+
+  lockfile:
+    name: Maintain reproducible private package lockfile
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [auth-and-tenant-tests, postgres-rls]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Regenerate lock from latest source, without force push
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for attempt in $(seq 1 6); do
+            git fetch --no-tags origin main
+            git reset --hard FETCH_HEAD
+            npm install --prefix private-knowledge --package-lock-only --ignore-scripts --no-audit --no-fund
+            git add -- private-knowledge/package-lock.json
+            if git diff --cached --quiet; then
+              echo "Private package lockfile is current"
+              exit 0
+            fi
+            git commit -m "chore(private-knowledge): lock dependencies [skip ci]"
+            if git push origin HEAD:main; then
+              echo "Updated deterministic private dependency lock"
+              exit 0
+            fi
+            echo "Concurrent main update, retrying from latest source ($attempt/6)"
+            sleep 3
+          done
+          echo "::error::Lockfile update conflicted with concurrent main changes"
+          exit 1
