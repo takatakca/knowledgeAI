@@ -3,6 +3,8 @@
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
+- 2026-10-14 | GPT-6 (knowledgeAI follow-up) | main | done | Verified TAKATAK session/workspace auth boundaries; fixed CI concurrent catalog publish, 62 records, 12 unit tests, production HTTP smoke run 38623893521 green, Vercel READY | next: integrate authorized private knowledge backend only with approved service auth + database
+
 - 2026-10-14 | GPT-6 (knowledgeAI next iteration) | main | done | Read-only agent search/health API, source SHA256 provenance, 12 unit tests green, verified HTTPS smoke in run 38623184283, Vercel READY, five continuity docs | next: authenticated private per-tenant ingestion and storage; access/approvals needed
 
 - 2026-10-14 | GPT-6 (knowledgeAI) | main | done | Public catalog generator, 55 indexed docs, portal search, five unit tests, CI publish successful, Vercel production READY | next: verify external browser access; build authenticated scoped ingestion separately

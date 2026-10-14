@@ -30,3 +30,7 @@ When production evidence contradicts this log, record the conflict and do not si
 ## 2026-10-14 — no false OIDC/JWKS integration
 
 The accessible TAKATAK core code uses Supabase sessions and database-backed workspace permission checks. Its publicly found `/.well-known/jwks.json` is a **Bluesky provider key**, not a TAKATAK identity federation contract. KnowledgeAI must obtain a real approved signed service token or secure server-to-server authority before private data access. See `docs/PRIVATE-AUTH-CONTRACT.md`.
+
+## 2026-10-14 — safe concurrent catalog generation
+
+Multiple agents may change `main` while GitHub Actions generates its public search index. The bot must not publish a stale snapshot or force-overwrite another agent. It re-fetches the current `main`, regenerates the index from that version, and uses bounded retries for a regular Git push. A rejected race is reported rather than bypassed.

@@ -41,3 +41,7 @@ node --check api/health.js
 ## Non-public AI Studio
 
 \`deploy/ai-studio/\` is a separate VPS kit, **not deployed by Vercel**. Follow its existing runbook only after server/DNS/API-keys and costs are approved. Never commit \`.env\`, passwords or downloaded client data.
+
+## Concurrency recovery (verified 2026-10-14)
+
+Parallel source edits can race with the catalog bot. The publish job now fetches the latest `main`, resets **only its ephemeral runner checkout**, regenerates `knowledge-catalog.json`, and retries a normal push. No force-push or destructive remote reset is used. If retries exhaust, inspect GitHub logs and re-run only after reconciling newer source changes. Verified successful production smoke after this fix: GitHub Actions run `38623893521`.

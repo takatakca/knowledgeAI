@@ -4,7 +4,7 @@ Statuses: DONE = implemented with evidence; PENDING = executable next; BLOCKED =
 
 | Priority | Workstream | Status | Acceptance criteria |
 | --- | --- | --- | --- |
-| P0 | Public knowledge index + browser portal | DONE | Deterministic public catalog, searchable interface, 55 sources indexed, CI green |
+| P0 | Public knowledge index + browser portal | DONE | Deterministic public catalog, searchable interface, 62 sources indexed, CI green |
 | P0 | Public read-only agent API | DONE | GET \`/api/search\`, GET \`/api/health\`; bounded queries and provenance URLs; CI tests and deployed HTTP verification |
 | P0 | Project continuity | DONE after files published | Five status/queue/handoff/deploy/decision files updated with next action |
 | P1 | Public API E2E | DONE | External HTTP 200, JSON, safe input validation and production SHA evidence |
