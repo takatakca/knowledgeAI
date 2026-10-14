@@ -62,8 +62,9 @@ test("private PostgreSQL adapter isolates two real tenants and replays", {
     assert.match(readB.results[0].excerpt,/banana/);
     assert.doesNotMatch(readB.results[0].excerpt,/apple/);
     const listedA = await service.listSources(token("tenant-aaaa","knowledge:read"),{limit:"20"});
-    assert.equal(listedA.results.length,1);
-    assert.equal(listedA.results[0].source_id,"same-source");
+    assert.equal(listedA.results.length,2);
+    assert.ok(listedA.results.some(row=>row.source_id==="same-source"));
+    assert.ok(listedA.results.some(row=>row.source_id==="doc-one"));
     await assert.rejects(service.deleteSource(token("tenant-bbbb","knowledge:read"),"same-source"),
       error => error.status === 403);
     const deletionToken = token("tenant-aaaa","knowledge:delete");

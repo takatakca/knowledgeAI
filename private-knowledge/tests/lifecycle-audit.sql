@@ -13,8 +13,11 @@ BEGIN
   IF (SELECT count(*) FROM knowledge_private.audit WHERE workspace_id='tenant-bbbb' AND operation='delete') <> 0 THEN
     RAISE EXCEPTION 'Tenant B deletion audit must not appear';
   END IF;
-  IF EXISTS (SELECT 1 FROM knowledge_private.documents WHERE workspace_id='tenant-aaaa') THEN
+  IF EXISTS (SELECT 1 FROM knowledge_private.documents WHERE workspace_id='tenant-aaaa' AND source_id='same-source') THEN
     RAISE EXCEPTION 'Tenant A deleted source must have no remaining versions';
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM knowledge_private.documents WHERE workspace_id='tenant-aaaa' AND source_id='doc-one') THEN
+    RAISE EXCEPTION 'Tenant A unrelated source was deleted';
   END IF;
   IF NOT EXISTS (SELECT 1 FROM knowledge_private.documents WHERE workspace_id='tenant-bbbb') THEN
     RAISE EXCEPTION 'Tenant B source was deleted by another workspace';

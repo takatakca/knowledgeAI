@@ -132,7 +132,7 @@ test("tenant source lifecycle requires distinct signed scopes and jti",async()=>
  assert.ok(db.calls.some(x=>x.sql.includes("LIMIT $1") && x.params?.[0]===2));
  assert.ok(db.calls.some(x=>x.sql.includes("'list'")));
  db.calls.length=0;
- const result=await svc.deleteSource(makeJwt(),"repo:1");
+ const result=await svc.deleteSource(makeJwt({...valid(),scope:"knowledge:delete"}),"repo:1");
  assert.equal(result.source_id,"repo:1");
  assert.ok(db.calls.some(x=>x.sql.startsWith("DELETE FROM knowledge_private.documents")));
  assert.ok(db.calls.some(x=>x.sql.includes("'delete'")));
