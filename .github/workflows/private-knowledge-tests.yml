@@ -79,6 +79,8 @@ jobs:
         env:
           PRIVATE_CI_DATABASE_URL: postgresql://knowledge_ci_runtime:ci-disposable-password@127.0.0.1:5433/knowledgeci
         run: node --test private-knowledge/tests/postgres.integration.test.cjs
+      - name: Verify private lifecycle audit using migration-owner
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/tests/lifecycle-audit.sql
       - name: Remove disposable DB
         if: always()
         run: docker rm -f knowledge-private-ci || true
