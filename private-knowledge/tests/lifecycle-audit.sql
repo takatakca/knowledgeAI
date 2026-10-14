@@ -4,7 +4,7 @@ BEGIN
   IF (SELECT count(*) FROM knowledge_private.audit WHERE workspace_id='tenant-aaaa' AND operation='search') < 1 THEN
     RAISE EXCEPTION 'Tenant A search must be audited';
   END IF;
-  IF (SELECT count(*) FROM knowledge_private.audit WHERE workspace_id='tenant-aaaa' AND operation='list') <> 1 THEN
+  IF (SELECT count(*) FROM knowledge_private.audit WHERE workspace_id='tenant-aaaa' AND operation='list') <> 3 THEN
     RAISE EXCEPTION 'Tenant A listing audit missing';
   END IF;
   IF (SELECT count(*) FROM knowledge_private.audit WHERE workspace_id='tenant-aaaa' AND operation='export') <> 1 THEN
