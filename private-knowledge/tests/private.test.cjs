@@ -126,6 +126,38 @@ test("HTTP layer requires bearer token, blocks write routes without token",async
   assert.equal(notFound.status,404);
  }finally{await new Promise(resolve=>app.close(resolve));}
 });
+test("tenant source lifecycle requires distinct signed scopes and jti",async()=>{
+ const db=fakePool(), svc=createService(db,verifier);
+ await svc.listSources(makeJwt(),{limit:"2"});
+ assert.ok(db.calls.some(x=>x.sql.includes("LIMIT $1") && x.params?.[0]===2));
+ assert.ok(db.calls.some(x=>x.sql.includes("'list'")));
+ db.calls.length=0;
+ const result=await svc.deleteSource(makeJwt(),"repo:1");
+ assert.equal(result.source_id,"repo:1");
+ assert.ok(db.calls.some(x=>x.sql.startsWith("DELETE FROM knowledge_private.documents")));
+ assert.ok(db.calls.some(x=>x.sql.includes("'delete'")));
+ assert.ok(db.calls.some(x=>x.sql.includes("write_receipts")));
+ await assert.rejects(svc.listSources(makeJwt(),{limit:"5000"}),InputError);
+});
+test("lifecycle HTTP paths reject malformed source filters",async()=>{
+ const pool={query:async()=>({rows:[{one:1}]})};
+ const app=createServer({
+  search:async()=>({visibility:"private",results:[]}),
+  ingest:async()=>({inserted:true}),
+  listSources:async()=>({visibility:"private",results:[]}),
+  deleteSource:async()=>({deleted:0,source_id:"s"})
+ },pool);
+ await new Promise(resolve=>app.listen(0,"127.0.0.1",resolve));
+ try{
+  const base="http://127.0.0.1:"+app.address().port;
+  const authorization={Authorization:"Bearer synthetic-token"};
+  assert.equal((await fetch(base+"/v1/knowledge/sources",{headers:authorization})).status,200);
+  assert.equal((await fetch(base+"/v1/knowledge/sources?source_id=s",{method:"DELETE",headers:authorization})).status,200);
+  assert.equal((await fetch(base+"/v1/knowledge/sources?source_id=a&source_id=b",{method:"DELETE",headers:authorization})).status,400);
+  assert.equal((await fetch(base+"/v1/knowledge/sources",{method:"DELETE",headers:authorization})).status,400);
+  assert.equal((await fetch(base+"/v1/knowledge/sources?limit=1&limit=2",{headers:authorization})).status,400);
+ } finally {await new Promise(resolve=>app.close(resolve));}
+});
 test("production configuration fails closed without independent database and identity",()=>{
  assert.throws(()=>settings({}),/configuration missing/);
  assert.throws(()=>settings({PRIVATE_DATABASE_URL:"postgres://test",KNOWLEDGE_JWT_ISSUER:"x",

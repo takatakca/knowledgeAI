@@ -61,6 +61,32 @@ test("private PostgreSQL adapter isolates two real tenants and replays", {
     assert.doesNotMatch(readA.results[0].excerpt,/banana/);
     assert.match(readB.results[0].excerpt,/banana/);
     assert.doesNotMatch(readB.results[0].excerpt,/apple/);
+    const listedA = await service.listSources(token("tenant-aaaa","knowledge:read"),{limit:"20"});
+    assert.equal(listedA.results.length,1);
+    assert.equal(listedA.results[0].source_id,"same-source");
+    await assert.rejects(service.deleteSource(token("tenant-bbbb","knowledge:read"),"same-source"),
+      error => error.status === 403);
+    const deletionToken = token("tenant-aaaa","knowledge:delete");
+    const deleted = await service.deleteSource(deletionToken,"same-source");
+    assert.equal(deleted.deleted,1);
+    await assert.rejects(service.deleteSource(deletionToken,"same-source"),
+      error => error.status === 409);
+    assert.equal((await service.search(token("tenant-aaaa","knowledge:read"),{
+      q:"highly",limit:"20"
+    })).results.length,0);
+    assert.equal((await service.search(token("tenant-bbbb","knowledge:read"),{
+      q:"highly",limit:"20"
+    })).results.length,1);
+    const auditA = await pool.connect();
+    try {
+      await auditA.query("BEGIN");
+      await auditA.query("SELECT set_config('knowledge_private.workspace_id',$1,true)",["tenant-aaaa"]);
+      const audit = await auditA.query("SELECT operation FROM knowledge_private.audit");
+      assert.ok(audit.rows.some(x=>x.operation==="search"));
+      assert.ok(audit.rows.some(x=>x.operation==="list"));
+      assert.ok(audit.rows.some(x=>x.operation==="delete"));
+      await auditA.query("COMMIT");
+    }finally{auditA.release();}
     const injection = await service.search(token("tenant-aaaa","knowledge:read"),
       {q:"' OR 1=1 --",limit:"5"});
     assert.equal(injection.results.length,0);

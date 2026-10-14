@@ -96,13 +96,16 @@ function createService(pool, verify) {
       const limit = validateSearch({q:"",limit:query.limit}).limit;
       return withTenant(pool, principal, async client => {
         const found = await client.query([
-          "SELECT DISTINCT ON (source_id) source_id,title,source_url,sha256,created_at",
-          "FROM knowledge_private.documents ORDER BY source_id,created_at DESC,id DESC"
-        ].join(" "));
+          "WITH latest AS (SELECT DISTINCT ON (source_id)",
+          "source_id,title,source_url,sha256,created_at,id",
+          "FROM knowledge_private.documents ORDER BY source_id,created_at DESC,id DESC)",
+          "SELECT source_id,title,source_url,sha256,created_at",
+          "FROM latest ORDER BY source_id LIMIT $1"
+        ].join(" "),[limit]);
         await client.query(
           "INSERT INTO knowledge_private.audit (workspace_id,actor_id,operation,source_id) VALUES ($1,$2,'list','__listing__')",
           [principal.workspace,principal.actor]);
-        return { visibility:"private", results:found.rows.slice(0,limit) };
+        return { visibility:"private", results:found.rows };
       });
     },
     async deleteSource(token, sourceId) {
