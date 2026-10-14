@@ -2,7 +2,7 @@
 -- Executed only against the disposable PostgreSQL instance created by CI.
 CREATE ROLE knowledge_ci_runtime NOLOGIN;
 GRANT USAGE ON SCHEMA knowledge_private TO knowledge_ci_runtime;
-GRANT SELECT,INSERT ON knowledge_private.documents TO knowledge_ci_runtime;
+GRANT SELECT,INSERT,DELETE ON knowledge_private.documents TO knowledge_ci_runtime;
 GRANT SELECT,INSERT ON knowledge_private.write_receipts TO knowledge_ci_runtime;
 GRANT INSERT ON knowledge_private.audit TO knowledge_ci_runtime;
 GRANT USAGE,SELECT ON ALL SEQUENCES IN SCHEMA knowledge_private TO knowledge_ci_runtime;

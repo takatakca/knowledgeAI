@@ -45,7 +45,7 @@ async function parseBody(req) {
   catch { const err = new Error("Malformed JSON"); err.status = 400; throw err; }
 }
 function createServer(service, pool) {
-  return http.createServer(async (req,res) => {
+  const server = http.createServer(async (req,res) => {
     try {
       const url = new URL(req.url || "/", "http://localhost");
       if (url.pathname === "/healthz" && req.method === "GET") {
@@ -69,6 +69,22 @@ function createServer(service, pool) {
           q:url.searchParams.get("q") || "",limit:url.searchParams.get("limit") || "20"
         }));
       }
+      if (url.pathname === "/v1/knowledge/sources" && req.method === "GET") {
+        if (url.searchParams.getAll("limit").length > 1 || url.searchParams.has("source_id")) {
+          return send(res,400,{error:"Invalid query parameters"});
+        }
+        return send(res,200,await service.listSources(match[1],{
+          limit:url.searchParams.get("limit") || "20"
+        }));
+      }
+      if (url.pathname === "/v1/knowledge/sources" && req.method === "DELETE") {
+        if (url.searchParams.getAll("source_id").length !== 1 ||
+            url.searchParams.has("limit")) {
+          return send(res,400,{error:"Invalid source identifier"});
+        }
+        return send(res,200,await service.deleteSource(match[1],
+          url.searchParams.get("source_id")));
+      }
       return send(res,404,{error:"Not found"});
     } catch (error) {
       const code = Number.isInteger(error.status) && error.status >= 400 &&
@@ -78,6 +94,11 @@ function createServer(service, pool) {
         (error instanceof AccessError ? error.message : "Invalid request")});
     }
   });
+  server.requestTimeout = 15000;
+  server.headersTimeout = 10000;
+  server.keepAliveTimeout = 5000;
+  server.maxRequestsPerSocket = 100;
+  return server;
 }
 async function boot() {
   const config = settings();

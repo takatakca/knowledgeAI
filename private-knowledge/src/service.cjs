@@ -40,6 +40,7 @@ async function withTenant(pool, principal, action) {
     // Transaction local: connections returned to the pool cannot leak tenant state.
     await client.query("SELECT set_config('knowledge_private.workspace_id', $1, true)",
       [principal.workspace]);
+    await client.query("SELECT set_config('statement_timeout', '5000', true)");
     const result = await action(client);
     await client.query("COMMIT");
     return result;
@@ -84,7 +85,41 @@ function createService(pool, verify) {
           "ORDER BY created_at DESC,source_id LIMIT $2"
         ].join(" ");
         const found = await client.query(statement, [input.q,input.limit]);
+        await client.query(
+          "INSERT INTO knowledge_private.audit (workspace_id,actor_id,operation,source_id) VALUES ($1,$2,'search','__search__')",
+          [principal.workspace,principal.actor]);
         return { visibility: "private", results: found.rows };
+      });
+    },
+    async listSources(token, query) {
+      const principal = await verify(token, "knowledge:read");
+      const limit = validateSearch({q:"",limit:query.limit}).limit;
+      return withTenant(pool, principal, async client => {
+        const found = await client.query([
+          "SELECT DISTINCT ON (source_id) source_id,title,source_url,sha256,created_at",
+          "FROM knowledge_private.documents ORDER BY source_id,created_at DESC,id DESC"
+        ].join(" "));
+        await client.query(
+          "INSERT INTO knowledge_private.audit (workspace_id,actor_id,operation,source_id) VALUES ($1,$2,'list','__listing__')",
+          [principal.workspace,principal.actor]);
+        return { visibility:"private", results:found.rows.slice(0,limit) };
+      });
+    },
+    async deleteSource(token, sourceId) {
+      const principal = await verify(token, "knowledge:delete");
+      const source = textField(sourceId, "source_id", 240);
+      return withTenant(pool, principal, async client => {
+        const receipt = await client.query(
+          "INSERT INTO knowledge_private.write_receipts (workspace_id,jti,actor_id) VALUES ($1,$2,$3) ON CONFLICT DO NOTHING RETURNING jti",
+          [principal.workspace,principal.jti,principal.actor]);
+        if(receipt.rowCount !== 1) throw new AccessError("Write credential already used",409);
+        const deleted = await client.query(
+          "DELETE FROM knowledge_private.documents WHERE source_id = $1",
+          [source]);
+        await client.query(
+          "INSERT INTO knowledge_private.audit (workspace_id,actor_id,operation,source_id) VALUES ($1,$2,'delete',$3)",
+          [principal.workspace,principal.actor,source]);
+        return { deleted:deleted.rowCount, source_id:source };
       });
     }
   };
