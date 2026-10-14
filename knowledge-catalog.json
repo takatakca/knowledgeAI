@@ -4,6 +4,8 @@
   "items": [
     {
       "path": "AGENTS.md",
+      "source_id": "github:takatakca/knowledgeAI:AGENTS.md",
+      "sha256": "af6aa4dfc0c71b1a705d8591983ae3bba740954727fc1e5cde0f876242ff229b",
       "title": "Agent instructions",
       "section": "guide",
       "summary": "Cheap to follow: read only what is listed here.",
@@ -11,6 +13,8 @@
     },
     {
       "path": "BRAND.md",
+      "source_id": "github:takatakca/knowledgeAI:BRAND.md",
+      "sha256": "21e1ba128ed2655071eaf06473460b6d782e49d98512ca355584fb9ad1869166",
       "title": "GROUPE TAKATAK brand reference",
       "section": "guide",
       "summary": "Use this for anything visual or written for TAKATAK: websites, dashboards, apps, emails, social posts, images, documents. Source: the owner's official logo and banner (Oct 2026).",
@@ -18,6 +22,8 @@
     },
     {
       "path": "docs/00-MASTER-INDEX.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/00-MASTER-INDEX.md",
+      "sha256": "7514d21c33e4feec0dd349ccb3d2bbe24603c2f020b8fc71f52f96be1afa7bfe",
       "title": "Knowledge TakaTak — Master Index",
       "section": "standard",
       "summary": "Build a durable, searchable, provenance-aware professional brain for TAKATAK product creation and operations. The repository captures what has already been decided across websites, client applications, integrations, campaigns and infrastruc",
@@ -25,6 +31,8 @@
     },
     {
       "path": "docs/02-ARCHITECTURE.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/02-ARCHITECTURE.md",
+      "sha256": "42efa8a3d138635bfedc428d440b10170227b7cf496f5c774a15a73f80086910",
       "title": "TAKATAK Architecture Standard",
       "section": "standard",
       "summary": "GROUPE TAKATAK is the central platform authority.",
@@ -32,6 +40,8 @@
     },
     {
       "path": "docs/03-INGESTION-POLICY.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/03-INGESTION-POLICY.md",
+      "sha256": "6c22add142275371d92e784a60b990235a4178cc9e2302ad912c0181992407cf",
       "title": "Knowledge Ingestion Policy",
       "section": "standard",
       "summary": "Capture reusable project intelligence without confusing original evidence with AI-generated interpretation.",
@@ -39,6 +49,8 @@
     },
     {
       "path": "docs/04-DEPLOYMENT-STANDARDS.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/04-DEPLOYMENT-STANDARDS.md",
+      "sha256": "bc038fcdb766e0025b5ada58d57ca335b4e3ab1c51bd5f18fd8c8359dd08a973",
       "title": "Deployment Standards",
       "section": "standard",
       "summary": "Primary infrastructure source snapshot:",
@@ -46,6 +58,8 @@
     },
     {
       "path": "docs/05-IDENTITY-AND-MULTISITE.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/05-IDENTITY-AND-MULTISITE.md",
+      "sha256": "91f9334c0837909f7f8c18f0028963abb3ee940a4bee76b15bb9601ccbeb66c7",
       "title": "Identity and Multi-Site Standard",
       "section": "standard",
       "summary": "TAKATAK may provide the preferred master identity/federation layer during a managed contract, but client websites/applications are independently transferable products.",
@@ -53,6 +67,8 @@
     },
     {
       "path": "docs/06-AGENT-OPERATING-RULES.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/06-AGENT-OPERATING-RULES.md",
+      "sha256": "13882b71aeb73d1ef9faa959a7d18a5a1da66476d3ce2a07e12cf476f3cb789c",
       "title": "AI Agent Operating Rules",
       "section": "standard",
       "summary": "Preferred tool division:",
@@ -60,6 +76,8 @@
     },
     {
       "path": "docs/07-DESIGN-SYSTEM-PREFERENCES.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/07-DESIGN-SYSTEM-PREFERENCES.md",
+      "sha256": "f3f7d027169f469fa136a261ed764a1415889ff44c23c62f16f82259a8cc1bb9",
       "title": "TAKATAK Cross-Project Design Preferences",
       "section": "standard",
       "summary": "TAKATAK sites should feel intentionally designed, polished, modern and animated rather than like unmodified templates.",
@@ -67,6 +85,8 @@
     },
     {
       "path": "docs/08-INTEGRATION-STANDARDS.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/08-INTEGRATION-STANDARDS.md",
+      "sha256": "8f609914c0b4813b522a296f7a762a6153567f73fb255c37460ba65b4f6762fc",
       "title": "Integration Standards",
       "section": "standard",
       "summary": "Use official APIs, documented partner interfaces and authorized OAuth/account connections.",
@@ -74,6 +94,8 @@
     },
     {
       "path": "docs/09-KNOWN-PROJECTS-AND-REPOS.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/09-KNOWN-PROJECTS-AND-REPOS.md",
+      "sha256": "624c93ddc6919209f098e730cf09b9c03ff4081d74ec6d55814232f423b29aaa",
       "title": "Known TAKATAK Projects / Repositories",
       "section": "standard",
       "summary": "This is a navigation and cleanup inventory, not an ownership/legal registry.",
@@ -81,6 +103,8 @@
     },
     {
       "path": "docs/10-PORTFOLIO-DOMAINS-REPOS-2026-10-06.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/10-PORTFOLIO-DOMAINS-REPOS-2026-10-06.md",
+      "sha256": "40b7be6e6e7740a2e63cd021574e7bf714a57c05d9b37e94343575bbd2b244d8",
       "title": "TAKATAK Portfolio Inventory — 2026-10-06",
       "section": "standard",
       "summary": "This is the annual cleanup baseline for the professional TAKATAK portfolio. It reconciles the connected GitHub organization, TAKATAK project context, and business-hosting/domain evidence available as of 2026-10-06.",
@@ -88,6 +112,8 @@
     },
     {
       "path": "docs/11-CLIENT-INDEPENDENCE-TRANSFER-ARCHITECTURE.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/11-CLIENT-INDEPENDENCE-TRANSFER-ARCHITECTURE.md",
+      "sha256": "d90279f0b31e24e0c6f95ff0e21f8f0188c9297c387d6caed6618039de74bb5f",
       "title": "Client Independence, Managed Services and Transfer Architecture",
       "section": "standard",
       "summary": "TAKATAK builds and operates client websites/applications during a managed contract, commonly with a long service horizon such as five years. The client platform must nevertheless remain a real, separable software product that can be transfe",
@@ -95,6 +121,8 @@
     },
     {
       "path": "docs/12-ANNUAL-PORTFOLIO-CLEANUP-PLAN.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/12-ANNUAL-PORTFOLIO-CLEANUP-PLAN.md",
+      "sha256": "c026eb67b56d0ef45c782ce4845bd78f1b2a9411010a0a18534df531fe62f797",
       "title": "Annual Portfolio Cleanup Plan — 2026",
       "section": "standard",
       "summary": "Create one authoritative operational registry for every TAKATAK/client domain, repository, deployment, database, third-party account and contract boundary.",
@@ -102,6 +130,8 @@
     },
     {
       "path": "docs/AGENT_HANDOFF.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/AGENT_HANDOFF.md",
+      "sha256": "10ed7874257970186a05bfb6ae3445d3aa996ae95fc26b77012b02f608a16e86",
       "title": "Agent handoff — knowledgeAI",
       "section": "standard",
       "summary": "Updated: **2026-10-14**. Agent: GPT-6. Read \\`AGENTS.md\\`, \\`WORKLOG.md\\`, \\`docs/PROJECT_STATUS.md\\` first.",
@@ -109,6 +139,8 @@
     },
     {
       "path": "docs/DECISIONS.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/DECISIONS.md",
+      "sha256": "cde78cc7894c67b7f98c471e548648def558b772fa7be5573e393395e48661df",
       "title": "Engineering decisions — knowledgeAI",
       "section": "standard",
       "summary": "**Decision:** Keep GitHub and Vercel catalogs strictly PUBLIC, based solely on allowlisted Markdown already in this public repository. Use a read-only search API and explicit \\`visibility: public\\` response metadata.",
@@ -116,6 +148,8 @@
     },
     {
       "path": "docs/DEPLOYMENT.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/DEPLOYMENT.md",
+      "sha256": "23092f523a2afc9c5bc89faa25949e2e1da894fa1247883b7e93ada65d965640",
       "title": "Deployment runbook — knowledgeAI",
       "section": "standard",
       "summary": "1. Push authorized, reviewed changes to \\`main\\` (never force-push).",
@@ -123,6 +157,8 @@
     },
     {
       "path": "docs/PROJECT_STATUS.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/PROJECT_STATUS.md",
+      "sha256": "2b47916b3050c04b955c243538d83c3ef43744d7a0f6b395da3fe0af01647988",
       "title": "Project status — knowledgeAI",
       "section": "standard",
       "summary": "Last audit: **2026-10-14**. Repository: \\`takatakca/knowledgeAI\\`, default branch \\`main\\`, **public**.",
@@ -130,6 +166,8 @@
     },
     {
       "path": "docs/TASK_QUEUE.md",
+      "source_id": "github:takatakca/knowledgeAI:docs/TASK_QUEUE.md",
+      "sha256": "d263a1016fb8a78aac9aca7017b19270d90e5be312c4cdc8ca02be5c4305423c",
       "title": "Ordered task queue — knowledgeAI",
       "section": "standard",
       "summary": "Statuses: DONE = implemented with evidence; PENDING = executable next; BLOCKED = external dependency.",
@@ -137,6 +175,8 @@
     },
     {
       "path": "projects/1LV.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/1LV.md",
+      "sha256": "64c537546b2270519a54850c551c834141a7d8695bd4821814586dce2c63e27b",
       "title": "1LV",
       "section": "project",
       "summary": "1LV is part of the TAKATAK ecosystem and is intended to integrate with TAKATAK rather than remain a completely isolated identity/system island.",
@@ -144,6 +184,8 @@
     },
     {
       "path": "projects/ACCOUNTING-CONTROL-TOWER.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/ACCOUNTING-CONTROL-TOWER.md",
+      "sha256": "426adc020cb874a470769d450fb0d2bb17bef2b47c82e70cdc93a8140bc242a4",
       "title": "TAKATAK Accounting Control Tower",
       "section": "project",
       "summary": "Central operational accounting/reconciliation workspace for restaurant and marketplace channels.",
@@ -151,6 +193,8 @@
     },
     {
       "path": "projects/AHMV.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/AHMV.md",
+      "sha256": "c81b8b699b6c33293d364b36dd1e604211d5e936df5305d16156dace25f92d88",
       "title": "AHMV / AHM Verdun",
       "section": "project",
       "summary": "AHMV is an independent application/experience, not a feature automatically exposed inside the standard TAKATAK dashboard.",
@@ -158,6 +202,8 @@
     },
     {
       "path": "projects/ALKAO.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/ALKAO.md",
+      "sha256": "a2188ed37bb8135f7ca38cead0af3cf0d5df1369ec5fda67b5f246ac62e540fa",
       "title": "ALKAO",
       "section": "project",
       "summary": "ALKAO is the name selected for the TAKATAK ticket-center / ticket-hub concept.",
@@ -165,6 +211,8 @@
     },
     {
       "path": "projects/CANADA-CUBA-TOKEN.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/CANADA-CUBA-TOKEN.md",
+      "sha256": "82bb84f984ba691515c3b472568822e7f7af347e1645e890049b9112ad1f0787",
       "title": "Canada/Cuba Token Project",
       "section": "project",
       "summary": "Repository: `takatakca/cuban-coin-cad`",
@@ -172,6 +220,8 @@
     },
     {
       "path": "projects/CCC-CANADA-CONNEXION-CUBA.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/CCC-CANADA-CONNEXION-CUBA.md",
+      "sha256": "778c3fa2024089e7cc0833a806790a9a7236aaa930f94c8f420f0f79b257ca83",
       "title": "CCC — Canada Connexion Cuba",
       "section": "project",
       "summary": "Repository: `takatakca/CCC-CANADIEN-CONNEXION-CUBA`",
@@ -179,6 +229,8 @@
     },
     {
       "path": "projects/CO-WORK.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/CO-WORK.md",
+      "sha256": "93ec4146c268503c1ad3f10ab53d7f7b5425617c7b9135269c63068a9e1ae68d",
       "title": "CO WORK.CA",
       "section": "project",
       "summary": "Repository: `takatakca/co-work.ca-montreal-launch`",
@@ -186,6 +238,8 @@
     },
     {
       "path": "projects/CUBAFOOD.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/CUBAFOOD.md",
+      "sha256": "7cbaedaab55b0f25887adeb8031789761279dbb69315bfff40904cd706e73842",
       "title": "CUBAFOOD.CA",
       "section": "project",
       "summary": "Repository: `takatakca/cubafoodca`",
@@ -193,6 +247,8 @@
     },
     {
       "path": "projects/DRONE-AIR.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/DRONE-AIR.md",
+      "sha256": "8fdcd3834b64a8ff79fae1e144db9b95df3c9980540647f3ce00129fefb78e0c",
       "title": "DRONE AIR / DRONE R'AIR",
       "section": "project",
       "summary": "Repository: `takatakca/droneair`",
@@ -200,6 +256,8 @@
     },
     {
       "path": "projects/EMPLOI-DIRECT.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/EMPLOI-DIRECT.md",
+      "sha256": "5a7e4b1b1bc03ddc4bbf3f6ca5c16b7b77a36d485bc13e19d19c40ace0a84e7c",
       "title": "EMPLOI DIRECT",
       "section": "project",
       "summary": "EMPLOI DIRECT is an employment vertical inside the GROUPE TAKATAK architecture. It owns employment operations, not master identity.",
@@ -207,6 +265,8 @@
     },
     {
       "path": "projects/FACTURATIONS.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/FACTURATIONS.md",
+      "sha256": "56abbb392d72c9cb351b76f4206b38f2c31c952c4a2c078c595d14e69241cab8",
       "title": "Facturations",
       "section": "project",
       "summary": "Facturations is an accounting/evidence-oriented TAKATAK project discussed as a source of reusable financial-record patterns.",
@@ -214,6 +274,8 @@
     },
     {
       "path": "projects/FESTI-ICE.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/FESTI-ICE.md",
+      "sha256": "7f309a95a832e35d540bb6acc2d07171810508c3da755f9184755b097ff24d3e",
       "title": "FESTI-ICE / Ticketing",
       "section": "project",
       "summary": "FESTI-ICE is a consumer of reusable TAKATAK ticketing patterns rather than a reason to create an incompatible ticket engine.",
@@ -221,6 +283,8 @@
     },
     {
       "path": "projects/FLEX.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/FLEX.md",
+      "sha256": "2289615abe2b5cf0315060d6fbbfd827eb30fab6abc6a66329f1671c054948ff",
       "title": "FLEX'S / Flexible Service",
       "section": "project",
       "summary": "Repository: `takatakca/flexsca`",
@@ -228,6 +292,8 @@
     },
     {
       "path": "projects/FOODHUB.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/FOODHUB.md",
+      "sha256": "d74a085b37804753434b5f773f731ef6478d3bc45dfa6bb7e2746cacb085bda1",
       "title": "TAKATAK FoodHub",
       "section": "project",
       "summary": "Order-aggregation/integration layer connecting supported marketplace orders into restaurant operations and POS workflows.",
@@ -235,6 +301,8 @@
     },
     {
       "path": "projects/HASTE-MART.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/HASTE-MART.md",
+      "sha256": "956cfcdbe3d8e045d85e6f995cb7e0f0e05d6660ff28d80a4f08abc859bd1646",
       "title": "Haste Mart / Liquidation Hub / FAST DEALS",
       "section": "project",
       "summary": "Repository: `takatakca/haste-mart`",
@@ -242,6 +310,8 @@
     },
     {
       "path": "projects/HAVANA.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/HAVANA.md",
+      "sha256": "3cadcd0b3de279d465908e60c95e7b0cbb710e082e38fa884ddc149c29e936fa",
       "title": "Havana Hospitality / Promotion",
       "section": "project",
       "summary": "Havana is a hospitality/tourism client vertical with web, promotional, advertising and event/ticketing use cases.",
@@ -249,6 +319,8 @@
     },
     {
       "path": "projects/LEGAL-LEAD-GEN.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/LEGAL-LEAD-GEN.md",
+      "sha256": "1ab8c2602a5a932c233c3f32d50c6c36568abb7b4b86072c44f220a61ecc295e",
       "title": "Legal Lead-Generation Properties — Needs Audit",
       "section": "project",
       "summary": "Observed domains:",
@@ -256,6 +328,8 @@
     },
     {
       "path": "projects/MIELAISSA.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/MIELAISSA.md",
+      "sha256": "901e4fa667286eb6b61add76e56dce8b79ef8905b143173f1a654a2cbed929c1",
       "title": "MIELAISSA",
       "section": "project",
       "summary": "Domain: `mielaissa.ca`",
@@ -263,6 +337,8 @@
     },
     {
       "path": "projects/MIMT-MVP.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/MIMT-MVP.md",
+      "sha256": "e228a78533b690e0d302ec7e7b21f4df04548d33b3cca3c892fe4e16568dbc69",
       "title": "MIMT: architecture and MVP plan",
       "section": "project",
       "summary": "Prepared: 2026-10-09 by the MIMT agent (agent 2). Status: **plan only. No code, no repository, no purchases yet.**",
@@ -270,6 +346,8 @@
     },
     {
       "path": "projects/MIMT-REGULATORY.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/MIMT-REGULATORY.md",
+      "sha256": "ef92e2213387f446ede2e1a040fc8260282806afbcf181d7660ede345cc89d9c",
       "title": "MIMT: regulatory research brief (Canada / Quebec)",
       "section": "project",
       "summary": "Prepared: **2026-10-09** by the MIMT agent (agent 2). Sources: official pages (crtc.gc.ca, laws-lois.justice.gc.ca, legisquebec.gouv.qc.ca, cai.gouv.qc.ca, oqlf.gouv.qc.ca, ccts-cprst.ca, canada.ca, revenuquebec.ca, ised-isde.canada.ca, cna",
@@ -277,6 +355,8 @@
     },
     {
       "path": "projects/MIMT-STACK.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/MIMT-STACK.md",
+      "sha256": "b9307f3a44f399e647421963a8f8e3c3dd04df893d47e8f395992f4c69de8aae",
       "title": "MIMT: cost-efficient stack",
       "section": "project",
       "summary": "Prepared: **2026-10-09** by the MIMT agent (agent 2). All prices were read on public pricing pages on 2026-10-09. **Nothing has been bought or signed up for.**",
@@ -284,6 +364,8 @@
     },
     {
       "path": "projects/MIMT.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/MIMT.md",
+      "sha256": "651a66339c0bd3e8ed570bb8892670200b88ed130e4452c92785e9a5d2c7ec74",
       "title": "MIMT",
       "section": "project",
       "summary": "MIMT = Mobile Innovation Modern Telecommunications.",
@@ -291,6 +373,8 @@
     },
     {
       "path": "projects/OCARINA-SPA.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/OCARINA-SPA.md",
+      "sha256": "55134108705cd7475399924f9ddf7a3620ca703fd6f9d5fabf67a4b132f720b3",
       "title": "Ocarina Spa",
       "section": "project",
       "summary": "Known Lovable project: `ocarinaspa`.",
@@ -298,6 +382,8 @@
     },
     {
       "path": "projects/ON2GO.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/ON2GO.md",
+      "sha256": "eacc7482737e2485a0428c6e4eacb05aa9998f8a6bf99d50ade03fa53115e703",
       "title": "ON2GO",
       "section": "project",
       "summary": "ON2GO.ca evolved from a marketplace concept into a Montréal-oriented local discovery/directory experience emphasizing late-night food and verified destinations.",
@@ -305,6 +391,8 @@
     },
     {
       "path": "projects/QMAPS.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/QMAPS.md",
+      "sha256": "742a38ca404bcbeea77d7c852fd2902961f27d1f6aa7fe384ba02e539ba4af5d",
       "title": "QMAPS",
       "section": "project",
       "summary": "QMAPS is a reusable TAKATAK ecosystem capability for location/map/QR-oriented workflows.",
@@ -312,6 +400,8 @@
     },
     {
       "path": "projects/R2F.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/R2F.md",
+      "sha256": "4eb27ed784b7eb317ced892b98a8abbeac88b65cef177681eca269f1c3d15992",
       "title": "R2F / Rapid Fix Solutions",
       "section": "project",
       "summary": "Repository: `takatakca/r2fca`",
@@ -319,6 +409,8 @@
     },
     {
       "path": "projects/R2NETTE.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/R2NETTE.md",
+      "sha256": "5256abedb9b2df61732a5e20a6601d115e8976a60146709b6f3926dceaaae5cf",
       "title": "R2NETTE",
       "section": "project",
       "summary": "R2NETTE provides advanced reusable financial/transaction patterns that can inform other TAKATAK products.",
@@ -326,6 +418,8 @@
     },
     {
       "path": "projects/RENTAUTO.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/RENTAUTO.md",
+      "sha256": "e1d3bbe5f2982f9efe14a8a943fd5719775b5dc0967cbb3b2bff5b51410ce14e",
       "title": "Rentauto",
       "section": "project",
       "summary": "Known repository: `takatakca/rentautoca`",
@@ -333,6 +427,8 @@
     },
     {
       "path": "projects/RESTAURANT-NETWORK.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/RESTAURANT-NETWORK.md",
+      "sha256": "6a8695a52d38284bfebe4278edfa484f402742b462a86284ec82b006441e747c",
       "title": "TAKATAK Restaurant / Food Client Network",
       "section": "project",
       "summary": "This dossier maps the recurring restaurant brands/domains used across ON2GO, FoodHub, Accounting Control Tower, Ads, Social and client-site work.",
@@ -340,6 +436,8 @@
     },
     {
       "path": "projects/REVERS-CANADA.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/REVERS-CANADA.md",
+      "sha256": "62ddbed31f54ed371361e169551e06e965080331c7ae73884d492b4ee0e24070",
       "title": "Revers Canada",
       "section": "project",
       "summary": "Revers Canada is a charitable/nonprofit project focused on women and children facing homelessness, with shelter, food, accompaniment and return-to-employment support.",
@@ -347,6 +445,8 @@
     },
     {
       "path": "projects/REVPERE.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/REVPERE.md",
+      "sha256": "5c0d8c85c5ad327186713a345f91e48faa836c22f0296832ed5ac17b16f55530",
       "title": "REVpère",
       "section": "project",
       "summary": "REVpère is a Montréal-focused organization concept centered on supporting fathers through digital inclusion, employability and practical community support.",
@@ -354,6 +454,8 @@
     },
     {
       "path": "projects/SOCIAL-CORE.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/SOCIAL-CORE.md",
+      "sha256": "f49e91bce700d4d11f7e72ec40699f78525423f31b4c119c82a19958b409138f",
       "title": "TAKATAK Social Core",
       "section": "project",
       "summary": "Primary verified source snapshot:",
@@ -361,6 +463,8 @@
     },
     {
       "path": "projects/TAKATAK-ADS.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/TAKATAK-ADS.md",
+      "sha256": "79df9ee85d84903596738395e2efd9c599f6baabd148cca55a252d7cc7145b87",
       "title": "TAKATAK Ads",
       "section": "project",
       "summary": "TAKATAK Ads is a proprietary/local advertising network that uses TAKATAK ecosystem sites and products as advertising inventory.",
@@ -368,6 +472,8 @@
     },
     {
       "path": "projects/TAKATAK-AI-NEXUS.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/TAKATAK-AI-NEXUS.md",
+      "sha256": "db160b8763d793826ff113e0b7d6b7730b03adda931773cbd3e1a9d9d84a578b",
       "title": "TAKATAK AI Nexus",
       "section": "project",
       "summary": "TAKATAK AI Nexus is the unified capability/orchestration layer for professional AI work across TAKATAK and authorized client projects.",
@@ -375,6 +481,8 @@
     },
     {
       "path": "projects/TAKATAK-CORE.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/TAKATAK-CORE.md",
+      "sha256": "89b7ca5d9a093a82a2c2394afc392523419a89fb00cd7c89a44611eff77c588f",
       "title": "TAKATAK Core",
       "section": "project",
       "summary": "TAKATAK is the central platform and control plane for the broader ecosystem.",
@@ -382,6 +490,8 @@
     },
     {
       "path": "projects/TAXI-CHAMBLY.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/TAXI-CHAMBLY.md",
+      "sha256": "c7e417e998d7fdd8297552dbb241f71c8fadf470b841a402d97f7081a6699242",
       "title": "Taxi Chambly",
       "section": "project",
       "summary": "Repository: `takatakca/taxichambly`",
@@ -389,6 +499,8 @@
     },
     {
       "path": "projects/UNMAPPED-DOMAINS.md",
+      "source_id": "github:takatakca/knowledgeAI:projects/UNMAPPED-DOMAINS.md",
+      "sha256": "6def212813e87a06ecbcb0c4edb7ddbc446089f89e630c0f3425fb565c342a2e",
       "title": "Unmapped / Historical Domain Queue",
       "section": "project",
       "summary": "The following professional domains have evidence but do not yet have a complete project/client/repository mapping:",
@@ -396,6 +508,8 @@
     },
     {
       "path": "prompts/MASTER-PORTFOLIO-AUDIT-CODEX.md",
+      "source_id": "github:takatakca/knowledgeAI:prompts/MASTER-PORTFOLIO-AUDIT-CODEX.md",
+      "sha256": "79a3c9eee0c926c5370f799e0b8702a704765e4415458e2c6879732cb1a7f10f",
       "title": "MASTER PORTFOLIO AUDIT PROMPT — CODEX / CLAUDE CODE",
       "section": "prompt",
       "summary": "Perform the 2026 TAKATAK portfolio cleanup across all professional repositories and domains without deleting, merging, redirecting, expiring or modifying production assets merely because they appear stale or duplicated.",
@@ -403,6 +517,8 @@
     },
     {
       "path": "prompts/MASTER-TAKATAK-AI-NEXUS-INDEPENDENT-CLIENTS.md",
+      "source_id": "github:takatakca/knowledgeAI:prompts/MASTER-TAKATAK-AI-NEXUS-INDEPENDENT-CLIENTS.md",
+      "sha256": "091587244a73302634fb8e2fa8f2e6d7b3d18ceeb8c205b837147807ad0059d7",
       "title": "MASTER CODING PROMPT — TAKATAK AI NEXUS + INDEPENDENT CLIENT PLATFORMS",
       "section": "prompt",
       "summary": "Use this prompt with Codex, Claude Code, Cursor or another authorized coding agent.",
@@ -410,6 +526,8 @@
     },
     {
       "path": "prompts/MASTER-TAKATAK-CHILD-APP-STANDARD.md",
+      "source_id": "github:takatakca/knowledgeAI:prompts/MASTER-TAKATAK-CHILD-APP-STANDARD.md",
+      "sha256": "4ad86bbf04a8401e32bc90e91a79e366a35bba2d43177f0b97bec0923a92421d",
       "title": "PROMPT MAÎTRE — STANDARD GROUPE TAKATAK / TAKATAK AUTH / TAKATAK DASHBOARD",
       "section": "prompt",
       "summary": "Contexte général:",
@@ -417,6 +535,8 @@
     },
     {
       "path": "README.md",
+      "source_id": "github:takatakca/knowledgeAI:README.md",
+      "sha256": "202ccc6b0b06a65a7f553d8470c8aa2262f640ef5034a1ef3fe375562326e074",
       "title": "knowledgeAI — Knowledge TakaTak",
       "section": "guide",
       "summary": "Knowledge TakaTak is the dedicated knowledge repository for the TAKATAK ecosystem and its AI agents.",
