@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   catalog:
-    name: Public catalog and unit tests
+    name: Public catalog unit tests
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -21,5 +21,37 @@ jobs:
           python-version: "3.12"
       - name: Run catalog unit tests
         run: python3 -m unittest discover -s ingest/tests -v
-      - name: Check catalog freshness and public-source policy
-        run: python3 ingest/build_catalog.py --check
+      - name: Generate and validate public catalog
+        run: |
+          python3 ingest/build_catalog.py
+          python3 ingest/build_catalog.py --check
+
+  publish:
+    name: Commit refreshed public catalog
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: catalog
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate public searchable index
+        run: python3 ingest/build_catalog.py
+      - name: Commit catalog if it changed
+        run: |
+          git add -- knowledge-catalog.json
+          if git diff --cached --quiet; then
+            echo "Catalog is current"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(knowledge): refresh public search catalog [skip ci]"
+          git pull --rebase origin main
+          git push origin HEAD:main

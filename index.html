@@ -22,6 +22,17 @@
     .card:hover{transform:translateY(-2px);border-color:#4aaeea;background:linear-gradient(180deg,#133051,#0b1a2d)}
     .kicker{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#7fd5ff;font-weight:800}.card h3{font-size:18px;margin:8px 0 6px}.card p{margin:0;color:#96a8bc;line-height:1.5;font-size:14px}
     .section-title{font-size:14px;color:#d9e8f6;margin:28px 0 8px;text-transform:uppercase;letter-spacing:.08em}.muted{color:#7f91a6;font-size:13px}
+
+    .search-label{display:block;margin:4px 0 12px}
+    .catalog-controls{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:30px}
+    .catalog-controls label{color:#d9e8f6;font-size:13px}
+    .catalog-controls select{display:block;margin-top:6px;padding:12px 14px;min-height:44px;background:#08111e;border:1px solid #29415f;border-radius:12px;color:#f8fafc;font:inherit}
+    #catalog-status{font-size:13px;color:#9cb7cf;flex:1}
+    .catalog-card{min-height:176px}
+    .catalog-path{display:block;margin-top:14px;color:#7eb6e0;font-size:11px;word-break:break-word}
+    .catalog-more{cursor:pointer;margin-top:20px;padding:13px 22px;color:white;background:#1565d8;border:1px solid #379afe;border-radius:12px;font-weight:700}
+    .catalog-more:hover,.catalog-more:focus-visible{background:#1f8bff}
+    .catalog-more[hidden]{display:none}
     .footer{margin-top:34px;color:#718399;font-size:13px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   </style>
 </head>
@@ -37,7 +48,8 @@
     <p class="lead">Architecture, websites, product decisions, deployment standards, integrations, reusable prompts and project history — organized so Claude, Codex and future TAKATAK agents can start with context instead of starting from zero.</p>
 
     <section class="panel">
-      <input id="q" class="search" placeholder="Filter knowledge…" autocomplete="off" />
+      <label class="eyebrow search-label" for="q">Search / Rechercher</label>
+      <input id="q" class="search" placeholder="Find a project, decision, integration…" autocomplete="off" aria-keyshortcuts="/" />
       <div class="section-title">Core standards</div>
       <div class="grid" id="cards">
         <a class="card" data-search="master index architecture projects" href="https://github.com/takatakca/knowledgeAI/blob/main/docs/00-MASTER-INDEX.md"><span class="kicker">Index</span><h3>Master Index</h3><p>Canonical navigation across standards, sources and projects.</p></a>
@@ -62,6 +74,24 @@
         <a class="card project" data-search="emploi direct employment candidate master identity" href="https://github.com/takatakca/knowledgeAI/blob/main/projects/EMPLOI-DIRECT.md"><span class="kicker">Project</span><h3>EMPLOI DIRECT</h3><p>Employment vertical on top of TAKATAK master identity.</p></a>
       </div>
 
+
+      <h2 class="section-title">Explore the complete public library</h2>
+      <p class="muted">Search curated standards, projects and agent prompts, with direct links to the source files on GitHub.</p>
+      <div class="catalog-controls">
+        <label for="catalog-section">Category
+          <select id="catalog-section">
+            <option value="all">All categories</option>
+            <option value="project">Projects</option>
+            <option value="standard">Standards</option>
+            <option value="prompt">Prompts</option>
+            <option value="guide">Guides</option>
+          </select>
+        </label>
+        <span role="status" aria-live="polite" id="catalog-status">Loading public knowledge catalog…</span>
+      </div>
+      <div class="grid" id="catalog-results"></div>
+      <button type="button" class="catalog-more" id="catalog-more" hidden>Show more documents</button>
+
       <div class="footer">
         <span>Source of truth: github.com/takatakca/knowledgeAI</span>
         <span>Curated knowledge · source-aware · backend-ready</span>
@@ -73,5 +103,6 @@ const q=document.getElementById('q');
 const cards=[...document.querySelectorAll('.card')];
 q.addEventListener('input',()=>{const v=q.value.toLowerCase().trim();for(const c of cards){const t=(c.textContent+' '+(c.dataset.search||'')).toLowerCase();c.style.display=!v||t.includes(v)?'block':'none';}});
 </script>
+<script src="./assets/knowledge-search.js" defer></script>
 </body>
 </html>
