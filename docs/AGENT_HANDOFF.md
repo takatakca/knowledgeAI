@@ -1,5 +1,16 @@
 # Agent handoff — knowledgeAI
 
+## Verified final continuation — source inventory paging (2026-10-14)
+
+- Latest task: make source inventory enumerable across pages; SQL `LIMIT/OFFSET`, no client-defined workspace; linked to the existing scoped version export `knowledge:export`, delete `knowledge:delete` and audit migrations 001→002→003.
+- Source commits: `46bb0cf60b8455815be0c51f5050345613ea56b6` (pagination), `d305602f3a1cee7a1454790b0c7d61c4be388ee4` (fixture audit correction). The upcoming documentation commit and CI catalog bot commit change SHA; query GitHub HEAD on resumption.
+- Updated files: `private-knowledge/src/{service,server}.cjs`, `private-knowledge/tests/{private.test.cjs,postgres.integration.test.cjs,lifecycle-audit.sql}`, `private-knowledge/README.md`, `docs/{PROJECT_STATUS,TASK_QUEUE,AGENT_HANDOFF,DEPLOYMENT,DECISIONS}.md`, `WORKLOG.md`.
+- Last verified test: Private Knowledge Security CI `38630925562` SUCCESS: unit auth tests, real PostgreSQL 17 tenant pagination/search/ingest/delete/export, audit verification and dependency audit. Knowledge Catalog CI for preceding code change has succeeded; verify final docs commit CI and production Vercel SHA after catalog bot refresh.
+- Production status: public Vercel portal ONLY; private server NOT deployed. No real workspace data, issuer signing service, database or private secret settings were provisioned. No changes to unrelated Supabase instances. Three unrelated PRs #3/#4/#5 preserved.
+- True blockers: trusted KnowledgeAI token issuer with server-side verified TAKATAK membership/entitlement and revocation; separately approved private DB/runtime and credentials; backup/retention/offboarding, production gateway TLS and smoke checks. Do not activate private ingestion until these are confirmed.
+- NEXT EXACT ACTION: verify/provision authorized TAKATAK issuer and dedicated DB, apply SQL migrations as owner, configure least-privileged runtime separately, run permission/denial/deletion/export and backup tests in staging, then approve private deployment. Continue independent runbook and observability work if those resources remain unavailable.
+
+
 ## Latest verified checkpoint — client version export (2026-10-14)
 
 - Repository: `takatakca/knowledgeAI` PUBLIC, `main`. Beginning-of-checkpoint SHA: `a078f2a9841a018bf48f7a60bd2c4229823903ab` (later docs and catalog regeneration update SHA; inspect `main`).

@@ -50,3 +50,7 @@ Permit knowledge:read to list only current source metadata; require a separate k
 ## 2026-10-14 — explicit private source portability scope
 
 Provide full original source revisions only with a separate signed `knowledge:export` scope; never elevate a standard `knowledge:read` token to bulk export. Enforce workspace filtering through PostgreSQL RLS, SQL pagination capped at ten revisions, no cache and metadata-only audit. All related operations remain in the undeployed private service pending a verified TAKATAK identity/entitlement authority.
+
+## 2026-10-14 — tenant pagination before export
+
+Support deterministic ordered, bounded source inventory pages with SQL LIMIT/OFFSET and explicit validated maximums. Workspace comes exclusively from validated signed identity and PostgreSQL RLS, not a request parameter. This makes source version export complete without broadening the public catalog or exposing cross-tenant source names.

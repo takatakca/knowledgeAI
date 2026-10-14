@@ -35,3 +35,7 @@ The separate private backend now supports tenant-only source inventory and all-v
 ## Scoped export milestone (2026-10-14)
 
 Versioned source export from `/v1/knowledge/export` implemented in the isolated backend with separate `knowledge:export` permission, SQL pagination, audit event and tenant-isolation regression tests. Private Knowledge Security CI run `38630318645` **SUCCESS**. This is **not deployed**; the only Vercel production surface remains public documents and public read-only search.
+
+## Full source inventory pagination (2026-10-14)
+
+The private inventory now accepts `limit` and `offset` and returns only SQL-bounded tenant-scoped pages. Private CI run `38630925562` passed authorization, tenant pagination on PostgreSQL 17, audit and dependency checks. This is **isolated code, not a production private service**.

@@ -61,3 +61,7 @@ After applying migration 001 in a separately approved private PostgreSQL DB, app
 ## New private export migration (2026-10-14)
 
 Apply `private-knowledge/migrations/003_export_audit.sql` after 001 and 002. Export is served only by the isolated private server, using `knowledge:export`, 10-version maximum pagination and audit. CI run `38630318645` passes synthetic two-tenant export isolation; **there is no production deployment** for this API. Public Vercel remains independent and cannot access confidential records.
+
+## Source pagination validation
+
+Latest private CI run `38630925562` verified SQL-bounded inventory pagination with restricted PostgreSQL roles and source export. Do NOT publish this private API to the public Vercel site. Migration prerequisites remain 001→002→003 and confidential TAKATAK-authenticated service infrastructure.

@@ -8,7 +8,7 @@ This directory contains independent backend code for a future APPROVED confident
 - PostgreSQL transaction-bound workspace context, FORCE ROW LEVEL SECURITY on documents, anti-replay receipts and audit.
 - POST /v1/knowledge/documents accepts JSON fields: source_id, title, content and HTTPS source_url. Server calculates SHA-256 and deduplicates by workspace/source/hash. Write token jti can only be used once.
 - GET /v1/knowledge/search?q=term&limit=20 returns only source records from the workspace authenticated by the JWT.
-- GET /v1/knowledge/sources?limit=20 returns latest source metadata only for that workspace (no full body). Requires knowledge:read; result sets are bounded at SQL level.
+- GET /v1/knowledge/sources?limit=20&offset=0 returns latest source metadata only for the authorized workspace, with SQL-bound pages (limit 1–50, offset 0–999999). Enumerate successive pages before exporting; no full document bodies in inventory.
 - GET /v1/knowledge/export?source_id=...&limit=10&offset=0 returns complete original content for up to 10 source versions per page, **only** within the verified workspace and only with a JWT scope of knowledge:export. All successful exports create an audit entry; export is intended for an approved client transfer, not public search.
 - DELETE /v1/knowledge/sources?source_id=... removes every version of that source **only** for the verified workspace; requires dedicated knowledge:delete scope and a single-use JWT jti.
 - Successful search, source-list and source-deletion operations are logged as scoped audit events without storing search terms.
