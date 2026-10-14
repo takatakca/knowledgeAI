@@ -67,6 +67,8 @@ jobs:
           node-version: '22'
       - name: Install pinned private database driver
         run: npm ci --prefix private-knowledge --omit=dev --ignore-scripts --no-audit --no-fund
+      - name: Audit locked production dependencies
+        run: npm audit --prefix private-knowledge --omit=dev --audit-level=high
       - name: Make CI runtime role a restricted login
         run: docker exec knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci -c "ALTER ROLE knowledge_ci_runtime LOGIN PASSWORD 'ci-disposable-password'"
       - name: Execute actual tenant-aware service against PostgreSQL
