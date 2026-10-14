@@ -1,0 +1,50 @@
+# KnowledgeAI private service — isolated, NOT DEPLOYED
+
+This directory contains independent backend code for a future APPROVED confidential KnowledgeAI environment. It is NOT included in the Vercel public search API and has NO live private customer records, passwords, identity secrets or production database.
+
+## Implemented code
+
+- RS256 JWT signature validation against an explicitly configured HTTPS JWKS endpoint; exact issuer/audience, product = knowledgeai, verified workspace_id, scope, short expiration (max 300 seconds), and token jti required.
+- PostgreSQL transaction-bound workspace context, FORCE ROW LEVEL SECURITY on documents, anti-replay receipts and audit.
+- POST /v1/knowledge/documents accepts JSON fields: source_id, title, content and HTTPS source_url. Server calculates SHA-256 and deduplicates by workspace/source/hash. Write token jti can only be used once.
+- GET /v1/knowledge/search?q=term&limit=20 returns only source records from the workspace authenticated by the JWT.
+- GET /healthz checks the private database connection (not a full identity-provider readiness check).
+- HTTP binds to 127.0.0.1 by default and does not enable CORS.
+- Private Knowledge Security CI verifies authentication, input validation and transaction handling with synthetic data; disposable PostgreSQL 17 tests check tenant RLS.
+
+## Verified developer commands
+
+From the repository root:
+
+    node --test private-knowledge/tests/private.test.cjs
+    node --check private-knowledge/src/auth.cjs
+    node --check private-knowledge/src/service.cjs
+    node --check private-knowledge/src/server.cjs
+
+The CI PostgreSQL job applies migrations/001_private_knowledge.sql, runs tests/rls.sql, and checks migration reapplication. CI test data is synthetic, never real client content.
+
+## NOT YET production-ready: required rollout steps
+
+1. Approve and provision a dedicated confidential PostgreSQL database. Do not reuse unrelated TAKATAK or client databases.
+2. Apply migrations/001_private_knowledge.sql as a migration-owner role, then create a separate app login without SUPERUSER/BYPASSRLS and which does not own these tables.
+3. Grant that login the least privilege required: USAGE on schema; SELECT/INSERT on documents and write_receipts; INSERT on audit; USAGE/SELECT on schema sequences.
+4. Have TAKATAK's trusted server verify a real authenticated user's workspace membership, active product entitlement, and least-privilege permission. Only then issue a short-lived KnowledgeAI-specific RS256 JWT. This repository does not implement the trusted issuer. The unrelated Bluesky JWKS endpoint in TAKATAK is NOT suitable.
+5. Configure the confidential runtime through its secret manager, never GitHub:
+   - PRIVATE_DATABASE_URL (restricted non-owner login)
+   - KNOWLEDGE_JWT_ISSUER (verified authority)
+   - KNOWLEDGE_JWT_AUDIENCE (private-service audience)
+   - KNOWLEDGE_JWKS_URL (actual trusted HTTPS public keys)
+   - PRIVATE_PORT (optional, default 8301)
+6. On approved server: install Node 22+, run npm install --omit=dev --ignore-scripts in this directory, and npm start. Package pg is pinned but its transitive dependency lockfile has NOT yet been committed; use approved packaging/lockfile verification before launch.
+7. Put service behind a private network/authenticated gateway. Verify real 401/403 responses, JWT rotation, two-company row isolation, audit, backup, retention, restore, disclosure approval and signed entitlements before enabling real imports.
+
+## Security and operational limits
+
+- The service verifies cryptographically signed authorization claims; it cannot verify changes to workspace membership or entitlements until the trusted issuer and revocation contract exist.
+- Do not expose or proxy this service from the public Vercel project or accept private source material at /api/search.
+- Audit and receipt retention/deletion jobs, customer data export, connection encryption verification, database monitoring, disaster recovery and regulatory compliance need approved production implementation.
+- source_url is stored as source provenance; it is never fetched by this service, to avoid arbitrary URL ingestion.
+- Read tokens are reusable for the short JWT lifetime. Write receipts prevent duplicated state-changing use of the same jti within a workspace.
+- This is PostgreSQL text search, not an AI embedding/vector search service. AI Studio remains a distinct unverified VPS deployment kit.
+
+The target architecture remains TAKATAK-managed identity federation with independently transferable client records and strict isolation of each organization's knowledge.

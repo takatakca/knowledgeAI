@@ -45,3 +45,7 @@ node --check api/health.js
 ## Concurrency recovery (verified 2026-10-14)
 
 Parallel source edits can race with the catalog bot. The publish job now fetches the latest `main`, resets **only its ephemeral runner checkout**, regenerates `knowledge-catalog.json`, and retries a normal push. No force-push or destructive remote reset is used. If retries exhaust, inspect GitHub logs and re-run only after reconciling newer source changes. Verified successful production smoke after this fix: GitHub Actions run `38623893521`.
+
+## Private backend — separate non-public deployment
+
+Do not deploy private-knowledge/ to Vercel public portal. It is a future isolated server, requiring the approved credential issuer, dedicated private PostgreSQL instance, RLS runtime role, secure network/proxy and backup/retention. Current evidence is synthetic JWT unit tests and a disposable PostgreSQL 17 RLS CI test. The service does not claim production availability. See private-knowledge/README.md.

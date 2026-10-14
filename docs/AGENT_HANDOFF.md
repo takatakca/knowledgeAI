@@ -47,3 +47,14 @@ Last updated **2026-10-14** by GPT-6. Repository: `takatakca/knowledgeAI` (**PUB
 3. Keep the public service working; do **not** pipe private content into it.
 4. Inspect TAKATAK Auth's **actual** OIDC/JWKS and permissions contracts in the appropriate source repository; define a versioned private retrieval adapter with denial-by-default tenant/product scopes.
 5. Implement private ingestion only against separately authorized infrastructure, with migration/authorization tests and secure deployment.
+
+## Latest continuation — isolated private service (2026-10-14)
+
+- Previous verified public head: 9f29bb37b2c606d0ef4a8a7837fbee080313da23, public CI run 38624116141 passed and Vercel READY.
+- This session's commits include auth/schema e5d2e726667b6878c7b7caa112f7e30139582b18, HTTP/service d214f20a1b42a27717c6a96825db470693d38509, security tests 1b0df216a279d7f816c7ee94faa77921cb04f548, CI workflow db486e2cda51f07c9ae463cfb1f2ad1d0b5e1a80. The latest docs and catalog bot commit are later; inspect GitHub main HEAD to obtain exact deployed SHA.
+- Last finished task: isolated private knowledge code, Node JWT/transaction tests and actual PostgreSQL 17 tenant-isolation migration tests (synthetic data only).
+- Current task: private issuer and dedicated storage/prod rollout are blocked pending real TAKATAK authorization contract and approved private infra.
+- Files changed: private-knowledge/package.json, private-knowledge/src/auth.cjs, src/service.cjs, src/server.cjs, migrations/001_private_knowledge.sql, tests/private.test.cjs, tests/rls.sql, private-knowledge/README.md, .github/workflows/private-knowledge-tests.yml, docs/PRIVATE-AUTH-CONTRACT.md, docs/DECISIONS.md, docs/PROJECT_STATUS.md, docs/TASK_QUEUE.md, docs/DEPLOYMENT.md, and WORKLOG.md.
+- Checks: private CI workflow run 38626791522 both jobs success (JWT/Node and live ephemeral Postgres RLS). Public Knowledge Catalog CI continues separately. Exact command: node --test private-knowledge/tests/private.test.cjs; SQL: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/001_private_knowledge.sql, then same command for private-knowledge/tests/rls.sql.
+- No new passwords or keys were committed. No private dataset or credentials were copied into Supabase staging or any unrelated client database. Public portal remains the only production deployment.
+- NEXT EXACT ACTION: inspect real trusted TAKATAK service-token issuer contract with membership/entitlement resolution and identify separately approved private PostgreSQL project; generate/check package lock and test two tenant roles on that approved DB. Do not allow private ingestion before these checks.

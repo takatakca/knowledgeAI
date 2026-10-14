@@ -34,3 +34,7 @@ The accessible TAKATAK core code uses Supabase sessions and database-backed work
 ## 2026-10-14 — safe concurrent catalog generation
 
 Multiple agents may change `main` while GitHub Actions generates its public search index. The bot must not publish a stale snapshot or force-overwrite another agent. It re-fetches the current `main`, regenerates the index from that version, and uses bounded retries for a regular Git push. A rejected race is reported rather than bypassed.
+
+## 2026-10-14 — isolated private-service code, no public data plane
+
+Implemented a standalone private-knowledge service and RLS schema behind a dedicated RS256 JWT contract with audience, issuer, product, workspace and explicit read/write scopes. No private credentials or tenant data are held in this public repository. The service is not deployed while the TAKATAK issuer, separate PostgreSQL instance and operational controls are unverified. CI uses synthetic identities and a disposable PostgreSQL 17 container.

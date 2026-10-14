@@ -23,3 +23,7 @@ Last audit: **2026-10-14**. Repository: \`takatakca/knowledgeAI\`, default branc
 See \`docs/TASK_QUEUE.md\` and \`docs/AGENT_HANDOFF.md\`.
 
 Private TAKATAK authentication discovery: verified existing Supabase/session/workspace guards, but no production-ready KnowledgeAI service federation contract. See [private authentication contract](./PRIVATE-AUTH-CONTRACT.md).
+
+## Private knowledge phase (2026-10-14)
+
+The new private-knowledge/ package contains a standalone JWT-verified tenant backend, SQL schema, audit/replay prevention, and synthetic authorization plus PostgreSQL RLS test suites. Private Knowledge Security CI is GREEN as of its first run. This is code and ephemeral CI proof, NOT a live private service: no dedicated approved database, identity issuer, operational secrets or hardened deployment are configured. Public Vercel routes remain unchanged.

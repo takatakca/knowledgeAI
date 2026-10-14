@@ -30,3 +30,7 @@ A KnowledgeAI backend must reject tokens unless their cryptographic signature, i
 - Separate private deployment with logging/monitoring and tests for both correct access and cross-client denial.
 
 Keep `/api/search` and `/api/health` PUBLIC and read-only. Do not expose a "private API" route until it has an actual authentication and storage implementation.
+
+## 2026-10-14 — isolated implementation checkpoint
+
+The separate private-knowledge/ package now implements an RS256-only JWT verifier and RLS-backed PostgreSQL service with synthetic Node and PostgreSQL 17 isolation tests. The trusted TAKATAK token issuer, actual authorization mapping, approved private database, secrets and runtime remain NOT CONFIGURED. No routes were added to the public Vercel site. See private-knowledge/README.md.
