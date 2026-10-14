@@ -23,6 +23,13 @@ Last updated **2026-10-14** by GPT-6. Repository: `takatakca/knowledgeAI` (**PUB
 - Verified CI run `38623184283`: **success**, including the GitHub runner's live HTTPS GET of page, catalog, health and search.
 - Vercel `knowledgeai` production commit `4ca3ad226a56a3df0fb5fe88e090f723c5821ffe`: **READY**. Final docs follow-up release is independently triggered and must be checked before updating its verified state.
 
+## Verified follow-up research — TAKATAK Auth
+
+- In `takatakca/takatak-v1` revision `dcd454e42e95f08c407c53ab1af73ee2b36e0e4f`, server-side workspace API guard requires actual `client_scoped` access and permission; unauthorized requests yield 401/403/503.
+- Auth uses Supabase session mechanisms. The `/.well-known/jwks.json` endpoint belongs to Bluesky OAuth and **must not be treated as the identity authority**.
+- The existing Facturations service token is audience/secret-specific, not a reusable KnowledgeAI integration.
+- See `docs/PRIVATE-AUTH-CONTRACT.md` for source-backed next implementation boundary.
+
 ## Known problems, access and open work
 
 - Source repository is **PUBLIC**: never commit PII, legal material, secrets, private client data or payment info.

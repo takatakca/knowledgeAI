@@ -21,3 +21,5 @@ Last audit: **2026-10-14**. Repository: \`takatakca/knowledgeAI\`, default branc
 - No claim of live AI model or payment integration absent tested production evidence.
 
 See \`docs/TASK_QUEUE.md\` and \`docs/AGENT_HANDOFF.md\`.
+
+Private TAKATAK authentication discovery: verified existing Supabase/session/workspace guards, but no production-ready KnowledgeAI service federation contract. See [private authentication contract](./PRIVATE-AUTH-CONTRACT.md).

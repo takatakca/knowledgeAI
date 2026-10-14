@@ -26,3 +26,7 @@ When production evidence contradicts this log, record the conflict and do not si
 ## 2026-10-14 — production HTTP evidence
 
 **Decision:** Require an independent GitHub-hosted HTTP smoke check after publishing the catalog. This verifies real HTTPS for the portal, JSON catalog, health probe and read-only agent search, beyond Vercel's READY indicator. Successful evidence: GitHub run `38623184283`. Keep production SHA checks separate because Vercel can automatically deploy before a CI job completes.
+
+## 2026-10-14 — no false OIDC/JWKS integration
+
+The accessible TAKATAK core code uses Supabase sessions and database-backed workspace permission checks. Its publicly found `/.well-known/jwks.json` is a **Bluesky provider key**, not a TAKATAK identity federation contract. KnowledgeAI must obtain a real approved signed service token or secure server-to-server authority before private data access. See `docs/PRIVATE-AUTH-CONTRACT.md`.
