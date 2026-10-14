@@ -1,0 +1,66 @@
+name: Private Knowledge Security CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'private-knowledge/**'
+      - '.github/workflows/private-knowledge-tests.yml'
+  pull_request:
+    paths:
+      - 'private-knowledge/**'
+      - '.github/workflows/private-knowledge-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  auth-and-tenant-tests:
+    name: Signed JWT and private service unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax checks
+        run: |
+          node --check private-knowledge/src/auth.cjs
+          node --check private-knowledge/src/service.cjs
+          node --check private-knowledge/src/server.cjs
+      - name: Authorization, input and transaction tests
+        run: node --test private-knowledge/tests/private.test.cjs
+
+  postgres-rls:
+    name: PostgreSQL 17 tenant-isolation tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start disposable PostgreSQL
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run -d --name knowledge-private-ci \
+            -e POSTGRES_PASSWORD=local-ci-only \
+            -e POSTGRES_DB=knowledgeci \
+            postgres:17
+          for attempt in $(seq 1 45); do
+            if docker exec knowledge-private-ci pg_isready -U postgres -d knowledgeci; then
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs knowledge-private-ci
+          exit 1
+      - name: Apply private-schema migration
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/001_private_knowledge.sql
+      - name: Verify RLS denies cross-tenant reads and writes
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/tests/rls.sql
+      - name: Ensure migration can be reapplied
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/001_private_knowledge.sql
+      - name: Remove disposable DB
+        if: always()
+        run: docker rm -f knowledge-private-ci || true
