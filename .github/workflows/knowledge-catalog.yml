@@ -21,6 +21,15 @@ jobs:
           python-version: "3.12"
       - name: Run catalog unit tests
         run: python3 -m unittest discover -s ingest/tests -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate public API syntax
+        run: |
+          node --check api/search.js
+          node --check api/health.js
+      - name: Run public API tests
+        run: node --test tests/public-api.test.cjs
       - name: Generate and validate public catalog
         run: |
           python3 ingest/build_catalog.py

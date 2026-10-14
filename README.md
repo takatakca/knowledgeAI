@@ -52,4 +52,15 @@ TAKATAK / Claude / Codex / other authorized agents
 
 GitHub is the human-reviewable source of truth for curated knowledge. A backend retrieval service can later index this repository into PostgreSQL/pgvector or another search layer without making Git the runtime database.
 
-Live portal: https://knowledgeai-nu.vercel.app\n\nStart with `docs/00-MASTER-INDEX.md`.
+Live public portal: https://knowledgeai-nu.vercel.app
+
+## Public knowledge API
+
+- `GET /api/health` — catalog availability/record count.
+- `GET /api/search?q=TAKATAK&section=project&limit=5&offset=0` — bounded, provenance-linked search of **only the public GitHub corpus**.
+- Allowed sections: `all`, `guide`, `standard`, `project`, `prompt`. Results link to original source files.
+- This API is public. **Never pass private/client data or credentials into it.** Authenticated tenant knowledge is not available here.
+
+## Resume development
+
+Start with `AGENTS.md`, `docs/AGENT_HANDOFF.md`, `docs/TASK_QUEUE.md`, and `docs/00-MASTER-INDEX.md`. See `docs/DEPLOYMENT.md` for CI, endpoint checks and release verification.
