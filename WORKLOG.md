@@ -3,7 +3,7 @@
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
-- 2026-10-14 | GPT-6 (inventory pagination) | main | done | Add bounded tenant source pagination for complete export; real private PostgreSQL JWT/RLS/backup-safe CI 38630925562 success | next: trusted issuer, dedicated private DB, retention and secure deployment
+- 2026-10-14 | GPT-6 (inventory pagination) | main | done | Add bounded tenant source pagination for complete export; real private PostgreSQL JWT/RLS/audit CI 38630925562 success; backups not configured | next: trusted issuer, dedicated private DB, retention and secure deployment
 
 - 2026-10-14 | GPT-6 (private export) | main | done | Add tenant-scoped paginated full-version export requiring knowledge:export with audit + migration 003; private CI 38630318645 green | next: authorized issuer, dedicated DB, retention & production private deployment
 
