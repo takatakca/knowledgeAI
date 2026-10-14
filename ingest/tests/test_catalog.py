@@ -32,11 +32,11 @@ class CatalogTests(unittest.TestCase):
         result = build_catalog(self.root)
         self.assertEqual(result["version"], 1)
         self.assertEqual([item["path"] for item in result["items"]],
-                         ["README.md", "docs/test.md", "projects/alpha.md", "prompts/agent.md"])
+                         ["docs/test.md", "projects/alpha.md", "prompts/agent.md", "README.md"])
         self.assertEqual(result, build_catalog(self.root))
         self.assertFalse(any(".env" in item["path"] for item in result["items"]))
-        self.assertEqual(result["items"][2]["section"], "project")
-        self.assertIn("independent", result["items"][2]["summary"])
+        self.assertEqual(result["items"][1]["section"], "project")
+        self.assertIn("independent", result["items"][1]["summary"])
 
     def test_symlink_cannot_import_private_source(self):
         with tempfile.TemporaryDirectory() as outside:
