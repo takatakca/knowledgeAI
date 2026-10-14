@@ -145,7 +145,8 @@ test("lifecycle HTTP paths reject malformed source filters",async()=>{
   search:async()=>({visibility:"private",results:[]}),
   ingest:async()=>({inserted:true}),
   listSources:async()=>({visibility:"private",results:[]}),
-  deleteSource:async()=>({deleted:0,source_id:"s"})
+  deleteSource:async()=>({deleted:0,source_id:"s"}),
+  exportSource:async()=>({visibility:"private",versions:[]})
  },pool);
  await new Promise(resolve=>app.listen(0,"127.0.0.1",resolve));
  try{
@@ -156,7 +157,23 @@ test("lifecycle HTTP paths reject malformed source filters",async()=>{
   assert.equal((await fetch(base+"/v1/knowledge/sources?source_id=a&source_id=b",{method:"DELETE",headers:authorization})).status,400);
   assert.equal((await fetch(base+"/v1/knowledge/sources",{method:"DELETE",headers:authorization})).status,400);
   assert.equal((await fetch(base+"/v1/knowledge/sources?limit=1&limit=2",{headers:authorization})).status,400);
+  assert.equal((await fetch(base+"/v1/knowledge/export?source_id=s",{headers:authorization})).status,200);
+  assert.equal((await fetch(base+"/v1/knowledge/export",{headers:authorization})).status,400);
+  assert.equal((await fetch(base+"/v1/knowledge/export?source_id=s&source_id=x",{headers:authorization})).status,400);
  } finally {await new Promise(resolve=>app.close(resolve));}
+});
+test("source exports require dedicated scope and SQL-bounded pagination",async()=>{
+ const db=fakePool(), svc=createService(db,verifier);
+ const jwt = makeJwt({...valid(),scope:"knowledge:export"});
+ const exported=await svc.exportSource(jwt,"repo:example",{limit:"4",offset:"2"});
+ assert.equal(exported.visibility,"private");
+ assert.equal(exported.source_id,"repo:example");
+ const query=db.calls.find(x=>x.sql.includes("ORDER BY created_at,id LIMIT $2 OFFSET $3"));
+ assert.deepEqual(query.params,["repo:example",4,2]);
+ assert.ok(db.calls.some(x=>x.sql.includes("'export'")));
+ await assert.rejects(svc.exportSource(makeJwt(),"repo:example",{limit:"1",offset:"0"}),
+   e=>e.status===403);
+ await assert.rejects(svc.exportSource(jwt,"repo:example",{limit:"1000",offset:"0"}),InputError);
 });
 test("production configuration fails closed without independent database and identity",()=>{
  assert.throws(()=>settings({}),/configuration missing/);

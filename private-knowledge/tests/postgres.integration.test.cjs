@@ -61,6 +61,20 @@ test("private PostgreSQL adapter isolates two real tenants and replays", {
     assert.doesNotMatch(readA.results[0].excerpt,/banana/);
     assert.match(readB.results[0].excerpt,/banana/);
     assert.doesNotMatch(readB.results[0].excerpt,/apple/);
+    const newer = await service.ingest(token("tenant-aaaa"), {
+      source_id:"same-source",title:"Alpha newer",content:"highly private apple updated",
+      source_url:"https://example.org/source-alpha"
+    });
+    assert.equal(newer.inserted,true);
+    const exported = await service.exportSource(token("tenant-aaaa","knowledge:export"),
+      "same-source",{limit:"10",offset:"0"});
+    assert.equal(exported.versions.length,2);
+    assert.ok(exported.versions.every(v => v.body.includes("apple")));
+    assert.ok(exported.versions.every(v => !v.body.includes("banana")));
+    assert.equal((await service.exportSource(token("tenant-bbbb","knowledge:export"),
+      "same-source",{limit:"10",offset:"0"})).versions.length,1);
+    await assert.rejects(service.exportSource(token("tenant-aaaa","knowledge:read"),
+      "same-source",{limit:"10",offset:"0"}),error=>error.status===403);
     const listedA = await service.listSources(token("tenant-aaaa","knowledge:read"),{limit:"20"});
     assert.equal(listedA.results.length,2);
     assert.ok(listedA.results.some(row=>row.source_id==="same-source"));
@@ -69,7 +83,7 @@ test("private PostgreSQL adapter isolates two real tenants and replays", {
       error => error.status === 403);
     const deletionToken = token("tenant-aaaa","knowledge:delete");
     const deleted = await service.deleteSource(deletionToken,"same-source");
-    assert.equal(deleted.deleted,1);
+    assert.equal(deleted.deleted,2);
     await assert.rejects(service.deleteSource(deletionToken,"same-source"),
       error => error.status === 409);
     assert.equal((await service.search(token("tenant-aaaa","knowledge:read"),{

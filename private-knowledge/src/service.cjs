@@ -108,6 +108,26 @@ function createService(pool, verify) {
         return { visibility:"private", results:found.rows };
       });
     },
+    async exportSource(token, sourceId, query) {
+      const principal = await verify(token, "knowledge:export");
+      const source = textField(sourceId, "source_id", 240);
+      if (!query || typeof query.limit !== "string" ||
+          !/^(?:[1-9]|10)$/.test(query.limit) ||
+          typeof query.offset !== "string" ||
+          !/^(?:0|[1-9][0-9]{0,5})$/.test(query.offset)) {
+        throw new InputError("Invalid export pagination");
+      }
+      const limit = Number(query.limit), offset = Number(query.offset);
+      return withTenant(pool, principal, async client => {
+        const found = await client.query(
+          "SELECT source_id,title,body,source_url,sha256,created_at FROM knowledge_private.documents WHERE source_id=$1 ORDER BY created_at,id LIMIT $2 OFFSET $3",
+          [source,limit,offset]);
+        await client.query(
+          "INSERT INTO knowledge_private.audit (workspace_id,actor_id,operation,source_id) VALUES ($1,$2,'export',$3)",
+          [principal.workspace,principal.actor,source]);
+        return { visibility:"private", source_id:source, limit, offset, versions:found.rows };
+      });
+    },
     async deleteSource(token, sourceId) {
       const principal = await verify(token, "knowledge:delete");
       const source = textField(sourceId, "source_id", 240);

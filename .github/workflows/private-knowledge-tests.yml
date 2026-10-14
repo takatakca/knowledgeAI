@@ -60,12 +60,16 @@ jobs:
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/001_private_knowledge.sql
       - name: Apply source lifecycle migration
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/002_source_lifecycle.sql
+      - name: Apply source export audit migration
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/003_export_audit.sql
       - name: Verify RLS denies cross-tenant reads and writes
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/tests/rls.sql
       - name: Ensure migration can be reapplied
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/001_private_knowledge.sql
       - name: Reapply source lifecycle migration
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/002_source_lifecycle.sql
+      - name: Reapply source export audit migration
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/003_export_audit.sql
       - uses: actions/setup-node@v4
         with:
           node-version: '22'

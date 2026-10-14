@@ -85,6 +85,18 @@ function createServer(service, pool) {
         return send(res,200,await service.deleteSource(match[1],
           url.searchParams.get("source_id")));
       }
+      if (url.pathname === "/v1/knowledge/export" && req.method === "GET") {
+        if (url.searchParams.getAll("source_id").length !== 1 ||
+            url.searchParams.getAll("limit").length > 1 ||
+            url.searchParams.getAll("offset").length > 1) {
+          return send(res,400,{error:"Invalid export parameters"});
+        }
+        return send(res,200,await service.exportSource(match[1],
+          url.searchParams.get("source_id"),{
+            limit:url.searchParams.get("limit") || "10",
+            offset:url.searchParams.get("offset") || "0"
+          }));
+      }
       return send(res,404,{error:"Not found"});
     } catch (error) {
       const code = Number.isInteger(error.status) && error.status >= 400 &&
