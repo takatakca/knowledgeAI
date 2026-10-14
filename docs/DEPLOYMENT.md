@@ -5,7 +5,7 @@
 - Repository: \`https://github.com/takatakca/knowledgeAI\` (public), publication branch: \`main\`.
 - Portal: Git-linked Vercel project \`knowledgeai\`.
 - Production alias: \`https://knowledgeai-nu.vercel.app\`.
-- Previous Vercel deployment was marked **READY**; an external browser GET was not confirmed.
+- Vercel production deployment for SHA `4ca3ad226a56a3df0fb5fe88e090f723c5821ffe` was **READY** and external GitHub runner HTTP smoke verified four routes on 2026-10-14 (GitHub Actions run `38623184283`).
 - GitHub Actions \`Knowledge Catalog CI\` runs Python tests, builds catalog and publishes refreshed \`knowledge-catalog.json\` to \`main\`.
 - Vercel may create two releases per content change: the author's commit and the catalog bot commit.
 
@@ -13,7 +13,7 @@
 
 1. Push authorized, reviewed changes to \`main\` (never force-push).
 2. Open GitHub **Actions → Knowledge Catalog CI**. Require successful unit tests and index generation.
-3. Check whether the catalog bot pushed a follow-up commit; use its SHA as the final production target.
+3. GitHub CI now includes an automatic external HTTPS smoke job after catalog publishing. Check it passed; if it fails, fix Vercel routes/domain/authorization before claiming production. Check whether the catalog bot pushed a follow-up commit; use its SHA as the final production target.
 4. Inspect the \`knowledgeai\` project on Vercel; verify \`READY\` **and** \`githubCommitSha\` matches the target branch.
 5. From an external browser or curl, verify:
    \`\`\`sh

@@ -14,6 +14,15 @@ Build a durable, searchable, provenance-aware professional brain for TAKATAK pro
 6. Preserve client/product independence and transferability.
 7. Later expose the repository through a scoped backend retrieval API.
 
+## Agent continuity and verified release
+
+- [Current project status](./PROJECT_STATUS.md)
+- [Prioritized task queue](./TASK_QUEUE.md)
+- [Agent handoff — read first](./AGENT_HANDOFF.md)
+- [Deployment and HTTP checks](./DEPLOYMENT.md)
+- [Architecture decisions](./DECISIONS.md)
+- [Public read-only search API](./PUBLIC-API.md)
+
 ## Cross-project standards
 
 - [Architecture](./02-ARCHITECTURE.md)

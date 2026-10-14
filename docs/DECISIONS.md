@@ -22,3 +22,7 @@
 - Agent and provider integrations must not be presented as live without actual production evidence: \`docs/06-AGENT-OPERATING-RULES.md\`.
 
 When production evidence contradicts this log, record the conflict and do not silently overwrite earlier history.
+
+## 2026-10-14 — production HTTP evidence
+
+**Decision:** Require an independent GitHub-hosted HTTP smoke check after publishing the catalog. This verifies real HTTPS for the portal, JSON catalog, health probe and read-only agent search, beyond Vercel's READY indicator. Successful evidence: GitHub run `38623184283`. Keep production SHA checks separate because Vercel can automatically deploy before a CI job completes.

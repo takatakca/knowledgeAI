@@ -1,34 +1,40 @@
 # Agent handoff — knowledgeAI
 
-Updated: **2026-10-14**. Agent: GPT-6. Read \`AGENTS.md\`, \`WORKLOG.md\`, \`docs/PROJECT_STATUS.md\` first.
+Last updated **2026-10-14** by GPT-6. Repository: `takatakca/knowledgeAI` (**PUBLIC**), branch: `main`.
 
-## Current checkpoint
+## Last completed task
 
-- Repository: \`takatakca/knowledgeAI\` (PUBLIC), default branch \`main\`.
-- Verified previous baseline SHA: \`0f285999211f668fc3d8dfc685d90e37ea28b4d1\`.
-- Current work: public read-only agent search API, health probe, CI tests, and five continuity documents.
-- Last completed task: first 55-document public catalog + browser search, GitHub CI passing, production release reported READY.
-- Last pushed SHA for this task: **see the current GitHub \`main\` head**; update this field in the final checkpoint commit.
-- Changed files this iteration: \`api/search.js\`, \`api/health.js\`, \`tests/public-api.test.cjs\`, \`.github/workflows/knowledge-catalog.yml\`, \`README.md\`, \`AGENTS.md\`, \`WORKLOG.md\`, and five \`docs/\` continuity files.
+- Public browser knowledge search + auto-built deterministic catalog, 55 documents at previous checkpoint; the new five continuity files and this API document are also indexed.
+- Read-only agent API `/api/search`, `/api/health`: bounded inputs, source ID and SHA-256 provenance.
+- Python + Node tests in GitHub Actions and production HTTPS smoke workflow.
+- Five mandated continuity documents and master index links.
 
-## Verification and deployment
+## In progress / next
 
-- Previous green GitHub run: \`38612894515\`.
-- New API: execute \`node --test tests/public-api.test.cjs\` and \`node --check api/*.js\` in CI.
-- Check final workflow run, Vercel READY + SHA and real HTTPS GET on \`/api/health\` and \`/api/search\`.
-- **Do not mark external HTTP public access verified without actual status/content evidence.**
-- VPS AI Studio is only an installation kit; no verified live backend/provider billing.
+**Next task:** authenticated, tenant-scoped private ingestion and retrieval service. This is **not deployed or claimed as implemented**, because trusted TAKATAK OIDC settings, approved durable storage, confidential source approvals, and privileged runtime remain unverified.
 
-## Known blockers / access
+## Commits, files and verification
 
-- Need tested TAKATAK OIDC issuer, audience, JWKS, secure credentials and approved durable private database *before* accepting sensitive ingestion.
-- Real external HTTPS checks can fail from tool access even if Vercel says READY; log that as unverified.
-- Open PRs #3, #4, #5 are unrelated and must not be clobbered.
-- No credentials, API keys, tokens or personal data belong in these public files.
+- Starting checkpoint `0f285999211f668fc3d8dfc685d90e37ea28b4d1`.
+- Agent work commits: `e9f9e94e06dd83ad0557bab8988f7ff8c2b715ba`, `4ecba350da63bdec24b84f038eeac96b698d7949`, `0c3541bdbc962043a929c52fbaa1ab153887c512`, `4ca3ad226a56a3df0fb5fe88e090f723c5821ffe`.
+- The final documentation commit that contains this handoff has a different SHA by definition; read `git rev-parse HEAD` / GitHub `main` and the catalog bot's subsequent commit. Do not treat a parent SHA as the current head.
+- Modified/added: `api/search.js`, `api/health.js`, `tests/public-api.test.cjs`, `ingest/build_catalog.py`, `ingest/tests/test_catalog.py`, `ingest/README.md`, `assets/knowledge-search.js` (prior stage), `index.html` (prior stage), `.github/workflows/knowledge-catalog.yml`, `README.md`, `AGENTS.md`, `WORKLOG.md`, and the new/updated `docs/` continuity/API files.
+- Checks: `python3 -m unittest discover -s ingest/tests -v` (5 passed); `node --test tests/public-api.test.cjs` (7 passed); catalog generation/check; Node syntax checks.
+- Verified CI run `38623184283`: **success**, including the GitHub runner's live HTTPS GET of page, catalog, health and search.
+- Vercel `knowledgeai` production commit `4ca3ad226a56a3df0fb5fe88e090f723c5821ffe`: **READY**. Final docs follow-up release is independently triggered and must be checked before updating its verified state.
 
-## Exact next action
+## Known problems, access and open work
 
-1. Verify most recent GitHub Actions run on \`main\`; repair any failing test.
-2. Verify Vercel production release commit and \`/api/health\`, \`/api/search\` responses.
-3. Update this handoff with confirmed SHA/results.
-4. Advance the independent, authenticated per-tenant ingestion service only once its auth/storage contract and access are available.
+- Source repository is **PUBLIC**: never commit PII, legal material, secrets, private client data or payment info.
+- Do not confuse this public search API with secured TAKATAK Auth or a cross-client CRM.
+- No confirmed live AI Studio VPS install, real provider messages, paid credits or payment linkage. The kit is not a Vercel service.
+- Open PRs #3 (ON2GO Hub), #4 (MIMT phase 2), #5 (CubaResort recovery): coordinate separately and avoid overwriting other agents.
+- Secure runtime for private ingestion needs issuer/JWKS/audience and server-side entitlement mapping, approved DB, credentials kept outside GitHub, secrets vault and legal source permissions.
+
+## Exact next action for the next agent
+
+1. Read `AGENTS.md`, this file, `docs/TASK_QUEUE.md`, and `WORKLOG.md`.
+2. Read GitHub `main` HEAD and newest CI/Vercel production SHA; verify live HTTP after catalog bot update.
+3. Keep the public service working; do **not** pipe private content into it.
+4. Inspect TAKATAK Auth's **actual** OIDC/JWKS and permissions contracts in the appropriate source repository; define a versioned private retrieval adapter with denial-by-default tenant/product scopes.
+5. Implement private ingestion only against separately authorized infrastructure, with migration/authorization tests and secure deployment.

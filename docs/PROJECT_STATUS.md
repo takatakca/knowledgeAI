@@ -6,10 +6,10 @@ Last audit: **2026-10-14**. Repository: \`takatakca/knowledgeAI\`, default branc
 
 | Surface | Verified evidence | State |
 | --- | --- | --- |
-| Static public portal | GitHub-connected Vercel project \`knowledgeai\` and production alias \`knowledgeai-nu.vercel.app\` | Vercel has reported READY deployments; external HTTP check still required |
+| Static public portal | GitHub-connected Vercel project \`knowledgeai\` and production alias \`knowledgeai-nu.vercel.app\` | Vercel READY and external GitHub runner HTTP smoke passed on 2026-10-14 |
 | Public catalog | Deterministic \`ingest/build_catalog.py\`, 55 indexed Markdown records as of 2026-10-14 | Implemented; auto-regenerated through GitHub Actions |
 | Browser search | \`assets/knowledge-search.js\` and \`index.html\` | Implemented; uses public JSON only |
-| Agent public search API | \`api/search.js\` and \`api/health.js\` | Implemented with local CI tests; test real HTTPS endpoints after deployment |
+| Agent public search API | \`api/search.js\` and \`api/health.js\` | Implemented; 7 Node API tests green and HTTP endpoints passed remote GitHub runner smoke |
 | Private ingestion / client retrieval | Future dedicated service | **NOT IMPLEMENTED** — never send private data to public endpoints |
 | AI Studio (LibreChat/Open WebUI) | \`deploy/ai-studio\` installation kit | Kit present; real credentials, server/DNS and paid-provider usage unverified |
 

@@ -64,3 +64,5 @@ Live public portal: https://knowledgeai-nu.vercel.app
 ## Resume development
 
 Start with `AGENTS.md`, `docs/AGENT_HANDOFF.md`, `docs/TASK_QUEUE.md`, and `docs/00-MASTER-INDEX.md`. See `docs/DEPLOYMENT.md` for CI, endpoint checks and release verification.
+
+Public API query contract and security boundaries: [docs/PUBLIC-API.md](docs/PUBLIC-API.md).

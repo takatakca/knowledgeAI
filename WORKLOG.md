@@ -3,7 +3,7 @@
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
-- 2026-10-14 | GPT-6 (knowledgeAI next iteration) | main | active | Public agent search API, API tests, reproducible CI, required project/handoff documents | next: code + CI + deployment verification
+- 2026-10-14 | GPT-6 (knowledgeAI next iteration) | main | done | Read-only agent search/health API, source SHA256 provenance, 12 unit tests green, verified HTTPS smoke in run 38623184283, Vercel READY, five continuity docs | next: authenticated private per-tenant ingestion and storage; access/approvals needed
 
 - 2026-10-14 | GPT-6 (knowledgeAI) | main | done | Public catalog generator, 55 indexed docs, portal search, five unit tests, CI publish successful, Vercel production READY | next: verify external browser access; build authenticated scoped ingestion separately
 
