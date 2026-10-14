@@ -27,3 +27,7 @@ Private TAKATAK authentication discovery: verified existing Supabase/session/wor
 ## Private knowledge phase (2026-10-14)
 
 The private-knowledge/ package contains JWT-verified tenant backend, SQL schema, audit/replay prevention, a locked dependency tree, and tests against a real disposable PostgreSQL database using a restricted runtime role. Private Knowledge Security CI run 38627614637 passed all jobs, including npm ci and production dependency audit. This is code and ephemeral CI proof, NOT a live private service: no dedicated approved database, identity issuer, operational secrets or hardened deployment are configured. Public Vercel routes remain unchanged.
+
+## Lifecycle/security extension (2026-10-14)
+
+The separate private backend now supports tenant-only source inventory and all-version deletion, requires knowledge:delete for destructive operations, writes search/list/delete audit events, and sets a transaction-local SQL statement timeout. The first complete private CI for this extension: run 38629828659 SUCCESS (Node security tests, real PostgreSQL 17 RLS/deletion isolation, audit-owner checks, npm CI and dependency audit). **Not deployed:** there is no approved dedicated private database, trusted TAKATAK token issuer, production gateway, or backup/retention service. Public Vercel remains unchanged.

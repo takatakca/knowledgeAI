@@ -42,3 +42,7 @@ Implemented a standalone private-knowledge service and RLS schema behind a dedic
 ## 2026-10-14 — reproducibility and private integration proof
 
 Use pinned pg dependency plus committed package-lock.json and npm ci; fail CI on npm audit findings at high severity or above. Test the private app, not just its SQL migration, against a disposable PostgreSQL 17 with restricted runtime login. The tests prove implementation behavior but do not grant approval to load confidential source material or deploy without real TAKATAK authorization.
+
+## 2026-10-14 — tenant-only deletion with audit-preserving lifecycle
+
+Permit knowledge:read to list only current source metadata; require a separate knowledge:delete authorization for irreversible deletion of all source versions. Both operations resolve workspace from verified signed claims and use database RLS. Keep audit metadata and anti-replay receipts outside deletion until a documented retention/offboarding policy is approved. Limit list results at the database and reject repeated or missing source IDs. Private CI proves cross-tenant isolation and audits as the migration owner without granting audit read privileges to the runtime login.

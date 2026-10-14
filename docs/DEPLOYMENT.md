@@ -53,3 +53,7 @@ Do not deploy private-knowledge/ to Vercel public portal. It is a future isolate
 ## Latest reproducible private-service security checks
 
 CI run 38627614637 succeeded. The separate Private Knowledge Security CI checks JWT verifier syntax/tests, PostgreSQL 17 migration and FORCE RLS, cross-tenant restricted-role ingestion/search, replay denial, deterministic npm ci using private-knowledge/package-lock.json, and npm audit of production packages at high severity threshold. The private service is STILL NOT deployed; Vercel is only for the public corpus/API.
+
+## Private lifecycle migration 002
+
+After applying migration 001 in a separately approved private PostgreSQL DB, apply `private-knowledge/migrations/002_source_lifecycle.sql`. Provision the restricted runtime role with SELECT/INSERT/DELETE on documents, SELECT/INSERT on write_receipts, INSERT on audit (not SELECT), plus sequence and schema permissions. Verify all tenant cross-access tests. There is **no automatic private production deployment**; public Vercel remains a separate read-only service. Evidence: Private Knowledge Security CI run 38629828659.

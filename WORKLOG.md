@@ -3,7 +3,7 @@
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
-- 2026-10-14 | GPT-6 (knowledgeAI hardening) | main | active | Close private service readiness gaps: authenticated audit trail, scoped source lifecycle, regression tests, security checks and handoff | next: push code; CI; verify Vercel public release
+- 2026-10-14 | GPT-6 (knowledgeAI hardening) | main | done | Implement tenant-only source inventory/delete with knowledge:delete + anti-replay, read/deletion audit, SQL migration 002 and real Postgres isolation tests; CI 38629828659 successful | next: approved issuer/private DB, retention and scoped export
 
 - 2026-10-14 | GPT-6 (private knowledge) | main | done | Isolated RS256 verification, private tenant ingest/search, PostgreSQL 17 real integration/RLS, npm ci lock and audit green (private CI 38627614637), public Vercel healthy | next: approved TAKATAK issuer, separate DB and production isolation checks
 

@@ -1,5 +1,16 @@
 # Agent handoff — knowledgeAI
 
+## Most recent checkpoint — private source lifecycle (2026-10-14)
+
+- Repository: takatakca/knowledgeAI, PUBLIC, branch main. At checkpoint start: `4f4151ba305e12d068fc2a5534a9de92a27e38c1`. **This documentation commit and catalog refresh will change HEAD; always read it again.**
+- Completed task: private-knowledge GET `/v1/knowledge/sources` and DELETE `/v1/knowledge/sources?source_id=...`, scoped to signed JWT workspace; deletion requires knowledge:delete and consumes the one-time write-jti receipt. Audit for search/list/delete; migration 002 adds allowable audit operations and CI grants runtime DELETE only on tenant-scoped document rows.
+- Files changed: `private-knowledge/src/{service,server}.cjs`, `private-knowledge/migrations/002_source_lifecycle.sql`, `private-knowledge/tests/{private.test.cjs,postgres.integration.test.cjs,rls.sql,lifecycle-audit.sql}`, `.github/workflows/private-knowledge-tests.yml`, `private-knowledge/README.md`, and the five continuity documents and `WORKLOG.md`.
+- Verified tests: Private Knowledge Security CI `38629828659` all jobs SUCCESS: unit/security cases, real disposable PostgreSQL 17 multi-tenant tests, audit verification by privileged migration-owner rather than widening runtime role, lockfile check and npm audit. Public Knowledge Catalog CI on the corresponding code revision completed SUCCESS. Vercel public READY on code SHA `4f4151ba305e12d068fc2a5534a9de92a27e38c1`; final documentation SHA must be confirmed separately.
+- Deployment status: **Public search live and tested in earlier HTTPS smoke checks. Private backend NOT DEPLOYED**. No dedicated approved PostgreSQL DB, TAKATAK KnowledgeAI issuer/audience/JWKS contract, or operational secret store attached. Supabase projects for unrelated apps were not modified.
+- Known limitations: no tenant data export API, no audit/receipt/backup retention deletion policy, no production issuer revocation mechanism, no AI Studio VPS verification. Three open PRs #3/#4/#5 are unrelated and were not modified.
+- NEXT EXACT ACTION: confirm approved TAKATAK issuer with server-side membership/entitlement verification; provision a dedicated confidential DB; install both migrations as owner; configure non-owner runtime plus proper gateway; verify live tenant denial/revocation and backup/retention before enabling private data. Independently implement a paginated, scoped source export and retention policy once legally approved.
+
+
 ## Latest verified checkpoint (2026-10-14)
 
 - At beginning of this handoff update, GitHub main = cd45e9e8ee6369b3adbd65b546f3568caaf84271, public Knowledge Catalog CI run 38627614608 SUCCESS; Vercel production deploy for that SHA READY.
