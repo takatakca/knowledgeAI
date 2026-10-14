@@ -75,7 +75,12 @@ test("private PostgreSQL adapter isolates two real tenants and replays", {
       "same-source",{limit:"10",offset:"0"})).versions.length,1);
     await assert.rejects(service.exportSource(token("tenant-aaaa","knowledge:read"),
       "same-source",{limit:"10",offset:"0"}),error=>error.status===403);
-    const listedA = await service.listSources(token("tenant-aaaa","knowledge:read"),{limit:"20"});
+    const listedA = await service.listSources(token("tenant-aaaa","knowledge:read"),{limit:"20",offset:"0"});
+    const pageOne = await service.listSources(token("tenant-aaaa","knowledge:read"),{limit:"1",offset:"0"});
+    const pageTwo = await service.listSources(token("tenant-aaaa","knowledge:read"),{limit:"1",offset:"1"});
+    assert.equal(pageOne.results.length,1);
+    assert.equal(pageTwo.results.length,1);
+    assert.notEqual(pageOne.results[0].source_id,pageTwo.results[0].source_id);
     assert.equal(listedA.results.length,2);
     assert.ok(listedA.results.some(row=>row.source_id==="same-source"));
     assert.ok(listedA.results.some(row=>row.source_id==="doc-one"));

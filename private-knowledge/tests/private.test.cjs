@@ -128,8 +128,8 @@ test("HTTP layer requires bearer token, blocks write routes without token",async
 });
 test("tenant source lifecycle requires distinct signed scopes and jti",async()=>{
  const db=fakePool(), svc=createService(db,verifier);
- await svc.listSources(makeJwt(),{limit:"2"});
- assert.ok(db.calls.some(x=>x.sql.includes("LIMIT $1") && x.params?.[0]===2));
+ await svc.listSources(makeJwt(),{limit:"2",offset:"3"});
+ assert.ok(db.calls.some(x=>x.sql.includes("LIMIT $1 OFFSET $2") && x.params?.[0]===2 && x.params?.[1]===3));
  assert.ok(db.calls.some(x=>x.sql.includes("'list'")));
  db.calls.length=0;
  const result=await svc.deleteSource(makeJwt({...valid(),scope:"knowledge:delete"}),"repo:1");
@@ -137,7 +137,8 @@ test("tenant source lifecycle requires distinct signed scopes and jti",async()=>
  assert.ok(db.calls.some(x=>x.sql.startsWith("DELETE FROM knowledge_private.documents")));
  assert.ok(db.calls.some(x=>x.sql.includes("'delete'")));
  assert.ok(db.calls.some(x=>x.sql.includes("write_receipts")));
- await assert.rejects(svc.listSources(makeJwt(),{limit:"5000"}),InputError);
+ await assert.rejects(svc.listSources(makeJwt(),{limit:"5000",offset:"0"}),InputError);
+ await assert.rejects(svc.listSources(makeJwt(),{limit:"5",offset:"-1"}),InputError);
 });
 test("lifecycle HTTP paths reject malformed source filters",async()=>{
  const pool={query:async()=>({rows:[{one:1}]})};
@@ -157,6 +158,7 @@ test("lifecycle HTTP paths reject malformed source filters",async()=>{
   assert.equal((await fetch(base+"/v1/knowledge/sources?source_id=a&source_id=b",{method:"DELETE",headers:authorization})).status,400);
   assert.equal((await fetch(base+"/v1/knowledge/sources",{method:"DELETE",headers:authorization})).status,400);
   assert.equal((await fetch(base+"/v1/knowledge/sources?limit=1&limit=2",{headers:authorization})).status,400);
+  assert.equal((await fetch(base+"/v1/knowledge/sources?offset=1&offset=2",{headers:authorization})).status,400);
   assert.equal((await fetch(base+"/v1/knowledge/export?source_id=s",{headers:authorization})).status,200);
   assert.equal((await fetch(base+"/v1/knowledge/export",{headers:authorization})).status,400);
   assert.equal((await fetch(base+"/v1/knowledge/export?source_id=s&source_id=x",{headers:authorization})).status,400);

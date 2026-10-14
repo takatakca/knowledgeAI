@@ -66,11 +66,14 @@ function createServer(service, pool) {
           return send(res,400,{error:"Duplicate query parameter"});
         }
         return send(res,200,await service.search(match[1],{
-          q:url.searchParams.get("q") || "",limit:url.searchParams.get("limit") || "20"
+          q:url.searchParams.get("q") || "",limit:url.searchParams.get("limit") || "20",
+          offset:url.searchParams.get("offset") || "0"
         }));
       }
       if (url.pathname === "/v1/knowledge/sources" && req.method === "GET") {
-        if (url.searchParams.getAll("limit").length > 1 || url.searchParams.has("source_id")) {
+        if (url.searchParams.getAll("limit").length > 1 ||
+            url.searchParams.getAll("offset").length > 1 ||
+            url.searchParams.has("source_id")) {
           return send(res,400,{error:"Invalid query parameters"});
         }
         return send(res,200,await service.listSources(match[1],{
