@@ -1,32 +1,33 @@
-# Ingestion
+# Ingestion — public catalog and future private retrieval
 
-This directory defines future ingestion behavior. It does not store credentials.
+## Available now: static, public, deterministic search
 
-## Pipeline
+Run the Python standard-library catalog builder from the repository root:
 
-```
-source connector/export
-  → source inventory
-  → classification
-  → segmentation
-  → deduplication
-  → provenance/hash
-  → normalization
-  → project/domain routing
-  → derived summaries/decisions
-  → search/vector indexing
-```
+    python3 ingest/build_catalog.py
+    python3 -m unittest discover -s ingest/tests -v
+    python3 ingest/build_catalog.py --check
 
-## Requirements
-- idempotent ingestion
-- deterministic source IDs where possible
-- provenance on every record
-- explicit current/historical/superseded state
-- conflict preservation
-- no secret ingestion
-- project and agent access scoping
-- ability to rebuild indexes from source records
-- raw source and derived content must remain distinguishable
+Commit the regenerated knowledge-catalog.json with every public Markdown
+change. GitHub Actions checks unit tests, drift and recognizable credential
+patterns. The search corpus is sourced **only** from approved public Markdown
+in root README/BRAND/AGENTS and docs/, projects/, prompts/. It does **not**
+ingest private files, users, customer data, or local machine exports.
 
-## Future runtime
-A TAKATAK backend service can periodically pull approved repository content, validate it against schemas, index it into PostgreSQL/pgvector/search, and expose a scoped retrieval API to authorized agents.
+The website reads public JSON directly and links to the original GitHub files.
+This is not an authenticated retrieval API and must not be used for client secrets.
+
+## Future ingestion pipeline (NOT YET IMPLEMENTED)
+
+    approved source → classification → segmentation → deduplication
+    → source IDs / content hashes → normalized records → scoped indexes
+    → authenticated retrieval API
+
+Required before ingesting anything private:
+- explicit source approval, classification, and confidentiality controls;
+- source/derived record separation, immutable provenance and conflict history;
+- idempotency, deduplication, proper tenant and product access checks;
+- encryption, audit, deletion and client offboarding controls;
+- server-side authorization tests for every retrieval path.
+
+See docs/03-INGESTION-POLICY.md and schemas/knowledge-record.schema.json.
