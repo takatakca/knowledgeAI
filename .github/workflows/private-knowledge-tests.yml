@@ -46,6 +46,7 @@ jobs:
           docker run -d --name knowledge-private-ci \
             -e POSTGRES_PASSWORD=local-ci-only \
             -e POSTGRES_DB=knowledgeci \
+            -p 127.0.0.1:5433:5432 \
             postgres:17
           for attempt in $(seq 1 45); do
             if docker exec knowledge-private-ci pg_isready -U postgres -d knowledgeci; then
@@ -61,6 +62,17 @@ jobs:
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/tests/rls.sql
       - name: Ensure migration can be reapplied
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/001_private_knowledge.sql
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned private database driver
+        run: npm install --prefix private-knowledge --omit=dev --ignore-scripts --no-audit --no-fund
+      - name: Make CI runtime role a restricted login
+        run: docker exec knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci -c "ALTER ROLE knowledge_ci_runtime LOGIN PASSWORD 'ci-disposable-password'"
+      - name: Execute actual tenant-aware service against PostgreSQL
+        env:
+          PRIVATE_CI_DATABASE_URL: postgresql://knowledge_ci_runtime:ci-disposable-password@127.0.0.1:5433/knowledgeci
+        run: node --test private-knowledge/tests/postgres.integration.test.cjs
       - name: Remove disposable DB
         if: always()
         run: docker rm -f knowledge-private-ci || true
