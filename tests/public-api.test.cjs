@@ -31,7 +31,7 @@ test("search enumerates only the public curated catalog", () => {
 });
 
 test("accent insensitive search returns provenance links", () => {
-  const result = invoke(handler, { q: "deploiement", limit: "5" });
+  const result = invoke(handler, { q: "montreal", limit: "5" });
   assert.equal(result.status, 200);
   assert.ok(result.body.total > 0);
   assert.ok(result.body.results.every((item) => item.path && item.source_url));
