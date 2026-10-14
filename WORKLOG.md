@@ -3,7 +3,7 @@
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
-- 2026-10-14 | GPT-6 (knowledgeAI) | main | active | Build public curated searchable catalog, portal search and CI validation | next: generate catalog, validate GitHub Actions and check Vercel deployment access
+- 2026-10-14 | GPT-6 (knowledgeAI) | main | done | Public catalog generator, 55 indexed docs, portal search, five unit tests, CI publish successful, Vercel production READY | next: verify external browser access; build authenticated scoped ingestion separately
 
 - 2026-10-09 | claude (MIMT agent 2, session 01GtWamF) | takatakca/mimtcaapp main | done | mimtcaapp bootstrap pushed: API, mobile, web, DB, CI (160 tests green); live mimt.ca is a Fongo copy, to replace | owner: replace mimt.ca with apps/web/out, Twilio MIMT sub-account + secrets, Supabase project
 - 2026-10-09 | claude (MIMT agent 2, session 01GtWamF) | claude/mimt-telecom-plan → PR #1 | PR #1 | MIMT telecom: regulatory brief, cost stack, MVP plan (projects/MIMT-*.md) | owner: review PR, lawyer quote, confirm Twilio console, approve repo takatakca/mimt before any code
