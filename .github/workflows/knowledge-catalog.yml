@@ -66,3 +66,47 @@ jobs:
           git commit -m "chore(knowledge): refresh public search catalog [skip ci]"
           git pull --rebase origin main
           git push origin HEAD:main
+
+  smoke:
+    name: Public production HTTP smoke check
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: [catalog, publish]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify portal, catalog and read-only APIs through HTTPS
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="https://knowledgeai-nu.vercel.app"
+          for attempt in $(seq 1 15); do
+            if curl -fsSL --max-time 10 "$base/" -o portal.html \
+              && curl -fsSL --max-time 10 "$base/knowledge-catalog.json" -o catalog.json \
+              && curl -fsSL --max-time 10 "$base/api/health" -o health.json \
+              && curl -fsSL --max-time 10 "$base/api/search?q=TAKATAK&limit=3" -o search.json \
+              && node -e '
+                const fs = require("fs");
+                const portal = fs.readFileSync("portal.html", "utf8");
+                const catalog = JSON.parse(fs.readFileSync("catalog.json", "utf8"));
+                const health = JSON.parse(fs.readFileSync("health.json", "utf8"));
+                const search = JSON.parse(fs.readFileSync("search.json", "utf8"));
+                if (!portal.includes("GROUPE TAKATAK") ||
+                    catalog.version !== 1 || !Array.isArray(catalog.items) || catalog.items.length < 55 ||
+                    health.status !== "ok" || health.records < 55 ||
+                    search.visibility !== "public" || !Array.isArray(search.results) || search.total < 1 ||
+                    search.results.some(x => !x.source_url.startsWith("https://github.com/takatakca/knowledgeAI/blob/main/"))) {
+                  process.exit(1);
+                }'; then
+              echo "Public portal and API HTTP checks passed"
+              exit 0
+            fi
+            echo "Public deployment not ready or mismatched (attempt $attempt/15)"
+            sleep 8
+          done
+          echo "::error::Public production HTTP smoke checks failed. Inspect Vercel routes, SSO, DNS, and deployment status."
+          exit 1
