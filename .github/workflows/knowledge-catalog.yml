@@ -54,18 +54,34 @@ jobs:
           python-version: "3.12"
       - name: Generate public searchable index
         run: python3 ingest/build_catalog.py
-      - name: Commit catalog if it changed
+      - name: Commit catalog from latest main without overwriting other agents
+        shell: bash
         run: |
-          git add -- knowledge-catalog.json
-          if git diff --cached --quiet; then
-            echo "Catalog is current"
-            exit 0
-          fi
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore(knowledge): refresh public search catalog [skip ci]"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          for attempt in $(seq 1 10); do
+            # This runner contains only generated artifacts. Rebase is replaced
+            # by a fresh fetch/reset so a newer source never receives a stale
+            # catalog. The remote branch is never force-pushed.
+            git fetch --no-tags origin main
+            git reset --hard FETCH_HEAD
+            python3 ingest/build_catalog.py
+            git add -- knowledge-catalog.json
+            if git diff --cached --quiet; then
+              echo "Public catalog already current on main"
+              exit 0
+            fi
+            git commit -m "chore(knowledge): refresh public search catalog [skip ci]"
+            if git push origin HEAD:main; then
+              echo "Published catalog from latest main"
+              exit 0
+            fi
+            echo "Concurrent main update; rebuilding on refreshed head ($attempt/10)"
+            sleep 4
+          done
+          echo "::error::Could not publish catalog after retries; inspect concurrent main changes."
+          exit 1
 
   smoke:
     name: Public production HTTP smoke check
