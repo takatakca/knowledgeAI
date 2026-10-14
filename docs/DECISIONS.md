@@ -38,3 +38,7 @@ Multiple agents may change `main` while GitHub Actions generates its public sear
 ## 2026-10-14 — isolated private-service code, no public data plane
 
 Implemented a standalone private-knowledge service and RLS schema behind a dedicated RS256 JWT contract with audience, issuer, product, workspace and explicit read/write scopes. No private credentials or tenant data are held in this public repository. The service is not deployed while the TAKATAK issuer, separate PostgreSQL instance and operational controls are unverified. CI uses synthetic identities and a disposable PostgreSQL 17 container.
+
+## 2026-10-14 — reproducibility and private integration proof
+
+Use pinned pg dependency plus committed package-lock.json and npm ci; fail CI on npm audit findings at high severity or above. Test the private app, not just its SQL migration, against a disposable PostgreSQL 17 with restricted runtime login. The tests prove implementation behavior but do not grant approval to load confidential source material or deploy without real TAKATAK authorization.

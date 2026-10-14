@@ -1,5 +1,17 @@
 # Agent handoff — knowledgeAI
 
+## Latest verified checkpoint (2026-10-14)
+
+- At beginning of this handoff update, GitHub main = cd45e9e8ee6369b3adbd65b546f3568caaf84271, public Knowledge Catalog CI run 38627614608 SUCCESS; Vercel production deploy for that SHA READY.
+- Private Knowledge Security CI run 38627614637 SUCCESS: 9 JWT/transaction/HTTP tests, PostgreSQL RLS SQL tests, a full restricted-role PostgreSQL 17 ingestion/search integration test, reproducible npm ci, and npm high-severity audit. Synthetic data only.
+- private-knowledge/package-lock.json added by bot SHA 76d142be0f98365930a3392a33f668abc39e3665; subsequent CI verified npm ci from committed lock.
+- This documentation commit and subsequent catalog bot refresh change main SHA. Always inspect fresh head/CI/Vercel after this update.
+- PUBLIC production remains only index.html, catalog and read-only public API. PRIVATE service code and migrations are tested, but not deployed and not wired to real TAKATAK issuer or separate approved confidential PostgreSQL.
+- Pending human-authorized dependencies: trusted TAKATAK per-workspace service token issuer/entitlement verification, a dedicated private DB + login/provisioning, operational secrets/network/backup/retention, and production smoke tests.
+- No live tenant records or credentials were copied to the public repo or another Supabase project. Open PRs #3, #4, #5 remain untouched.
+- Next exact action: verify actual signed KnowledgeAI issuer and entitlement contract in TAKATAK core; provision the APPROVED separate private DB; run migration as owner and service as restricted login, check revocation, two live test workspaces and backups before activating private ingestion.
+
+
 Last updated **2026-10-14** by GPT-6. Repository: `takatakca/knowledgeAI` (**PUBLIC**), branch: `main`.
 
 ## Last completed task
@@ -57,4 +69,4 @@ Last updated **2026-10-14** by GPT-6. Repository: `takatakca/knowledgeAI` (**PUB
 - Files changed: private-knowledge/package.json, private-knowledge/src/auth.cjs, src/service.cjs, src/server.cjs, migrations/001_private_knowledge.sql, tests/private.test.cjs, tests/rls.sql, private-knowledge/README.md, .github/workflows/private-knowledge-tests.yml, docs/PRIVATE-AUTH-CONTRACT.md, docs/DECISIONS.md, docs/PROJECT_STATUS.md, docs/TASK_QUEUE.md, docs/DEPLOYMENT.md, and WORKLOG.md.
 - Checks: private CI workflow run 38626791522 both jobs success (JWT/Node and live ephemeral Postgres RLS). Public Knowledge Catalog CI continues separately. Exact command: node --test private-knowledge/tests/private.test.cjs; SQL: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/001_private_knowledge.sql, then same command for private-knowledge/tests/rls.sql.
 - No new passwords or keys were committed. No private dataset or credentials were copied into Supabase staging or any unrelated client database. Public portal remains the only production deployment.
-- NEXT EXACT ACTION: inspect real trusted TAKATAK service-token issuer contract with membership/entitlement resolution and identify separately approved private PostgreSQL project; generate/check package lock and test two tenant roles on that approved DB. Do not allow private ingestion before these checks.
+- NEXT EXACT ACTION: inspect real trusted TAKATAK service-token issuer contract with membership/entitlement resolution and identify separately approved private PostgreSQL project; package lock DONE; test role and authenticated issuer against a separately approved DB, with revocation/backup controls. Do not allow private ingestion before these checks.

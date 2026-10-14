@@ -23,6 +23,7 @@ Build a durable, searchable, provenance-aware professional brain for TAKATAK pro
 - [Architecture decisions](./DECISIONS.md)
 - [Public read-only search API](./PUBLIC-API.md)
 - [Private authentication integration — verified contract discovery](./PRIVATE-AUTH-CONTRACT.md)
+- [Isolated private backend implementation and security runbook](../private-knowledge/README.md)
 
 ## Cross-project standards
 

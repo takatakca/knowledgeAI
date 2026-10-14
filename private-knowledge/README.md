@@ -21,7 +21,7 @@ From the repository root:
     node --check private-knowledge/src/service.cjs
     node --check private-knowledge/src/server.cjs
 
-The CI PostgreSQL job applies migrations/001_private_knowledge.sql, runs tests/rls.sql, and checks migration reapplication. CI test data is synthetic, never real client content.
+The CI PostgreSQL job applies migrations/001_private_knowledge.sql, runs tests/rls.sql, and checks migration reapplication. CI test data is synthetic, never real client content. An additional integration test runs ingestion and tenant-scoped retrieval against real PostgreSQL 17 as a restricted login, including cross-workspace and replay checks.
 
 ## NOT YET production-ready: required rollout steps
 
@@ -35,7 +35,7 @@ The CI PostgreSQL job applies migrations/001_private_knowledge.sql, runs tests/r
    - KNOWLEDGE_JWT_AUDIENCE (private-service audience)
    - KNOWLEDGE_JWKS_URL (actual trusted HTTPS public keys)
    - PRIVATE_PORT (optional, default 8301)
-6. On approved server: install Node 22+, run npm install --omit=dev --ignore-scripts in this directory, and npm start. Package pg is pinned but its transitive dependency lockfile has NOT yet been committed; use approved packaging/lockfile verification before launch.
+6. On approved server: install Node 22+, run npm ci --omit=dev --ignore-scripts in this directory, and npm start. The committed package-lock.json locks pg and its transitive dependencies; CI verifies npm ci, npm audit (high severity threshold), and real PostgreSQL integration tests.
 7. Put service behind a private network/authenticated gateway. Verify real 401/403 responses, JWT rotation, two-company row isolation, audit, backup, retention, restore, disclosure approval and signed entitlements before enabling real imports.
 
 ## Security and operational limits

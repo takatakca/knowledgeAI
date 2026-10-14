@@ -49,3 +49,7 @@ Parallel source edits can race with the catalog bot. The publish job now fetches
 ## Private backend — separate non-public deployment
 
 Do not deploy private-knowledge/ to Vercel public portal. It is a future isolated server, requiring the approved credential issuer, dedicated private PostgreSQL instance, RLS runtime role, secure network/proxy and backup/retention. Current evidence is synthetic JWT unit tests and a disposable PostgreSQL 17 RLS CI test. The service does not claim production availability. See private-knowledge/README.md.
+
+## Latest reproducible private-service security checks
+
+CI run 38627614637 succeeded. The separate Private Knowledge Security CI checks JWT verifier syntax/tests, PostgreSQL 17 migration and FORCE RLS, cross-tenant restricted-role ingestion/search, replay denial, deterministic npm ci using private-knowledge/package-lock.json, and npm audit of production packages at high severity threshold. The private service is STILL NOT deployed; Vercel is only for the public corpus/API.
