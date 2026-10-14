@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -62,6 +63,8 @@ def build_catalog(root: Path) -> dict:
         title = title_from(path, body)
         items.append({
             "path": relative,
+            "source_id": "github:takatakca/knowledgeAI:" + relative,
+            "sha256": hashlib.sha256(body.encode("utf-8")).hexdigest(),
             "title": title,
             "section": section,
             "summary": summary_from(body, title),

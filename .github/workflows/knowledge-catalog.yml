@@ -21,6 +21,8 @@ jobs:
           python-version: "3.12"
       - name: Run catalog unit tests
         run: python3 -m unittest discover -s ingest/tests -v
+      - name: Build public catalog for API tests
+        run: python3 ingest/build_catalog.py
       - uses: actions/setup-node@v4
         with:
           node-version: "22"

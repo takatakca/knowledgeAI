@@ -62,6 +62,8 @@ function search(query) {
       summary: item.summary,
       section: item.section,
       path: item.path,
+      source_id: item.source_id,
+      source_sha256: item.sha256,
       source_url: githubBase + item.path.split("/").map(encodeURIComponent).join("/"),
       // Search text indexes only the repository's already-public source files.
       excerpt: item.search_text.slice(0, 500)

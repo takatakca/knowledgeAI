@@ -28,6 +28,8 @@ test("search enumerates only the public curated catalog", () => {
   assert.equal(headers["x-content-type-options"], "nosniff");
   assert.match(headers["cache-control"], /public/);
   assert.ok(!("search_text" in body.results[0]));
+  assert.ok(body.results.every((item) => item.source_id.startsWith("github:takatakca/knowledgeAI:")));
+  assert.ok(body.results.every((item) => /^[a-f0-9]{64}$/.test(item.source_sha256)));
 });
 
 test("accent insensitive search returns provenance links", () => {

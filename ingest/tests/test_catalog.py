@@ -1,5 +1,6 @@
 """Tests for deterministic, public-only Knowledge AI catalog generation."""
 import json
+import hashlib
 import sys
 import tempfile
 import unittest
@@ -36,6 +37,8 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(result, build_catalog(self.root))
         self.assertFalse(any(".env" in item["path"] for item in result["items"]))
         self.assertEqual(result["items"][1]["section"], "project")
+        self.assertEqual(result["items"][1]["source_id"], "github:takatakca/knowledgeAI:projects/alpha.md")
+        self.assertEqual(result["items"][1]["sha256"], hashlib.sha256((self.root / "projects" / "alpha.md").read_bytes()).hexdigest())
         self.assertIn("independent", result["items"][1]["summary"])
 
     def test_symlink_cannot_import_private_source(self):

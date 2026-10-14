@@ -31,3 +31,5 @@ Required before ingesting anything private:
 - server-side authorization tests for every retrieval path.
 
 See docs/03-INGESTION-POLICY.md and schemas/knowledge-record.schema.json.
+
+Each indexed record carries a deterministic GitHub `source_id` and SHA-256 hash of its public source Markdown bytes. Treat these as provenance, not as authentication or encryption.
