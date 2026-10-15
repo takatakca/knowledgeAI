@@ -66,6 +66,10 @@ function fakePool(){
     async query(sql,params){
       calls.push({sql,params});
       if(fail && sql.includes("knowledge_private.audit")) throw new Error("db failed");
+      if(sql.includes("FROM knowledge_private.workspace_entitlements"))
+        return {rowCount:1,rows:[{enabled:true,allowed:true}]};
+      if(sql.includes("FROM knowledge_private.revoked_tokens"))
+        return {rowCount:0,rows:[]};
       if(sql.includes("write_receipts"))return {rowCount:1,rows:[{jti:"nonce"}]};
       if(sql.includes("knowledge_private.documents")&&sql.startsWith("INSERT")) return {rowCount:1,rows:[{id:1}]};
       return {rowCount:1,rows:[]};

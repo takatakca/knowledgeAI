@@ -29,6 +29,7 @@ jobs:
         run: |
           node --check private-knowledge/src/auth.cjs
           node --check private-knowledge/src/service.cjs
+          node --check private-knowledge/src/access.cjs
           node --check private-knowledge/src/server.cjs
       - name: Authorization, input and transaction tests
         run: node --test private-knowledge/tests/private.test.cjs
@@ -62,6 +63,10 @@ jobs:
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/002_source_lifecycle.sql
       - name: Apply source export audit migration
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/003_export_audit.sql
+      - name: Apply fail-closed workspace access migration
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/004_workspace_access.sql
+      - name: Seed synthetic admin-managed entitlements and revocations
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/tests/access-controls.sql
       - name: Verify RLS denies cross-tenant reads and writes
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/tests/rls.sql
       - name: Ensure migration can be reapplied
@@ -70,6 +75,8 @@ jobs:
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/002_source_lifecycle.sql
       - name: Reapply source export audit migration
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/003_export_audit.sql
+      - name: Reapply workspace access migration
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/004_workspace_access.sql
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
