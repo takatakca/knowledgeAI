@@ -2,6 +2,7 @@
 const http = require("node:http");
 const { createVerifier, AccessError } = require("./auth.cjs");
 const { createService } = require("./service.cjs");
+const { assertDatabaseSafety } = require("./preflight.cjs");
 
 function settings(env = process.env) {
   const required = ["PRIVATE_DATABASE_URL","KNOWLEDGE_JWT_ISSUER",
@@ -123,10 +124,11 @@ async function boot() {
     connectionString:config.connectionString,ssl:{rejectUnauthorized:true},max:10,
     connectionTimeoutMillis:5000, idleTimeoutMillis:20000
   });
-  // Refuse privileged pool users: database RLS requires a distinct non-owner login.
-  const state = await pool.query("SELECT rolsuper,rolbypassrls FROM pg_roles WHERE rolname = current_user");
-  if (state.rows.length !== 1 || state.rows[0].rolsuper || state.rows[0].rolbypassrls) {
-    await pool.end(); throw new Error("Private database runtime role is privileged");
+  try {
+    await assertDatabaseSafety(pool);
+  } catch (error) {
+    await pool.end();
+    throw error;
   }
   const verify = createVerifier({issuer:config.issuer,audience:config.audience,
     jwksUrl:config.jwksUrl});

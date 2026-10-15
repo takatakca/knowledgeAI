@@ -30,9 +30,10 @@ jobs:
           node --check private-knowledge/src/auth.cjs
           node --check private-knowledge/src/service.cjs
           node --check private-knowledge/src/access.cjs
+          node --check private-knowledge/src/preflight.cjs
           node --check private-knowledge/src/server.cjs
       - name: Authorization, input and transaction tests
-        run: node --test private-knowledge/tests/private.test.cjs private-knowledge/tests/access.test.cjs
+        run: node --test private-knowledge/tests/private.test.cjs private-knowledge/tests/access.test.cjs private-knowledge/tests/preflight.test.cjs
 
   postgres-rls:
     name: PostgreSQL 17 tenant-isolation tests

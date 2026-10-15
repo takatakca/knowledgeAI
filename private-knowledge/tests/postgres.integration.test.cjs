@@ -6,6 +6,7 @@ const { generateKeyPairSync, sign } = require("node:crypto");
 const { Pool } = require("pg");
 const { createVerifier } = require("../src/auth.cjs");
 const { createService } = require("../src/service.cjs");
+const { assertDatabaseSafety } = require("../src/preflight.cjs");
 
 test("private PostgreSQL adapter isolates two real tenants and replays", {
   skip: !process.env.PRIVATE_CI_DATABASE_URL
@@ -15,6 +16,10 @@ test("private PostgreSQL adapter isolates two real tenants and replays", {
     ssl: false, max: 2, connectionTimeoutMillis: 3000
   });
   try {
+    // Disposable local PostgreSQL uses plaintext by design: production preflight
+    // must reject it, and the CI-only override verifies the remaining controls.
+    await assert.rejects(assertDatabaseSafety(pool),/database session is not using TLS/);
+    assert.equal(await assertDatabaseSafety(pool,{requireTLS:false}),true);
     const { publicKey, privateKey } = generateKeyPairSync("rsa", { modulusLength: 2048 });
     const jwk = { ...publicKey.export({ format:"jwk" }), kid:"ci-key", alg:"RS256", use:"sig" };
     const config = {issuer:"https://ci.identity.invalid", audience:"knowledge-private-ci",
