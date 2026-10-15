@@ -199,6 +199,23 @@ test("source exports require dedicated scope and SQL-bounded pagination",async()
    e=>e.status===403);
  await assert.rejects(svc.exportSource(jwt,"repo:example",{limit:"1000",offset:"0"}),InputError);
 });
+test("HTTP propagates workspace quota denials as uncached 429",async()=>{
+ const pool={query:async()=>({rows:[]})};
+ const server=createServer({
+   search:async()=>{throw new AccessError("Request quota exceeded",429)},
+   ingest:async()=>({inserted:true})
+ },pool);
+ await new Promise(resolve=>server.listen(0,"127.0.0.1",resolve));
+ try{
+   const result=await fetch("http://127.0.0.1:"+server.address().port+
+     "/v1/knowledge/search?q=test",{
+       headers:{Authorization:"Bearer ci-valid-token"}
+     });
+   assert.equal(result.status,429);
+   assert.equal(result.headers.get("cache-control"),"no-store");
+   assert.deepEqual(await result.json(),{error:"Request quota exceeded"});
+ }finally{await new Promise(resolve=>server.close(resolve));}
+});
 test("production configuration fails closed without independent database and identity",()=>{
  assert.throws(()=>settings({}),/configuration missing/);
  assert.throws(()=>settings({PRIVATE_DATABASE_URL:"postgres://test",KNOWLEDGE_JWT_ISSUER:"x",

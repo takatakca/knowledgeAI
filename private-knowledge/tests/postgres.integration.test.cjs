@@ -145,6 +145,15 @@ test("private PostgreSQL adapter isolates two real tenants and replays", {
       assert.ok(used.rows.every(v=>v.request_count>0));
       const cross=await quotaClient.query("SELECT count(*)::int AS total FROM knowledge_private.request_windows WHERE workspace_id='tenant-bbbb'");
       assert.equal(cross.rows[0].total,0);
+      // Within one fixed database transaction (and minute), fill the cap
+      // and prove PostgreSQL rejects the next call with HTTP-mappable 429.
+      await quotaClient.query(
+        "INSERT INTO knowledge_private.request_windows(workspace_id,scope,bucket_minute,request_count) VALUES ($1,$2,date_trunc('minute',CURRENT_TIMESTAMP),$3) ON CONFLICT (workspace_id,scope,bucket_minute) DO UPDATE SET request_count=$3",
+        ["tenant-aaaa","knowledge:read",120]);
+      await assert.rejects(
+        require("../src/rate-limit.cjs").consumeWorkspaceQuota(quotaClient,{
+          workspace:"tenant-aaaa",scope:"knowledge:read"
+        }),error=>error.status===429);
       await quotaClient.query("ROLLBACK");
     }finally{quotaClient.release();}
     const rows = await pool.query("SELECT count(*)::int AS total FROM knowledge_private.documents");
