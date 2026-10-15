@@ -88,3 +88,18 @@ after CI and never uploaded. See `docs/PRIVATE-RECOVERY.md`.
 No production backup service, offsite storage or retention schedule is configured.
 Do not deploy the private backend before the authorized independent database
 and its protected recovery plan are genuinely operational.
+
+## 2026-10-15 — migration 005, private request quotas
+
+Apply migrations **001 → 002 → 003 → 004 → 005** in a dedicated approved
+confidential PostgreSQL instance, using the migration owner. Grant the
+non-owner app role SELECT/INSERT/UPDATE only on
+`knowledge_private.request_windows`; never DELETE or BYPASSRLS.
+The startup preflight now requires **six** FORCE RLS tables and appropriate
+quota-table grants. `private-knowledge/src/rate-limit.cjs` enforces read=120,
+write=30, delete=20 and export=30 requests per workspace/minute. When
+the limit is exhausted, the API returns HTTP 429 and rolls back its transaction.
+Quota buckets are not automatically purged; a privileged retention plan is
+required before live activation. The network gateway should rate-limit
+unauthenticated traffic separately. Evidence: private CI 38802621695.
+**The private service remains undeployed; Vercel hosts only public content.**

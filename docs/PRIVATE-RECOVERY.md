@@ -43,3 +43,10 @@ psql -v ON_ERROR_STOP=1 -U postgres -d knowledge_restore_ci -f private-knowledge
 These commands operate on **synthetic fixtures only**. They are NOT a production
 backup recipe: they lack encryption, offsite replication, scheduler, retention
 and recovery-authority controls.
+
+## Extension: durable quota state
+
+The 2026-10-15 private security pipeline also verifies that the sixth FORCE
+RLS table, `request_windows`, and its tenant-scoped request counters survive
+the disposable PostgreSQL backup/restore round trip. This does not constitute
+a production backup, retention schedule or operational recovery guarantee.

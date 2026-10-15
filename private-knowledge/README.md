@@ -78,3 +78,19 @@ and runs `tests/restore.sql`. The test verifies tenant/RLS boundaries, document
 deletion state, audit, revoked credentials and disabled-entitlement integrity.
 Backup archives are never committed/uploaded and are removed after the check.
 **No production backup is configured.** See `../docs/PRIVATE-RECOVERY.md`.
+
+## Transactional private quotas — 2026-10-15
+
+Migration **005_rate_limits.sql** introduces `request_windows`, a sixth
+FORCE RLS tenant table. Each authenticated request checks current workspace
+entitlement and token revocation, then atomically charges a fixed
+per-workspace/per-scope one-minute bucket before any private data operation.
+The caps are 120 reads, 30 writes, 20 deletes and 30 exports per minute.
+A full bucket returns uncached HTTP 429. CI exercises actual quota exhaustion
+and confirms tenant isolation, SQL-bound counters and backup recovery.
+
+The non-owner runtime role needs SELECT/INSERT/UPDATE on request_windows
+and must NOT receive DELETE. The startup preflight verifies these grants.
+Migration order is 001, 002, 003, 004, 005. No production retention
+scheduler, gateway throttling or alerting is configured yet. Historical
+migration references to 001–004 in earlier notes are superseded by 001–005.

@@ -3,7 +3,7 @@
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
-- 2026-10-15 | GPT-6 (private quotas) | main | active | Implement durable per-workspace scoped request quotas, FORCE RLS migration and private CI tests | next: validate, fix, document and deploy public-only
+- 2026-10-15 | GPT-6 (private quotas) | main | done | PostgreSQL-backed per-tenant scoped atomic quotas, HTTP 429, FORCE RLS migration 005, restore+real DB tests; private CI 38802621695 green | next: authorized TAKATAK issuer, private DB and quota retention
 
 - 2026-10-15 | GPT-6 (private recovery) | main | done | Synthetic PostgreSQL archive recovery rehearsal with restored FORCE RLS, tenant, revocation and audit checks; private CI 38801324564 green | next: TAKATAK issuer, confidential DB and encrypted offsite backups
 

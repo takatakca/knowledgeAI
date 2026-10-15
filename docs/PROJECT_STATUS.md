@@ -57,3 +57,14 @@ tenant isolation, FORCE RLS, audit, revoked JWT, disabled-entitlement and
 deleted-source state after recovery. Run **38801324564** succeeded.
 This is ONLY a synthetic CI proof; no production backup service is deployed.
 See `docs/PRIVATE-RECOVERY.md`.
+
+## 2026-10-15 — durable private per-tenant quotas
+
+Implemented PostgreSQL-backed atomic request buckets per verified workspace
+and signed operation scope. Limits per UTC database minute: read 120, write 30,
+delete 20, export 30. A full bucket returns HTTP 429 and the transaction rolls
+back before any protected operation. Migration 005 adds a sixth FORCE RLS table.
+Verified: Private Knowledge Security CI run 38802621695 SUCCESS (including
+PostgreSQL quota exhaustion and restore); public catalog CI 38802621665 SUCCESS.
+**Not a production deployment**: the private service has no verified TAKATAK
+issuer, approved confidential PostgreSQL or gateway yet.

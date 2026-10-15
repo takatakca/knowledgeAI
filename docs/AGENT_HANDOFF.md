@@ -1,5 +1,41 @@
 # Agent handoff — knowledgeAI
 
+## Latest verified milestone — 2026-10-15 tenant quotas
+
+- Repository: `takatakca/knowledgeAI`, public `main`. Previous published
+  checkpoint before this quota milestone: `85c1f67d0b3b98ac9a1aa20bbdb3fee7f931a85d`.
+- Completed: fixed-scope database request quotas using a sixth FORCE RLS
+  table `request_windows`. Verified workspace and JWT scope determine the
+  bucket; atomically enforced 120 read, 30 write, 20 delete, 30 export / minute.
+  HTTP returns uncached 429 on denial before the protected operation.
+- Source commits: `033baf625c7ecdfdaeb9e2e8e949f40e9596ab53` (feature),
+  `0c7243fd2af695d78e887dc6292aaa339acc1bdb` (quota exhaustion and
+  HTTP tests). This handoff commit and catalog bot change SHA; read GitHub
+  main HEAD after publication.
+- Files changed: `private-knowledge/migrations/005_rate_limits.sql`,
+  `private-knowledge/src/{rate-limit,service,preflight}.cjs`,
+  `private-knowledge/tests/{rate-limit,private,preflight,postgres.integration}.test.cjs`,
+  `private-knowledge/tests/{rls,restore}.sql`,
+  `.github/workflows/private-knowledge-tests.yml`,
+  five continuity files, private README, private recovery runbook and WORKLOG.
+- Commands/checks: Node syntax checks; built-in Node test runner;
+  real synthetic PostgreSQL 17 migration+RLS+tenant quota exhaustion;
+  `npm ci`/dependency audit; full disposable PostgreSQL restore rehearsal.
+  Private CI `38802621695` SUCCESS; public CI `38802621665` SUCCESS,
+  including external HTTPS portal/API smoke. Recheck the documentation
+  release's final CI and Vercel SHA.
+- Current task: production provisioning and true TAKATAK authorization are
+  BLOCKED by unverified service issuer, dedicated private DB, secrets,
+  offsite encrypted backup/retention and gateway. Private API NOT DEPLOYED.
+- Operational gap: authorized cleanup of expired rate buckets has not been
+  implemented; do not run ad hoc role-bypass cleanup or mistake quotas for
+  complete DDoS defense.
+- NEXT EXACT ACTION: inspect current `main`, CI and Vercel production SHA;
+  verify actual TAKATAK issuer/active product entitlements; provision an
+  approved confidential DB, apply migrations 001→005 as owner, configure
+  separate restricted runtime/TLS, offsite backup, retention, gateway
+  and a two-tenant staging release before enabling private ingestion.
+
 ## Latest agent checkpoint — 2026-10-15, recovery validation
 
 - Repo: `takatakca/knowledgeAI`, public `main`; previous starting SHA `7433710c8f17316d17e2702b59e3a5361e5a39d1`.

@@ -74,3 +74,13 @@ Require recovered FORCE RLS, correct tenant records, deletion state, audit,
 disabled-workspace entitlements and revoked-token records. Use no live customer
 content in CI; never publish backup artifacts. A passing CI is not evidence
 of encrypted offsite production backup, retention, WAL/PITR or an agreed RPO/RTO.
+
+## 2026-10-15 — durable quota counters instead of process-local counters
+
+Use per-workspace, per-operation, per-minute PostgreSQL counters with
+transactional UPSERT and FORCE RLS so separate private backend instances
+share the same limit. Do not accept tenant, permission or limit values from
+browser query parameters. Exceeded quotas throw 429 before protected reads
+or writes; the containing transaction rolls back. Hard-coded limits are abuse
+controls, not billing meters or a substitute for gateway-level throttling.
+Bucket retention and production alerting remain separately governed work.

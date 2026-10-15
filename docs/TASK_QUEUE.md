@@ -39,3 +39,13 @@ TLS downgrade prevention: DONE IN CODE. PostgreSQL URLs with overriding SSL opti
 - BLOCKED IN PRODUCTION: approved encrypted offsite backups, WAL/PITR, separate
   backup authority, key custody, retention/deletion policy, tested RPO/RTO and
   a staging restore drill using true TAKATAK entitlements.
+
+### 2026-10-15 — tenant-scoped request quotas
+
+- DONE IN CODE/CI: atomic DB quota windows per tenant and permission, tested
+  429 denial, tenant-separated counters, FORCE RLS and restored quota state.
+- PENDING PRODUCTION: apply migration 005 as approved migration owner, grant
+  restricted SELECT/INSERT/UPDATE on request_windows, configure independent
+  gateway abuse protection and monitor agreed limits.
+- PENDING GOVERNANCE: approved expired-bucket retention and maintenance
+  schedule (NO automatic deletion job exists). Do not use quotas as billing.
