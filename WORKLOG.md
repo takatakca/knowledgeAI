@@ -3,6 +3,8 @@
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
+- 2026-10-15 | GPT-6 (private recovery) | main | active | Add reproducible PostgreSQL backup/restore rehearsal with recovered tenant RLS and integrity checks, then update runbooks | next: run CI, repair, verify deployments
+
 - 2026-10-15 | GPT-6 (private TLS hardening) | main | done | Prevent PostgreSQL DSN TLS overrides and add startup tests, commit 52a0968f | next: verified TAKATAK issuer, independent DB and private production smoke
 
 - 2026-10-15 | GPT-6 (private authorization) | main | done | Shipped workspace entitlements/revocation with per-query denial checks, TLS/FORCE RLS startup preflight, source-offset routing fix and CI regression suites | next: authorized TAKATAK issuer, dedicated private DB, production security deployment
