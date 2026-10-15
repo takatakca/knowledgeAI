@@ -22,19 +22,43 @@ test("private PostgreSQL adapter isolates two real tenants and replays", {
     const verify = createVerifier(config, async()=>({keys:[jwk]}));
     const service = createService(pool, verify);
     let nonce = 0;
-    function token(workspace, scopes = "knowledge:read knowledge:write") {
+    function token(workspace, scopes = "knowledge:read knowledge:write", fixedJti) {
       nonce += 1;
       const now = Math.floor(Date.now()/1000);
       const h = Buffer.from(JSON.stringify({typ:"JWT",alg:"RS256",kid:"ci-key"})).toString("base64url");
       const p = Buffer.from(JSON.stringify({
         iss:config.issuer, aud:config.audience, sub:"ci-person-00001",
         workspace_id:workspace,product:"knowledgeai",scope:scopes,
-        iat:now,exp:now+120,jti:"ci-nonce-0000000-"+nonce
+        iat:now,exp:now+120,jti:fixedJti || "ci-nonce-0000000-"+nonce
       })).toString("base64url");
       const data = h+"."+p;
       return data+"."+sign("RSA-SHA256",Buffer.from(data),privateKey).toString("base64url");
     }
 
+    // A correctly signed token is not sufficient without a current, admin-managed
+    // workspace entitlement and the absence of an active revocation.
+    await assert.rejects(
+      service.search(token("tenant-cccc","knowledge:read"),{q:"",limit:"1"}),
+      error => error.status === 403);
+    await assert.rejects(
+      service.search(token("tenant-zzzz","knowledge:read"),{q:"",limit:"1"}),
+      error => error.status === 403);
+    await assert.rejects(
+      service.search(token("tenant-aaaa","knowledge:read",
+        "ci-revoked-credential-000001"),{q:"",limit:"1"}),
+      error => error.status === 401);
+    await assert.rejects(
+      service.ingest(token("tenant-dddd","knowledge:write"),{
+        source_id:"blocked",title:"No write access",content:"denied",
+        source_url:"https://example.org/blocked"
+      }),
+      error => error.status === 403);
+    assert.equal((await service.search(token("tenant-dddd","knowledge:read"),{
+      q:"",limit:"1"
+    })).results.length,0);
+    // Revocation is workspace-scoped, not a global accidental block.
+    assert.equal((await service.search(token("tenant-bbbb","knowledge:read",
+      "ci-revoked-credential-000001"),{q:"",limit:"1"})).visibility,"private");
     const tokenA = token("tenant-aaaa");
     const first = await service.ingest(tokenA, {
       source_id:"same-source",title:"Alpha special", content:"highly private apple",

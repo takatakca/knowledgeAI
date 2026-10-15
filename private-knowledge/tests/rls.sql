@@ -28,6 +28,25 @@ BEGIN
 END;
 $test$;
 ROLLBACK;
+-- Runtime may SELECT only its own control data, never change activation/revocation.
+BEGIN;
+SELECT set_config('knowledge_private.workspace_id','tenant-aaaa',true);
+DO $test$
+BEGIN
+ IF (SELECT count(*) FROM knowledge_private.workspace_entitlements) <> 1 THEN
+   RAISE EXCEPTION 'Admin-managed workspace controls leaked across tenant';
+ END IF;
+ IF (SELECT count(*) FROM knowledge_private.revoked_tokens) <> 1 THEN
+   RAISE EXCEPTION 'A revoked token belonging to this tenant should be visible';
+ END IF;
+ BEGIN
+   UPDATE knowledge_private.workspace_entitlements SET enabled=true WHERE workspace_id='tenant-cccc';
+   RAISE EXCEPTION 'Runtime must not activate a workspace';
+ EXCEPTION WHEN insufficient_privilege THEN NULL;
+ END;
+END;
+$test$;
+ROLLBACK;
 BEGIN;
 SELECT set_config('knowledge_private.workspace_id','tenant-bbbb',true);
 DO $test$
