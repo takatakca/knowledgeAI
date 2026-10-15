@@ -200,5 +200,15 @@ test("source exports require dedicated scope and SQL-bounded pagination",async()
 test("production configuration fails closed without independent database and identity",()=>{
  assert.throws(()=>settings({}),/configuration missing/);
  assert.throws(()=>settings({PRIVATE_DATABASE_URL:"postgres://test",KNOWLEDGE_JWT_ISSUER:"x",
-   KNOWLEDGE_JWT_AUDIENCE:"y",KNOWLEDGE_JWKS_URL:"http://localhost"}),/JWKS requires HTTPS/);
+   KNOWLEDGE_JWT_AUDIENCE:"y",KNOWLEDGE_JWKS_URL:"http://localhost"}),/database URL/);
+ const good={PRIVATE_DATABASE_URL:"postgresql://service@database.example.org/knowledge",
+   KNOWLEDGE_JWT_ISSUER:"https://issuer.example.org",
+   KNOWLEDGE_JWT_AUDIENCE:"knowledge-private",
+   KNOWLEDGE_JWKS_URL:"https://issuer.example.org/keys"};
+ assert.equal(settings(good).port,8301);
+ for(const suffix of ["?sslmode=disable","?sslmode=no-verify","?sslrootcert=/tmp/foo",
+   "?sslcert=/tmp/cert"]) {
+   assert.throws(()=>settings({...good,PRIVATE_DATABASE_URL:good.PRIVATE_DATABASE_URL+suffix}),
+      /database URL must not override/);
+ }
 });

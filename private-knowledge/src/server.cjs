@@ -10,6 +10,15 @@ function settings(env = process.env) {
   if (required.some(key => !env[key])) throw new Error("Private KnowledgeAI configuration missing");
   const port = Number(env.PRIVATE_PORT || 8301);
   if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error("Invalid port");
+  // node-postgres may replace the explicit ssl object when sslmode/sslcert
+  // parameters are embedded in the connection string. Do not allow clients
+  // to override server-enforced peer verification through database URLs.
+  const databaseUrl = new URL(env.PRIVATE_DATABASE_URL);
+  if (!["postgres:", "postgresql:"].includes(databaseUrl.protocol) ||
+      !databaseUrl.hostname || !databaseUrl.username ||
+      ["sslmode","ssl","sslcert","sslkey","sslrootcert"].some(k => databaseUrl.searchParams.has(k))) {
+    throw new Error("Private database URL must not override verified TLS settings");
+  }
   const jwksUrl = new URL(env.KNOWLEDGE_JWKS_URL);
   if (jwksUrl.protocol !== "https:") throw new Error("JWKS requires HTTPS");
   return {
