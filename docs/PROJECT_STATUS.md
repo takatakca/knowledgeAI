@@ -48,3 +48,12 @@ The private inventory now accepts `limit` and `offset` and returns only SQL-boun
 - Fixed HTTP source-list pagination to forward `offset`. No new private data service is deployed; the public Vercel portal remains independent.
 
 2026-10-15: PostgreSQL URL TLS bypass options are now rejected before private server bootstrap (commit `52a0968f`); isolated private code remains undeployed.
+
+## 2026-10-15 — synthetic disaster-recovery rehearsal
+
+Private Knowledge Security CI now performs a real custom-format PostgreSQL backup
+and restoration to a second disposable PostgreSQL 17 database. It verifies
+tenant isolation, FORCE RLS, audit, revoked JWT, disabled-entitlement and
+deleted-source state after recovery. Run **38801324564** succeeded.
+This is ONLY a synthetic CI proof; no production backup service is deployed.
+See `docs/PRIVATE-RECOVERY.md`.

@@ -70,3 +70,11 @@ Production `npm start` now runs a fail-closed DB preflight before opening port 8
 ### TLS configuration warning (2026-10-15)
 
 The private server rejects PostgreSQL URLs with `sslmode`, `ssl`, `sslcert`, `sslkey` or `sslrootcert` query parameters, as these can override strict TLS verification in the Node driver. Use a clean protected database URL and configure the server's proper certificate trust store. Never suppress TLS certificate verification to make an untrusted database connect.
+
+## Recovery rehearsal — 2026-10-15
+
+CI now restores its synthetic PostgreSQL 17 database into a second fresh database
+and runs `tests/restore.sql`. The test verifies tenant/RLS boundaries, document
+deletion state, audit, revoked credentials and disabled-entitlement integrity.
+Backup archives are never committed/uploaded and are removed after the check.
+**No production backup is configured.** See `../docs/PRIVATE-RECOVERY.md`.

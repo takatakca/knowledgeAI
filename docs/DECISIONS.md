@@ -66,3 +66,11 @@ Before binding a private HTTP listener, verify runtime SQL login is not a superu
 ## 2026-10-15 — no TLS downgrade through database URL
 
 Reject PostgreSQL DSN query options that could replace the pinned Node TLS peer-verification object. Keep strict certificate verification and require approved private trust configuration. Production private DB bootstrap must fail when connection encryption or authorization constraints are inadequate.
+
+## 2026-10-15 — restore-integrity evidence before private rollout
+
+Adopt a synthetic, disposable PostgreSQL backup/restore drill in CI.
+Require recovered FORCE RLS, correct tenant records, deletion state, audit,
+disabled-workspace entitlements and revoked-token records. Use no live customer
+content in CI; never publish backup artifacts. A passing CI is not evidence
+of encrypted offsite production backup, retention, WAL/PITR or an agreed RPO/RTO.

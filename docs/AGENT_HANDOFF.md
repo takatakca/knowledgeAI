@@ -1,5 +1,33 @@
 # Agent handoff — knowledgeAI
 
+## Latest agent checkpoint — 2026-10-15, recovery validation
+
+- Repo: `takatakca/knowledgeAI`, public `main`; previous starting SHA `7433710c8f17316d17e2702b59e3a5361e5a39d1`.
+- Last completed work: PostgreSQL 17 synthetic `pg_dump -Fc` / `pg_restore`
+  rehearsal into a second disposable DB with restored FORCE RLS, tenant isolation,
+  delete history, audit, disabled workspace and revoked JWT verification.
+- Code commit `90cceeefca2ed55a9e582f67a6ace1bdbfd65296`,
+  recovery-runbook commit `eac2f0e12bff754fe3e79a41e6bdfc7e51337740`.
+  This documentation update and catalog-bot commits change HEAD: check the actual
+  GitHub main SHA before continuing.
+- Files modified: `.github/workflows/private-knowledge-tests.yml`,
+  `private-knowledge/tests/restore.sql`, `docs/PRIVATE-RECOVERY.md`,
+  `private-knowledge/README.md`, all five required continuity documents and WORKLOG.
+- Verified commands/workflows: GitHub Private Knowledge Security CI run
+  `38801324564` SUCCESS (JWT, Node, real restricted PostgreSQL, RLS, restore,
+  npm CI/dependency audit), Knowledge Catalog CI run `38801324561` SUCCESS
+  including external public HTTPS smoke.
+- Deployment: only the PUBLIC KnowledgeAI portal is connected to Vercel.
+  The PRIVATE KnowledgeAI service is NOT deployed. No customer content or
+  production database was copied to GitHub, CI or unrelated Supabase projects.
+- Real blockers: verified TAKATAK issuer/product entitlement flow and admin
+  lifecycle, dedicated confidential DB and TLS, offsite encrypted backups,
+  recovery/retention policies, observability and two-tenant staging proof.
+- NEXT EXACT ACTION: verify the latest CI/Vercel SHA, then coordinate an
+  authorized TAKATAK signing/entitlement integration and independently approved
+  confidential infrastructure. Run private migration 001→004 and a secure
+  two-company restoration drill before any production ingestion.
+
 ## 2026-10-15 follow-up — TLS URL hardening
 
 - Code commit `52a0968f7d0b6b5804da3b368c60c0c77adfd439` rejects PostgreSQL connection-string SSL overrides (including `sslmode=no-verify`) before the isolated private server starts; regression cases were added to `private-knowledge/tests/private.test.cjs`.

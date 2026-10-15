@@ -31,3 +31,11 @@ Private inventory paging: DONE IN CODE/CI (limit 1–50, offset max 999999, veri
 - DO NOT interpret synthetic CI identities, hard-coded test fixture entitlements or a Vercel READY status as evidence of active confidential production ingestion.
 
 TLS downgrade prevention: DONE IN CODE. PostgreSQL URLs with overriding SSL options are rejected and unit-tested. An approved real certificate chain and dedicated private deployment remain blocked externally.
+
+### 2026-10-15 — backup restore readiness
+
+- DONE IN CI: `pg_dump -Fc` and `pg_restore` to a fresh database, with post-restore
+  cross-workspace RLS, audit, revocation and deletion assertions (run 38801324564).
+- BLOCKED IN PRODUCTION: approved encrypted offsite backups, WAL/PITR, separate
+  backup authority, key custody, retention/deletion policy, tested RPO/RTO and
+  a staging restore drill using true TAKATAK entitlements.

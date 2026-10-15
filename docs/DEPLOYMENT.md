@@ -78,3 +78,13 @@ Latest private CI run `38630925562` verified SQL-bounded inventory pagination wi
 ## PostgreSQL DSN TLS safety — 2026-10-15
 
 Private startup now rejects URLs containing `sslmode`, `sslcert`, `sslkey`, `sslrootcert` or `ssl` parameters, because database connection-string parsing can override the strict TLS settings on the Node PostgreSQL client. Supply a clean `postgresql://` connection URL via protected secrets and configure a trusted CA at the host TLS trust layer when necessary; never set `NODE_TLS_REJECT_UNAUTHORIZED=0`. CI tests these rejection cases. Private production is still NOT DEPLOYED.
+
+## 2026-10-15 — private disaster-recovery gate
+
+The separate Private Knowledge Security CI now verifies a full disposable
+PostgreSQL archive restore, including RLS and tenant authorization state.
+Evidence: GitHub Actions run 38801324564. The synthetic archive is deleted
+after CI and never uploaded. See `docs/PRIVATE-RECOVERY.md`.
+No production backup service, offsite storage or retention schedule is configured.
+Do not deploy the private backend before the authorized independent database
+and its protected recovery plan are genuinely operational.
