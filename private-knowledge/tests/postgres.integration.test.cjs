@@ -136,6 +136,17 @@ test("private PostgreSQL adapter isolates two real tenants and replays", {
     }),error=>error.status===403);
 
     // Tenant context must not survive a released pooled connection.
+    const quotaClient=await pool.connect();
+    try {
+      await quotaClient.query("BEGIN");
+      await quotaClient.query("SELECT set_config('knowledge_private.workspace_id',$1,true)",["tenant-aaaa"]);
+      const used=await quotaClient.query("SELECT scope,request_count FROM knowledge_private.request_windows");
+      assert.ok(used.rows.some(v=>v.scope==="knowledge:read" && v.request_count>=1));
+      assert.ok(used.rows.every(v=>v.request_count>0));
+      const cross=await quotaClient.query("SELECT count(*)::int AS total FROM knowledge_private.request_windows WHERE workspace_id='tenant-bbbb'");
+      assert.equal(cross.rows[0].total,0);
+      await quotaClient.query("ROLLBACK");
+    }finally{quotaClient.release();}
     const rows = await pool.query("SELECT count(*)::int AS total FROM knowledge_private.documents");
     assert.equal(rows.rows[0].total,0);
   } finally { await pool.end(); }

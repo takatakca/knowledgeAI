@@ -30,10 +30,11 @@ jobs:
           node --check private-knowledge/src/auth.cjs
           node --check private-knowledge/src/service.cjs
           node --check private-knowledge/src/access.cjs
+          node --check private-knowledge/src/rate-limit.cjs
           node --check private-knowledge/src/preflight.cjs
           node --check private-knowledge/src/server.cjs
       - name: Authorization, input and transaction tests
-        run: node --test private-knowledge/tests/private.test.cjs private-knowledge/tests/access.test.cjs private-knowledge/tests/preflight.test.cjs
+        run: node --test private-knowledge/tests/private.test.cjs private-knowledge/tests/access.test.cjs private-knowledge/tests/preflight.test.cjs private-knowledge/tests/rate-limit.test.cjs
 
   postgres-rls:
     name: PostgreSQL 17 tenant-isolation tests
@@ -66,6 +67,8 @@ jobs:
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/003_export_audit.sql
       - name: Apply fail-closed workspace access migration
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/004_workspace_access.sql
+      - name: Apply tenant request quota migration
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/005_rate_limits.sql
       - name: Seed synthetic admin-managed entitlements and revocations
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/tests/access-controls.sql
       - name: Verify RLS denies cross-tenant reads and writes
@@ -78,6 +81,8 @@ jobs:
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/003_export_audit.sql
       - name: Reapply workspace access migration
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/004_workspace_access.sql
+      - name: Reapply request quota migration
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/migrations/005_rate_limits.sql
       - uses: actions/setup-node@v4
         with:
           node-version: '22'

@@ -2,6 +2,7 @@
 const { createHash } = require("node:crypto");
 const { AccessError } = require("./auth.cjs");
 const { assertWorkspaceAccess } = require("./access.cjs");
+const { consumeWorkspaceQuota } = require("./rate-limit.cjs");
 class InputError extends Error {
   constructor(message) { super(message); this.status = 400; }
 }
@@ -43,6 +44,7 @@ async function withTenant(pool, principal, action) {
       [principal.workspace]);
     await client.query("SELECT set_config('statement_timeout', '5000', true)");
     await assertWorkspaceAccess(client, principal);
+    await consumeWorkspaceQuota(client, principal);
     const result = await action(client);
     await client.query("COMMIT");
     return result;

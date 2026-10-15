@@ -7,6 +7,7 @@ GRANT SELECT,INSERT ON knowledge_private.write_receipts TO knowledge_ci_runtime;
 GRANT INSERT ON knowledge_private.audit TO knowledge_ci_runtime;
 GRANT SELECT ON knowledge_private.workspace_entitlements TO knowledge_ci_runtime;
 GRANT SELECT ON knowledge_private.revoked_tokens TO knowledge_ci_runtime;
+GRANT SELECT,INSERT,UPDATE ON knowledge_private.request_windows TO knowledge_ci_runtime;
 GRANT USAGE,SELECT ON ALL SEQUENCES IN SCHEMA knowledge_private TO knowledge_ci_runtime;
 INSERT INTO knowledge_private.documents(workspace_id,source_id,title,body,source_url,sha256,created_by)
 VALUES

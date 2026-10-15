@@ -9,8 +9,8 @@ BEGIN
     FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
     WHERE n.nspname='knowledge_private' AND c.relkind='r'
       AND c.relrowsecurity AND c.relforcerowsecurity
-      AND c.relname IN ('documents','audit','write_receipts','workspace_entitlements','revoked_tokens');
-  IF forced <> 5 THEN RAISE EXCEPTION 'Recovered RLS security controls incomplete (%/5)',forced; END IF;
+      AND c.relname IN ('documents','audit','write_receipts','workspace_entitlements','revoked_tokens','request_windows');
+  IF forced <> 6 THEN RAISE EXCEPTION 'Recovered RLS security controls incomplete (%/6)',forced; END IF;
 
   IF NOT EXISTS (SELECT 1 FROM knowledge_private.documents
       WHERE workspace_id='tenant-aaaa' AND source_id='doc-one') THEN
@@ -53,6 +53,9 @@ BEGIN
   END IF;
   IF (SELECT count(*) FROM knowledge_private.revoked_tokens) <> 1 THEN
     RAISE EXCEPTION 'Recovered revocation isolation failed';
+  END IF;
+  IF (SELECT count(*) FROM knowledge_private.request_windows) < 1 THEN
+    RAISE EXCEPTION 'Recovered request quota state was lost';
   END IF;
 END;
 $restore$;
