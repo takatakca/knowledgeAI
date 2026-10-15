@@ -93,6 +93,26 @@ jobs:
         run: node --test private-knowledge/tests/postgres.integration.test.cjs
       - name: Verify private lifecycle audit using migration-owner
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/tests/lifecycle-audit.sql
+      - name: Rehearse complete PostgreSQL backup and restore
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Temporary synthetic fixture only: never upload this archive.
+          umask 077
+          archive="$RUNNER_TEMP/knowledge-private-rehearsal.dump"
+          docker exec knowledge-private-ci pg_dump -U postgres -d knowledgeci -Fc > "$archive"
+          test -s "$archive"
+          docker exec knowledge-private-ci createdb -U postgres knowledge_restore_ci
+          docker exec -i knowledge-private-ci pg_restore \
+            -U postgres -d knowledge_restore_ci --no-owner --exit-on-error < "$archive"
+          docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 \
+            -U postgres -d knowledge_restore_ci < private-knowledge/tests/restore.sql
+          rm -f "$archive"
+      - name: Assert no recovery archive is retained
+        if: always()
+        shell: bash
+        run: |
+          rm -f "$RUNNER_TEMP/knowledge-private-rehearsal.dump"
       - name: Remove disposable DB
         if: always()
         run: docker rm -f knowledge-private-ci || true
