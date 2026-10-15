@@ -29,3 +29,5 @@ Private inventory paging: DONE IN CODE/CI (limit 1–50, offset max 999999, veri
 - BLOCKED IN PRODUCTION: TAKATAK authority must provide verified membership/product entitlements and a trusted RS256 token issuer/JWKS, and must govern writes to the admin access-control tables.
 - BLOCKED IN PRODUCTION: separate approved private PostgreSQL, TLS trust configuration, migration-owner + restricted runtime login, backups/recovery, access revocation operations, retention and live smoke tests.
 - DO NOT interpret synthetic CI identities, hard-coded test fixture entitlements or a Vercel READY status as evidence of active confidential production ingestion.
+
+TLS downgrade prevention: DONE IN CODE. PostgreSQL URLs with overriding SSL options are rejected and unit-tested. An approved real certificate chain and dedicated private deployment remain blocked externally.

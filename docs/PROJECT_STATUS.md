@@ -46,3 +46,5 @@ The private inventory now accepts `limit` and `offset` and returns only SQL-boun
 - Added RLS tests proving that an ordinary private runtime cannot grant itself access; disabled/unknown companies and revoked JTIs are denied. Synthetic PostgreSQL CI remains the only integration environment.
 - Added startup preflight for distinct non-owner login, all required FORCE RLS tables, least-privilege SQL grants and TLS. Local CI deliberately verifies a plaintext database fails the production TLS check.
 - Fixed HTTP source-list pagination to forward `offset`. No new private data service is deployed; the public Vercel portal remains independent.
+
+2026-10-15: PostgreSQL URL TLS bypass options are now rejected before private server bootstrap (commit `52a0968f`); isolated private code remains undeployed.

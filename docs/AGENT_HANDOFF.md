@@ -1,5 +1,13 @@
 # Agent handoff — knowledgeAI
 
+## 2026-10-15 follow-up — TLS URL hardening
+
+- Code commit `52a0968f7d0b6b5804da3b368c60c0c77adfd439` rejects PostgreSQL connection-string SSL overrides (including `sslmode=no-verify`) before the isolated private server starts; regression cases were added to `private-knowledge/tests/private.test.cjs`.
+- Previously verified auth/preflight/real PostgreSQL suite: Private Knowledge Security CI `38793448231` SUCCESS, public catalog/production smoke `38793448260` SUCCESS; final follow-up CI and Vercel SHA must be refreshed after this documentation commit.
+- Last source files changed: `private-knowledge/src/server.cjs`, `private-knowledge/tests/private.test.cjs`. Current milestone: security startup and authorization gates delivered in CODE only. Private KnowledgeAI remains UNDEPLOYED.
+- Required next action: confirm TAKATAK authorized token issuer and administrative workspace lifecycle, provision an explicitly approved confidential PostgreSQL with verified TLS CA and least-privileged service role, test actual revocation and two-tenant staging paths, and separately deploy/monitor. No production secrets or billing projects were created.
+
+
 ## Latest agent checkpoint — 2026-10-15 (private authorization)
 
 - Repository `takatakca/knowledgeAI`, `main`, PUBLIC. Starting main SHA `ece938126c12a42e7746be0a8638633e7e106c81`; newest source commits `c0df12a4` (workspace entitlements/revocation), `da87d047` (tests), `e8d097a1` (CI enrollment), `d0bc7ad0` (HTTP source pagination), `ad48d2c3` (private startup preflight), `30194cf0` (serialized tenant SQL checks). After this documentation commit and catalog automation, check HEAD anew.

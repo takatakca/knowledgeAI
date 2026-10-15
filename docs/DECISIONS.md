@@ -62,3 +62,7 @@ Require an independent database authorization row on **every** private operation
 ## 2026-10-15 — private startup fail-closed
 
 Before binding a private HTTP listener, verify runtime SQL login is not a superuser/BYPASSRLS/table owner; require every expected table to FORCE RLS, forbid runtime mutation of access controls, forbid runtime audit reads, and require PostgreSQL TLS. CI may bypass TLS **only** in a disposable local test of the preflight; production code does not expose such an override.
+
+## 2026-10-15 — no TLS downgrade through database URL
+
+Reject PostgreSQL DSN query options that could replace the pinned Node TLS peer-verification object. Keep strict certificate verification and require approved private trust configuration. Production private DB bootstrap must fail when connection encryption or authorization constraints are inadequate.

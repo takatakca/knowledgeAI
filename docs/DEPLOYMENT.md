@@ -74,3 +74,7 @@ Latest private CI run `38630925562` verified SQL-bounded inventory pagination wi
 4. Before HTTP bind, private `assertDatabaseSafety()` now rejects privileged ownership, RLS not forced, unsafe SQL grants, or PostgreSQL plaintext sessions. Configure a verified TLS CA through protected host settings. Startup must fail if configuration is not ready.
 5. Tests: `node --test private-knowledge/tests/private.test.cjs private-knowledge/tests/access.test.cjs private-knowledge/tests/preflight.test.cjs`; the Private Knowledge Security CI runs a disposable PostgreSQL instance and live restricted-role checks.
 6. Actual private deployment remains unapproved and unconfigured. Vercel must continue serving only the public knowledge catalog.
+
+## PostgreSQL DSN TLS safety — 2026-10-15
+
+Private startup now rejects URLs containing `sslmode`, `sslcert`, `sslkey`, `sslrootcert` or `ssl` parameters, because database connection-string parsing can override the strict TLS settings on the Node PostgreSQL client. Supply a clean `postgresql://` connection URL via protected secrets and configure a trusted CA at the host TLS trust layer when necessary; never set `NODE_TLS_REJECT_UNAUTHORIZED=0`. CI tests these rejection cases. Private production is still NOT DEPLOYED.
