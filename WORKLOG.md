@@ -3,7 +3,7 @@
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
-- 2026-10-15 | GPT-6 (private authorization) | main | active | Add fail-closed workspace entitlements and JWT revocation checks, SQL migration and PostgreSQL regression tests | next: CI verification, documentation, production gating
+- 2026-10-15 | GPT-6 (private authorization) | main | done | Shipped workspace entitlements/revocation with per-query denial checks, TLS/FORCE RLS startup preflight, source-offset routing fix and CI regression suites | next: authorized TAKATAK issuer, dedicated private DB, production security deployment
 
 - 2026-10-14 | GPT-6 (inventory pagination) | main | done | Add bounded tenant source pagination for complete export; real private PostgreSQL JWT/RLS/audit CI 38630925562 success; backups not configured | next: trusted issuer, dedicated private DB, retention and secure deployment
 

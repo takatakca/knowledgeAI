@@ -1,5 +1,16 @@
 # Agent handoff — knowledgeAI
 
+## Latest agent checkpoint — 2026-10-15 (private authorization)
+
+- Repository `takatakca/knowledgeAI`, `main`, PUBLIC. Starting main SHA `ece938126c12a42e7746be0a8638633e7e106c81`; newest source commits `c0df12a4` (workspace entitlements/revocation), `da87d047` (tests), `e8d097a1` (CI enrollment), `d0bc7ad0` (HTTP source pagination), `ad48d2c3` (private startup preflight), `30194cf0` (serialized tenant SQL checks). After this documentation commit and catalog automation, check HEAD anew.
+- Completed: deny-by-default workspace entitlement and revoked-JTI authorization checked per transaction; startup preflight of FORCE RLS, non-owner/non-bypass runtime, restricted grants and TLS; HTTP inventory offset forwarding fixed.
+- Files touched: `private-knowledge/src/{access,service,server,preflight}.cjs`, `private-knowledge/migrations/004_workspace_access.sql`, `private-knowledge/tests/{private,access,preflight,postgres.integration}.test.cjs`, `private-knowledge/tests/{access-controls,rls}.sql`, `.github/workflows/private-knowledge-tests.yml`, `WORKLOG.md`, all five `docs/` continuity files and `private-knowledge/README.md`.
+- Verified source CI checkpoints: `38792797696`, `38792854564`, `38792985528`, `38793108805` were private CI SUCCESS; latest post-fix pipeline must be inspected after doc commit. GitHub Actions public CI and Vercel production changes are independent from the undeployed private service.
+- Real deployment: PUBLIC KnowledgeAI catalog/search is on Vercel; PRIVATE service is **NOT DEPLOYED**, with NO real confidential project DB, signer, administrator provisioned or secrets imported. No existing Supabase projects were changed.
+- Production blockers: TAKATAK-issued dedicated short-lived token mapped to authoritative active workspace/product entitlement; authorized administrative lifecycle for `workspace_entitlements` and `revoked_tokens`; approved private DB/roles/TLS; secure runtime and network, backups, recovery and retention, observability, two-tenant staging E2E validation.
+- NEXT EXACT ACTION: identify/implement the verified TAKATAK signing/entitlement contract in the master repository after confirming owner approval; provision an **independent approved** private PostgreSQL instance; apply migrations 001–004 and grant restricted runtime, verify TLS/preflight and revocation against true staged identities; then deploy the private service separately with reversible release and health checks. Do not treat public Vercel as a private data plane.
+
+
 ## Verified final continuation — source inventory paging (2026-10-14)
 
 - Latest task: make source inventory enumerable across pages; SQL `LIMIT/OFFSET`, no client-defined workspace; linked to the existing scoped version export `knowledge:export`, delete `knowledge:delete` and audit migrations 001→002→003.

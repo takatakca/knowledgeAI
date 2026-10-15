@@ -54,3 +54,11 @@ Provide full original source revisions only with a separate signed `knowledge:ex
 ## 2026-10-14 — tenant pagination before export
 
 Support deterministic ordered, bounded source inventory pages with SQL LIMIT/OFFSET and explicit validated maximums. Workspace comes exclusively from validated signed identity and PostgreSQL RLS, not a request parameter. This makes source version export complete without broadening the public catalog or exposing cross-tenant source names.
+
+## 2026-10-15 — refuse stale or self-assigned private access
+
+Require an independent database authorization row on **every** private operation, in addition to verifying the RSA-signed token and operation scope. New workspaces default disabled and permissions default false; JWTs can be revoked by `workspace_id` + `jti`. The app role receives SELECT-only access to these tables and cannot issue/revoke credentials or change workspace entitlements. The trusted TAKATAK master remains the sole source of identity, membership and product authorization. Do not invent a second login authority in KnowledgeAI.
+
+## 2026-10-15 — private startup fail-closed
+
+Before binding a private HTTP listener, verify runtime SQL login is not a superuser/BYPASSRLS/table owner; require every expected table to FORCE RLS, forbid runtime mutation of access controls, forbid runtime audit reads, and require PostgreSQL TLS. CI may bypass TLS **only** in a disposable local test of the preflight; production code does not expose such an override.

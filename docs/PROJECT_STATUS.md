@@ -1,6 +1,6 @@
 # Project status — knowledgeAI
 
-Last audit: **2026-10-14**. Repository: `takatakca/knowledgeAI`, default branch `main`, **public**.
+Last audit: **2026-10-15**. Repository: `takatakca/knowledgeAI`, default branch `main`, **public**.
 
 ## Production surfaces
 
@@ -39,3 +39,10 @@ Versioned source export from `/v1/knowledge/export` implemented in the isolated 
 ## Full source inventory pagination (2026-10-14)
 
 The private inventory now accepts `limit` and `offset` and returns only SQL-bounded tenant-scoped pages. Private CI run `38630925562` passed authorization, tenant pagination on PostgreSQL 17, audit and dependency checks. This is **isolated code, not a production private service**.
+
+## 2026-10-15 — private authorization hardening
+
+- Added migration `004_workspace_access.sql` with admin-controlled, deny-by-default `workspace_entitlements` and workspace-bound `revoked_tokens`. Each database operation now verifies both a cryptographically signed scope and live access-control rows before reading/writing tenant data.
+- Added RLS tests proving that an ordinary private runtime cannot grant itself access; disabled/unknown companies and revoked JTIs are denied. Synthetic PostgreSQL CI remains the only integration environment.
+- Added startup preflight for distinct non-owner login, all required FORCE RLS tables, least-privilege SQL grants and TLS. Local CI deliberately verifies a plaintext database fails the production TLS check.
+- Fixed HTTP source-list pagination to forward `offset`. No new private data service is deployed; the public Vercel portal remains independent.

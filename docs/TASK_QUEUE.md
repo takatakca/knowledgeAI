@@ -22,3 +22,10 @@ Further production gates: implement approved export/data portability; defined re
 Private version export: **code and synthetic CI integration DONE**, production BLOCKED. New `knowledge:export` scope, SQL-bound 10-version pagination, audit event, and tenant isolation. Requires migration 003 and a real approved trusted issuer before deployment. Remaining high-priority gaps: authoritative revocation, retention/deletion of backups and audit, secure private runtime and live end-to-end tests.
 
 Private inventory paging: DONE IN CODE/CI (limit 1–50, offset max 999999, verified cross-tenant pagination in `38630925562`). Operations remain BLOCKED IN PRODUCTION until actual TAKATAK identity/entitlement issuer and confidential PostgreSQL are verified.
+
+### 2026-10-15 private authorization checklist
+
+- DONE IN CODE: deny-by-default workspace grants, JTI revocation, scoped SQL RLS, TLS/role/schema startup preflight, source-list HTTP offset regression and CI coverage.
+- BLOCKED IN PRODUCTION: TAKATAK authority must provide verified membership/product entitlements and a trusted RS256 token issuer/JWKS, and must govern writes to the admin access-control tables.
+- BLOCKED IN PRODUCTION: separate approved private PostgreSQL, TLS trust configuration, migration-owner + restricted runtime login, backups/recovery, access revocation operations, retention and live smoke tests.
+- DO NOT interpret synthetic CI identities, hard-coded test fixture entitlements or a Vercel READY status as evidence of active confidential production ingestion.

@@ -65,3 +65,12 @@ Apply `private-knowledge/migrations/003_export_audit.sql` after 001 and 002. Exp
 ## Source pagination validation
 
 Latest private CI run `38630925562` verified SQL-bounded inventory pagination with restricted PostgreSQL roles and source export. Do NOT publish this private API to the public Vercel site. Migration prerequisites remain 001→002→003 and confidential TAKATAK-authenticated service infrastructure.
+
+## 2026-10-15 — migration 004 and private startup gate
+
+1. Apply **001 → 002 → 003 → 004** in a dedicated approved private PostgreSQL as migration owner. Never apply private migrations to unrelated TAKATAK/customer projects.
+2. The authorized TAKATAK backend or its privileged database operator must explicitly insert/update `workspace_entitlements` for each verified active workspace. All booleans default false. To revoke a particular still-valid JWT, write its `workspace_id`, `jti` and expiration into `revoked_tokens` from a trusted control-plane identity. Never expose these admin writes to the normal service role.
+3. Grant the distinct non-owner runtime login SELECT only on `workspace_entitlements` and `revoked_tokens`; allow only previously documented tenant RLS data access, and INSERT-only on audit.
+4. Before HTTP bind, private `assertDatabaseSafety()` now rejects privileged ownership, RLS not forced, unsafe SQL grants, or PostgreSQL plaintext sessions. Configure a verified TLS CA through protected host settings. Startup must fail if configuration is not ready.
+5. Tests: `node --test private-knowledge/tests/private.test.cjs private-knowledge/tests/access.test.cjs private-knowledge/tests/preflight.test.cjs`; the Private Knowledge Security CI runs a disposable PostgreSQL instance and live restricted-role checks.
+6. Actual private deployment remains unapproved and unconfigured. Vercel must continue serving only the public knowledge catalog.
