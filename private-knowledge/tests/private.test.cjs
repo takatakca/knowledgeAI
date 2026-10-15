@@ -144,6 +144,22 @@ test("tenant source lifecycle requires distinct signed scopes and jti",async()=>
  await assert.rejects(svc.listSources(makeJwt(),{limit:"5000",offset:"0"}),InputError);
  await assert.rejects(svc.listSources(makeJwt(),{limit:"5",offset:"-1"}),InputError);
 });
+test("HTTP passes source listing offset to the service",async()=>{
+ const pool={query:async()=>({rows:[]})}, seen=[];
+ const server=createServer({
+   search:async()=>({visibility:"private",results:[]}), ingest:async()=>({inserted:true}),
+   listSources:async(_jwt,query)=>{seen.push(query);return {results:[]};},
+   deleteSource:async()=>({deleted:0}),exportSource:async()=>({versions:[]})
+ },pool);
+ await new Promise(resolve=>server.listen(0,"127.0.0.1",resolve));
+ try{
+   const base="http://127.0.0.1:"+server.address().port+"/v1/knowledge/sources";
+   const opts={headers:{Authorization:"Bearer sample"}};
+   assert.equal((await fetch(base,opts)).status,200);
+   assert.equal((await fetch(base+"?limit=2&offset=3",opts)).status,200);
+   assert.deepEqual(seen,[{limit:"20",offset:"0"},{limit:"2",offset:"3"}]);
+ }finally{await new Promise(resolve=>server.close(resolve));}
+});
 test("lifecycle HTTP paths reject malformed source filters",async()=>{
  const pool={query:async()=>({rows:[{one:1}]})};
  const app=createServer({

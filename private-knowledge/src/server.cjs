@@ -77,7 +77,8 @@ function createServer(service, pool) {
           return send(res,400,{error:"Invalid query parameters"});
         }
         return send(res,200,await service.listSources(match[1],{
-          limit:url.searchParams.get("limit") || "20"
+          limit:url.searchParams.get("limit") || "20",
+          offset:url.searchParams.get("offset") || "0"
         }));
       }
       if (url.pathname === "/v1/knowledge/sources" && req.method === "DELETE") {
