@@ -99,3 +99,8 @@ actual private JWT verifier, including tenant/scope denial, fresh access checks
 and signing-key rotation. **This library is not installed as a live TAKATAK
 issuer route and does not issue real customer credentials.** See
 `docs/TAKATAK-ISSUER-INTEGRATION.md`.
+
+
+## TAKATAK integration checkpoint
+
+2026-10-16: TAKATAK master KnowledgeAI issuer integration is implemented in DRAFT PR #194 (https://github.com/takatakca/takatak-v1/pull/194). The new central product grant and RS256/JWKS routes remain off until reviewed and configured. No live private KnowledgeAI issuer/database was deployed.

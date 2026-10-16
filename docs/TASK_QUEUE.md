@@ -77,3 +77,8 @@ TLS downgrade prevention: DONE IN CODE. PostgreSQL URLs with overriding SSL opti
   definition and scoped permission policy, real server-side route and key/JWKS
   secret provisioning, signed staging token and approved private PostgreSQL.
 - Never equate a passing issuer contract test with working client login.
+
+
+## TAKATAK integration checkpoint
+
+2026-10-16 P1 issuer: DRAFT TAKATAK PR #194 has explicit per-client/per-member grants, product initially planned, four scope flags, guarded signer and JWKS. Blocked on approved merge/migration, secrets, operator grant provisioning, real private DB and two-tenant staging. Must not auto-enable from CI alone.

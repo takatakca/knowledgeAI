@@ -137,3 +137,8 @@ See `docs/TAKATAK-ISSUER-INTEGRATION.md` for exact server-only callback,
 secrets/JWKS, approved product entitlement and scope mapping prerequisites.
 Production private deployment remains blocked on dedicated DB, signer,
 encrypted backups and staging verification; do not flip flags without evidence.
+
+
+## TAKATAK integration checkpoint
+
+2026-10-16: TAKATAK PR #194 is UNMERGED and off by default. Do not assume the master issuer exists in production. On approval, validate migration, protected signing config, real membership/product scope rights, JWKS, independent private KnowledgeAI PostgreSQL TLS/RLS and backup drills before launch.

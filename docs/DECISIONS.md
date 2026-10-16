@@ -118,3 +118,8 @@ KnowledgeAI. Dedicated RSA keys remain external, short-lived operation-scoped
 JWTs last 60 seconds, and the already-isolated private service revalidates
 database entitlements and revocation. Without an actual TAKATAK product grant
 or issuer route, production stays disabled.
+
+
+## TAKATAK integration checkpoint
+
+2026-10-16: central master TAKATAK is the only KnowledgeAI user/organization authority. Dedicated default-off KnowledgeAiGrant rows control separate read/write/delete/export scopes in draft master PR #194; JWT signing remains server-only. Existing public KnowledgeAI Vercel content stays separate.
