@@ -49,6 +49,52 @@ test("fails closed when a JWKS authority is not configured or reachable",async()
   const down = createVerifier(config,async()=>{throw new Error("unavailable")});
   await assert.rejects(down(makeJwt(),"knowledge:read"),e=>e.status===503);
 });
+test("remote JWKS is streamed within 64 KiB, fails closed on oversized JSON and recovers",async()=>{
+ const saved=globalThis.fetch;
+ const signed=makeJwt();
+ try {
+   let downloaded=0;
+   globalThis.fetch=async()=>{
+     const body=new ReadableStream({
+       pull(controller) {
+         downloaded++;
+         controller.enqueue(new Uint8Array(16384).fill(65));
+         if(downloaded>10) controller.close();
+       }
+     });
+     return new Response(body,{status:200});
+   };
+   const verifyOversized=createVerifier(config);
+   await assert.rejects(verifyOversized(signed,"knowledge:read"),error=>error.status===503);
+   assert.ok(downloaded<=6,"JWKS stream should be cancelled promptly on overflow");
+
+   globalThis.fetch=async()=>new Response("{ not-json",{status:200});
+   const verifyInvalid=createVerifier(config);
+   await assert.rejects(verifyInvalid(signed,"knowledge:read"),error=>error.status===503);
+
+   const jwks={keys:[jwk]};
+   globalThis.fetch=async()=>new Response(JSON.stringify(jwks),{status:200,
+     headers:{"content-type":"application/json"}});
+   const verifyHealthy=createVerifier(config);
+   assert.equal((await verifyHealthy(signed,"knowledge:read")).workspace,"tenant-a1234");
+ }finally {
+   globalThis.fetch=saved;
+ }
+});
+test("JWKS content-length over limit is rejected before reading body",async()=>{
+ const saved=globalThis.fetch;
+ try {
+   let requested=false;
+   globalThis.fetch=async()=>({
+     ok:true,
+     headers:{get(name){return name==="content-length"?"999999":null;}},
+     get body(){requested=true;throw new Error("should not read body");}
+   });
+   await assert.rejects(createVerifier(config)(makeJwt(),"knowledge:read"),
+     error=>error.status===503);
+   assert.equal(requested,false);
+ }finally{globalThis.fetch=saved;}
+});
 test("document validation constrains provenance and content",()=>{
   const doc=validateDocument({source_id:"repo:doc-1",title:"Title",content:"body",
     source_url:"https://example.org/a"});

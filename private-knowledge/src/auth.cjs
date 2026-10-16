@@ -28,9 +28,32 @@ function createVerifier(config, getJwks) {
       signal: AbortSignal.timeout(4000), headers: { Accept: "application/json" }, redirect: "error"
     });
     if (!response.ok) throw new AccessError("Identity provider unavailable", 503);
-    const body = await response.text();
-    if (body.length > 65536) throw new AccessError("Identity provider unavailable", 503);
-    const candidate = JSON.parse(body);
+    // Decode no more than 64 KiB from untrusted JWKS HTTP traffic. Calling
+    // response.text() would buffer the *entire* response before size checking.
+    const length = response.headers.get("content-length");
+    if (length && Number(length) > 65536) {
+      throw new AccessError("Identity provider unavailable", 503);
+    }
+    const reader = response.body?.getReader();
+    if (!reader) throw new AccessError("Identity provider unavailable", 503);
+    let received = 0;
+    const chunks = [];
+    try {
+      while (true) {
+        const {done, value} = await reader.read();
+        if (done) break;
+        received += value.byteLength;
+        if (received > 65536) {
+          await reader.cancel();
+          throw new AccessError("Identity provider unavailable", 503);
+        }
+        chunks.push(value);
+      }
+    } finally {
+      reader.releaseLock();
+    }
+    if (!received) throw new AccessError("Identity provider unavailable", 503);
+    const candidate = JSON.parse(Buffer.concat(chunks, received).toString("utf8"));
     if (!candidate || !Array.isArray(candidate.keys) || candidate.keys.length > 30) {
       throw new AccessError("Identity provider unavailable", 503);
     }
