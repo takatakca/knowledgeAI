@@ -41,6 +41,17 @@ BEGIN
  IF (SELECT count(*) FROM knowledge_private.revoked_tokens) <> 1 THEN
    RAISE EXCEPTION 'A revoked token belonging to this tenant should be visible';
  END IF;
+ IF (SELECT count(*) FROM knowledge_private.source_approvals) <> 3 THEN
+   RAISE EXCEPTION 'Tenant A must see only its own approved/denied sources';
+ END IF;
+ IF EXISTS (SELECT 1 FROM knowledge_private.source_approvals WHERE workspace_id='tenant-bbbb') THEN
+   RAISE EXCEPTION 'Tenant B source provenance visible to tenant A';
+ END IF;
+ BEGIN
+   UPDATE knowledge_private.source_approvals SET approved=true WHERE source_id='denied-source';
+   RAISE EXCEPTION 'Runtime must not self-approve sources';
+ EXCEPTION WHEN insufficient_privilege THEN NULL;
+ END;
  BEGIN
    UPDATE knowledge_private.workspace_entitlements SET enabled=true WHERE workspace_id='tenant-cccc';
    RAISE EXCEPTION 'Runtime must not activate a workspace';
