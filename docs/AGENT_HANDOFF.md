@@ -1,5 +1,17 @@
 # Agent handoff — knowledgeAI
 
+## 2026-10-16 — TAKATAK master issuer draft PR
+
+- Assigned repo: takatakca/knowledgeAI, main. Starting SHA: 2cc572174dc574d866807272492cebeffc5bcdd7.
+- Completed: prepared draft https://github.com/takatakca/takatak-v1/pull/194 from TAKATAK master branch feature/knowledgeai-issuer-20261016; code SHA fe368ea5f8fe4321d3bbc16ca9e616b3b8da9da0. Master production/main not changed.
+- Features: dedicated centrally administered KnowledgeAiGrant (default disabled), initially planned KnowledgeAI product, profile/membership/client/product/role-scope validation, internal-consumer gated 60-second RS256 token route and public-only JWKS route. No credentials provisioned.
+- Modified master files: prisma/schema.prisma, migration 20261016054500_knowledgeai_product_grants, src/lib/integrations/knowledgeai/{policy,issuer,authority}.ts, src/app/api/integrations/knowledgeai/{token,jwks}/route.ts, src/lib/security/authenticated-identity.ts, package.json, dedicated tests/workflow and docs/WORKLOG.
+- Master draft CI launched: KnowledgeAI Issuer Contract CI #38883378962 and master CI #38883378847; CHECK final status, correct failures on feature branch before any merge. Previous KnowledgeAI CI #38844023448 and #38844023283 succeeded.
+- Deployment: public KnowledgeAI Vercel remains; private KnowledgeAI not deployed. Neither TAKATAK production signing nor a paid PostgreSQL project was activated. No real customer data tested.
+- Blockers: PR review/typecheck, approved product-grant provisioning, protected RSA key, dedicated tenant-isolated PostgreSQL/TLS, backup retention, private gateway, live staged two-tenant checks.
+- Next exact action: inspect PR #194 CI, fix errors without touching master main; once code verified seek protected signing/backend provisioning, run migrations 001–006 on approved dedicated DB, confirm real issuer and denied/allowed staged requests. Do not claim 100% until private deployment proved.
+
+
 ## Newest checkpoint — 2026-10-15 TAKATAK issuance bridge
 
 - Repository: `takatakca/knowledgeAI`, public `main` (starting SHA
