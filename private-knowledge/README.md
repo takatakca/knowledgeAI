@@ -136,3 +136,14 @@ not as a successful authorization. Unit tests in `tests/private.test.cjs`
 verify stream overflow, early rejection and recovery with an RSA key.
 GitHub Actions private CI #38941838399 was successful; this is not
 a live private deployment.
+
+## Non-public rootless Docker image — 2026-10-16
+
+`Dockerfile` and `.dockerignore` now build a standalone minimal Node 22
+runtime as `node:node`. No secret, migration/test fixture or customer
+document is copied into the image. The listener remains loopback-only
+until an operator **explicitly** configures BOTH
+`PRIVATE_BIND_HOST=0.0.0.0` and `PRIVATE_ALLOW_CONTAINER_BIND=1`,
+and protects the network. A healthy `/healthz` requires DB access.
+Automated image/no-credentials safety gate succeeded in CI #38942617058.
+See `../docs/PRIVATE-CONTAINER-DEPLOYMENT.md`. Not published/live.

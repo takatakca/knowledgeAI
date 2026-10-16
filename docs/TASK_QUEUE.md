@@ -104,3 +104,16 @@ TLS downgrade prevention: DONE IN CODE. PostgreSQL URLs with overriding SSL opti
 - STILL BLOCKED: merge coordination between competing TAKATAK PRs #194/#195
   (different master grant tables and issuer contracts), private DB/JWKS
   provisioning, real sessions, encrypted backup and two-tenant staging.
+
+### 2026-10-16 — private container release gating
+
+- DONE IN CODE AND CI: locked-dependency rootless Docker image, safe
+  loopback network binding default, explicit dual-flag protected-container
+  bind opt-in, fail-closed secretless startup, health probe and build CI.
+  Private CI #38942617058 and public CI #38942617237 SUCCESS.
+- DONE VERIFIED: newest TAKATAK PR #195 baseline + high-risk search
+  security CI #38941386144 SUCCESS; still DRAFT and UNMERGED.
+- BLOCKED: master PR #194/#195 conflicting grant schemas and JWKS routes,
+  coordinator approval, protected Coolify network/ingress, independent
+  confidential DB and recovery, live key provisioning and two-tenant
+  staging validation. No private Docker image is published automatically.

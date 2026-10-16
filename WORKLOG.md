@@ -3,7 +3,7 @@
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
-- 2026-10-16 | GPT-6 (private container release gate) | knowledgeAI/main | active | Add reproducible rootless private container and fail-closed guarded network binding, test build/invalid configs in CI; no production activation | next: verify, docs, handoff
+- 2026-10-16 | GPT-6 (private container release gate) | knowledgeAI/main | done | Rootless Node 22 Docker image, guarded container binding and refusal to start without DB/issuer; private CI #38942617058 and public #38942617237 SUCCESS | next: one master grant contract and approved private Coolify staging
 
 - 2026-10-16 | GPT-6 (private JWKS network hardening) | knowledgeAI/main | done | Bounded 64-KiB JWKS streaming, early length refusal and adversarial network regressions; CI #38941838399 and public #38941838409 green | next: consolidate master #194/#195, approve private issuer and DB before activation
 

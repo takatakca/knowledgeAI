@@ -139,3 +139,14 @@ Response.text() before enforcing a byte limit. Consume a stream with a strict
 65,536-byte cap and cancel oversized responses, rejecting malformed bodies
 without promoting them to the verification cache. This is a defensive
 improvement, not evidence of a live TAKATAK issuer or private backend.
+
+## 2026-10-16 — private container without implicit public exposure
+
+Produce a separate minimal Node.js container exclusively for confidential
+KnowledgeAI, under non-root runtime, using a reproducible package lock.
+Retain default loopback binding and require BOTH
+`PRIVATE_BIND_HOST=0.0.0.0` and `PRIVATE_ALLOW_CONTAINER_BIND=1` before
+allowing container-network ingress. These switches are not a substitute
+for private overlay firewall, TLS, a master entitlement contract or
+offsite recovery; production remains disabled. CI must verify both the
+rootless build and failure to boot with no credentials.

@@ -1,5 +1,44 @@
 # Agent handoff — knowledgeAI
 
+## Latest handoff — 2026-10-16 rootless private container
+
+- Repository: `takatakca/knowledgeAI` (`main`). Source container
+  feature commit `496f75bde84479fbfc4700b43a696bc7103b6941`,
+  GitHub Actions YAML fix `f1bd6b9ef9b2ab3d4cb1157b878b8f3f318c28eb`.
+  This docs commit / public catalog bot may advance HEAD; recheck GitHub.
+- Last completed: minimal Node 22 confidential `Dockerfile` (rootless
+  `node:node`, locked `npm ci`, no secrets or fixtures), `.dockerignore`,
+  HTTP binding guard in `src/server.cjs` (default localhost and two
+  explicit opt-in vars for protected container ingress), related tests
+  in `tests/private.test.cjs`, CI image build & fail-closed boot test.
+- Files modified: `private-knowledge/{Dockerfile,.dockerignore}`,
+  `private-knowledge/src/server.cjs`, `private-knowledge/tests/private.test.cjs`,
+  `.github/workflows/private-knowledge-tests.yml`,
+  `docs/PRIVATE-CONTAINER-DEPLOYMENT.md`, five continuity documents,
+  `private-knowledge/README.md` and `WORKLOG.md`.
+- Checks: CI #38942617058 SUCCESS (container build/unprivileged user,
+  refused startup with no secrets, Node signed auth, PostgreSQL 17 RLS
+  and backup/restore); Catalog CI #38942617237 SUCCESS (external HTTP).
+  Vercel public READY observed for `f1bd6b9ef9b2ab3d4cb1157b878b8f3f318c28eb`.
+- Master status: draft TAKATAK #195 latest high-risk auth CI
+  #38941386144 SUCCESS; #194 is a competing draft with incompatible
+  grant schema and issuer. Neither merged, no production product/grants.
+- Actual deployment: PUBLIC catalog is live on Vercel. Confidential
+  backend image built IN CI ONLY: NOT published, hosted or reachable.
+  No real tenant database, protected Coolify ingress, signing key,
+  customer data, paid Supabase project or automated backups provisioned.
+- Known blockers: approve ONE TAKATAK issuer schema (PR #194 vs #195),
+  master entitlement grant lifecycle, isolated PostgreSQL and TLS,
+  approved secrets/backup retention, internal protected network route,
+  multi-tenant staging smoke. Do not expose port 8301 publicly.
+- NEXT EXACT ACTION: verify latest docs/catalog commit CI and Vercel;
+  coordinate resolving TAKATAK PR #194 vs #195 into one canonical
+  entitlement/issuer contract. After approved provisioning, publish
+  a pinned image to private registry/Coolify, apply migrations 001–006,
+  and test real JWT/JWKS, tenant isolation, revoke, cleanup and restore
+  in staging before any production traffic.
+
+
 ## Latest handoff — 2026-10-16 private JWKS streaming security
 
 - Last completed: hardened `private-knowledge/src/auth.cjs` to use a bounded

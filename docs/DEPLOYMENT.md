@@ -160,3 +160,17 @@ The public portal CI #38941838409 has passed external smoke. No new private
 server has been deployed: require verified TAKATAK issuer, one canonical
 master entitlement schema, controlled RSA keys, separate confidential DB,
 backup/restore and two-tenant stage validation before go-live.
+
+## 2026-10-16 — Docker/Coolify confidential deployment preparation
+
+New standalone image under `private-knowledge/Dockerfile`. The image was
+built successfully without production secrets in Private Security CI
+#38942617058, and tested nonroot with intentional refusal to start
+without database/JWKS configuration. A container proxy must NEVER
+publish the private port to the internet. Approved protected Coolify
+network routing may set both `PRIVATE_BIND_HOST=0.0.0.0` and
+`PRIVATE_ALLOW_CONTAINER_BIND=1`; default is `127.0.0.1`.
+See `docs/PRIVATE-CONTAINER-DEPLOYMENT.md` for exact gates, rollback
+and security requirements. The private service was NOT deployed.
+Latest TAKATAK master draft PR #195 CI #38941386144 SUCCESS;
+PR #194 is a conflicting alternative and must be reconciled first.

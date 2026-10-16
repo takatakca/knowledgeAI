@@ -121,3 +121,16 @@ responses and malformed JSON fail closed (HTTP 503). Synthetic adversarial
 regressions added. Private Knowledge Security CI #38941838399 **SUCCESS**,
 Knowledge Catalog CI #38941838409 **SUCCESS** including public HTTP smoke.
 This validates CODE ONLY: private service has NOT been deployed.
+
+## 2026-10-16 — rootless confidential service image prepared
+
+`private-knowledge/Dockerfile` builds an isolated nonroot Node 22 image
+with no real customer content or secrets. Default binding is loopback,
+and any container-network listening requires explicit two-variable opt-in.
+Private Security CI #38942617058 completed SUCCESS, including image build,
+startup failure without secrets, Node auth tests and PostgreSQL RLS/restore.
+Public Catalog CI #38942617237 completed SUCCESS; public Vercel was READY
+for code release SHA `f1bd6b9ef9b2ab3d4cb1157b878b8f3f318c28eb`.
+TAKATAK master PR #195 CI #38941386144 is also now SUCCESS.
+**No production private container, database or true TAKATAK issuer is live.**
+See `docs/PRIVATE-CONTAINER-DEPLOYMENT.md`.
