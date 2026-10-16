@@ -1,5 +1,15 @@
 # Agent handoff — knowledgeAI
 
+## Verified 2026-10-16 check — TAKATAK issuer PR #194
+
+- Source PR: https://github.com/takatakca/takatak-v1/pull/194 (DRAFT, unmerged), branch `feature/knowledgeai-issuer-20261016`; latest corrected code commit `4a634ee094d95dd87b27ca595cd08d56ac5b7283`.
+- Unit crypto, default-deny product/workspace and scoped grant checks: **PASS**; specialized GitHub Actions `KnowledgeAI Issuer Contract CI` run `38883646592` concluded success after fixing the TypeScript env parameter type.
+- General TAKATAK CI `38883646779`: still running its ephemeral local Supabase startup at this checkpoint. Do not claim full CI/deployment completed until verified.
+- KnowledgeAI public Vercel: observed `READY` for GitHub HEAD `eb744bda7ae7f283eb4218c1d2080563f54c15e2`. This is **only the public site**; confidential backend is not deployed.
+- PR merges/deployment: NONE. Missing live secrets, approved master product activation, per-member grants, separate private DB, backup and two-tenant staging validation. No charged resources created.
+- Next exact task: inspect general master CI run 38883646779; fix any failures on PR #194 branch, keep main untouched. Review migration and secrets with authorized operators; then staged master ↔ private issuer/backend tests.
+
+
 ## Latest checkpoint — 2026-10-16, master bridge draft
 
 - KnowledgeAI GitHub repository: `takatakca/knowledgeAI`, `main`; starting head `2cc572174dc574d866807272492cebeffc5bcdd7`. This docs commit and public catalog bot may advance head; recheck GitHub.
