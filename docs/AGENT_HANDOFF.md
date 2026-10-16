@@ -1,5 +1,14 @@
 # Agent handoff — knowledgeAI
 
+## Follow-up — 2026-10-16 TAKATAK PR #195 security and CI corrections
+
+- Latest master PR branch `feat/knowledgeai-private-auth-20261016` commit: `c4e2ee001ebf5d2be8d1e1403aac83e2ccfaf18c`. Draft PR [#195](https://github.com/takatakca/takatak-v1/pull/195) OPEN, **not merged**.
+- Source change after original handoff: static migration table enables RLS and revokes public/anon/authenticated database grants; the issuer config accepts partial test environments; regression suite tests expired/disabled product, membership, profile, company and scope grants. Master files: `prisma/migrations/20261016094500_knowledgeai_workspace_grants/migration.sql`, `src/lib/integrations/knowledgeai/issuer.ts`, `scripts/verify-knowledgeai-issuer.ts`.
+- Initial TAKATAK full CI run `38883679854` FAILED only because a required `NODE_ENV` field in the test environment typing was missing; source fix committed `a05168bb449f4643801c04be422ddbc3280aaf0c`. On follow-up run `38884061006`, Prisma generation, Typecheck, KnowledgeAI issuer test and Lint were all SUCCESS; the remaining full QA was still in progress. Latest security migration run `38884205088` also passed those four steps; the full CI was **still running** at this checkpoint. Check its final conclusion, never assume green.
+- Public knowledgeAI CI `38883966136` SUCCESS, and Vercel PUBLIC portal was independently verified READY on catalog-bot SHA `c3812d79009013cf834c82797383643bd0398513`. The private KnowledgeAI backend is NOT deployed or provisioned.
+- NEXT EXACT ACTION: inspect [TAKATAK PR #195](https://github.com/takatakca/takatak-v1/pull/195) checks for run `38884205088`; fix any failing step on the branch, update PR evidence and await coordinator-controlled merge. After approved master migration/secret provisioning, stand up independent private KnowledgeAI DB/gateway and stage two-company authorization, source approvals and recoverability before production.
+
+
 ## Verified 2026-10-16 check — TAKATAK issuer PR #194
 
 - Source PR: https://github.com/takatakca/takatak-v1/pull/194 (DRAFT, unmerged), branch `feature/knowledgeai-issuer-20261016`; latest corrected code commit `4a634ee094d95dd87b27ca595cd08d56ac5b7283`.
