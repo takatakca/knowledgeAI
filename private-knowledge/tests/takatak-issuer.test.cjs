@@ -73,3 +73,29 @@ test("scope is one approved operation only; token tampering fails private verifi
   p[1]=Buffer.from(JSON.stringify(forged)).toString("base64url");
   await assert.rejects(verify(p.join("."),"knowledge:export"),e=>e.status===401);
 });
+
+test("authorization is re-evaluated on every issuance, not cached across requests",async()=>{
+  let active=true, productChecks=0, permissionChecks=0;
+  const opts={
+    authorizeProduct:async()=>{productChecks+=1;return active;},
+    authorizeScope:async()=>{permissionChecks+=1;return active;}
+  };
+  const first=await issue(opts), second=await issue(opts);
+  assert.notEqual(first,second);
+  active=false;
+  await assert.rejects(issue(opts),/issuance denied/);
+  assert.equal(productChecks,3);
+  assert.equal(permissionChecks,3);
+});
+test("JWKS key rotation invalidates old signing key and accepts new dedicated key",async()=>{
+  const original=await issue();
+  const {privateKey:rotatedKey}=generateKeyPairSync("rsa",{modulusLength:2048});
+  const replacement={...config,kid:"knowledge-rs256-ci-v2",
+    privateKeyPem:rotatedKey.export({format:"pem",type:"pkcs8"}).toString()};
+  const next=await issue(replacement);
+  const verify=createVerifier({issuer:config.issuer,audience:config.audience,
+    jwksUrl:"https://takatak.example/new-keys"},
+    async()=>getKnowledgeJwks(replacement));
+  await assert.rejects(verify(original,"knowledge:read"),e=>e.status===401);
+  assert.equal((await verify(next,"knowledge:read")).workspace,"tenant-aaaa");
+});
