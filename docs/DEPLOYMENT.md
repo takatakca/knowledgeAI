@@ -150,3 +150,13 @@ encrypted backups and staging verification; do not flip flags without evidence.
 ## 2026-10-16 — reviewed CI and master merge blocker
 
 TAKATAK PR #195 baseline `c4e2ee001ebf5d2be8d1e1403aac83e2ccfaf18c` completed master CI run [38884205088](https://github.com/takatakca/takatak-v1/actions/runs/38884205088) successfully. The follow-up high-risk-route source commit `5f76e0bee202162c9569b01ef0f52372211ab98b` and worklog commit `3bd6c1ef0bb6b2a49dd27325c37c600e907fae80` require fresh CI confirmation. PR #194 is an incompatible overlapping draft; coordinator MUST choose a single master grant table and JWKS issuer, not merge both SQL migrations. No signing keys, grants, private deployment, customer data, paid Supabase projects or migrations were provisioned by this work. Vercel READY is PUBLIC only; continue staging checks against a separately authorized confidential backend.
+
+## 2026-10-16 — private JWKS pre-deployment gate
+
+The private JWT verifier streams JWKS responses within a 64-KiB cap and
+rejects oversized, empty and malformed bodies. CI #38941838399 has verified
+adversarial JWT/JWKS checks, real disposable PostgreSQL tenancy and restore.
+The public portal CI #38941838409 has passed external smoke. No new private
+server has been deployed: require verified TAKATAK issuer, one canonical
+master entitlement schema, controlled RSA keys, separate confidential DB,
+backup/restore and two-tenant stage validation before go-live.

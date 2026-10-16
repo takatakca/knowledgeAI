@@ -126,3 +126,13 @@ identity service and is **not deployed**; the actual TAKATAK server must
 validate selected workspace, membership, product grant, current permission,
 secure signing key and public JWKS. The standalone library itself exposes
 no HTTP endpoint. See `../docs/TAKATAK-ISSUER-INTEGRATION.md`.
+
+## Bounded JWKS HTTP verification — 2026-10-16
+
+The remote verifier in `src/auth.cjs` now consumes JWKS as a streamed
+response with an immediate `Content-Length` check and a 65,536-byte hard
+read limit. Oversized or invalid issuer JSON fails as service-unavailable,
+not as a successful authorization. Unit tests in `tests/private.test.cjs`
+verify stream overflow, early rejection and recovery with an RSA key.
+GitHub Actions private CI #38941838399 was successful; this is not
+a live private deployment.

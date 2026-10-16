@@ -131,3 +131,11 @@ Prefer a TAKATAK-server-to-KnowledgeAI-backend read proxy rather than returning 
 ## 2026-10-16 — no parallel KnowledgeAI identity contracts
 
 Protect TAKATAK as the sole customer and workspace authority. Two master drafts currently implement incompatible entitlements: PR #194 (`knowledgeai_grants`) and #195 (`knowledgeai_workspace_grants`). These must be reconciled into ONE approved schema/signing interface before any merge or provisioning. For any browser-facing private knowledge proxy, require fresh Supabase `getUser()` authentication (high-risk route), validated master per-user/per-company grant, fixed scope and server-only JWT; do not rely on a cached session or return the bearer to the browser. No production activation or auto-merge is permitted until a real two-company test and dedicated secured backend are verified.
+
+## 2026-10-16 — bound JWKS network reads
+
+Even when configured to fetch keys from an HTTPS trusted issuer, never use
+Response.text() before enforcing a byte limit. Consume a stream with a strict
+65,536-byte cap and cancel oversized responses, rejecting malformed bodies
+without promoting them to the verification cache. This is a defensive
+improvement, not evidence of a live TAKATAK issuer or private backend.

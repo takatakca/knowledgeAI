@@ -1,5 +1,37 @@
 # Agent handoff — knowledgeAI
 
+## Latest handoff — 2026-10-16 private JWKS streaming security
+
+- Last completed: hardened `private-knowledge/src/auth.cjs` to use a bounded
+  streaming JWKS reader (65,536 bytes), with early `Content-Length` refusal
+  and no allocation of oversized untrusted responses. Added regression tests
+  to `private-knowledge/tests/private.test.cjs` for stream overflow, invalid
+  response, healthy recovery and content-length short-circuit.
+- Security code commit: `415b15e2f911631178f13af94084371a1728bab2`
+  on `takatakca/knowledgeAI:main`, after WORKLOG task claim `50a2212f`.
+  Documentation commit and public catalog bot may advance the SHA; recheck.
+- Verified: Private Knowledge Security CI #38941838399 **SUCCESS** (Node
+  auth/JWKS unit tests, PostgreSQL 17 tenancy/RLS, migrations, backup/restore,
+  lockfile checks). Public Catalog CI #38941838409 **SUCCESS** including real
+  external HTTPS smoke check. Check Vercel READY on final docs/catalog SHA.
+- Cross-project continuity: TAKATAK draft PR #195 baseline CI
+  #38884205088 SUCCESS. Security follow-up `5f76e0bee2` requires fresh
+  Supabase user verification for the private read-only search proxy; master
+  branch last WORKLOG commit `3bd6c1ef0b`. Final master CI must be checked.
+  Competing draft PR #194 has a different `knowledgeai_grants` schema and
+  protected token route. Do NOT merge both PRs; the coordinator must select
+  a single entitlement table and signing/JWKS contract, then port safe features.
+- Production reality: the PUBLIC KnowledgeAI catalog is on Vercel; the
+  confidential KnowledgeAI backend, private database, TAKATAK issuer/secrets,
+  true grants, encrypted offsite backups and two-tenant smoke are NOT live.
+- No new billable Supabase project, production migrations or private tenant
+  data were created or deployed.
+- NEXT EXACT ACTION: check final HEAD, CI and Vercel; inspect PR #195 full CI
+  and coordinate consolidation with #194, secure approved master migration
+  and private signing keys, then provision isolated Postgres migrations 001–006
+  and exercise real authorization/deny/revoke and recovery before production.
+
+
 ## Latest checkpoint — 2026-10-16, conflicting master PRs and high-risk auth
 
 - SOURCE OF TRUTH: `takatakca/knowledgeAI` main previously `369ad44b9535ed2185b61dbd31fc265be14c9166` (public Vercel READY and catalog smoke passed). Current handoff/docs commit and auto catalog refresh can advance HEAD; verify current SHA at resume.

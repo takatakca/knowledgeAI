@@ -3,7 +3,7 @@
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
-- 2026-10-16 | GPT-6 (private JWKS network hardening) | knowledgeAI/main | active | Stream-bound untrusted JWKS response before JSON allocation; test oversized and invalid bodies without exposing secrets | next: CI, docs, production smoke
+- 2026-10-16 | GPT-6 (private JWKS network hardening) | knowledgeAI/main | done | Bounded 64-KiB JWKS streaming, early length refusal and adversarial network regressions; CI #38941838399 and public #38941838409 green | next: consolidate master #194/#195, approve private issuer and DB before activation
 
 - 2026-10-16 | GPT-6 (master consolidation) | TAKATAK draft PR #195 → knowledgeAI/main | done, latest CI pending | Verified master baseline CI green, hardened private search to require fresh Supabase session, identified competing PR #194 schema/issuer; merge blocked until coordinator selects one | next: verify PR #195 final CI; consolidate only one master entitlement path, provision protected private staging
 

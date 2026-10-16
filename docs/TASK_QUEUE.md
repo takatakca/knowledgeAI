@@ -95,3 +95,12 @@ TLS downgrade prevention: DONE IN CODE. PostgreSQL URLs with overriding SSL opti
 - REQUIRED before master merge: coordinate competing PR #194 (`knowledgeai_grants` plus token endpoint) and PR #195 (`knowledgeai_workspace_grants` plus browser-safe server proxy). Select ONE canonical schema, ONE issuer/JWKS contract and carry over unique tested behaviors; do not apply both migrations.
 - BLOCKED for activation: security/coordinator review, master approved product and individual grants, authorized master migration, validated private PostgreSQL + migrations 001–006, separate RLS/backup/retention, secret-managed RSA issuer/JWKS and two-tenant staging identity tests.
 
+
+### 2026-10-16 — remote identity safety
+
+- DONE: stream-bound untrusted JWKS response before allocation, 64-KiB limit,
+  early Content-Length denial, malformed body denial and valid-key recovery tests.
+  Verified CI #38941838399; public CI #38941838409.
+- STILL BLOCKED: merge coordination between competing TAKATAK PRs #194/#195
+  (different master grant tables and issuer contracts), private DB/JWKS
+  provisioning, real sessions, encrypted backup and two-tenant staging.

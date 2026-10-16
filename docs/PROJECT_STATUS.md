@@ -112,3 +112,12 @@ The TAKATAK master branch `feat/knowledgeai-private-auth-20261016` has a **draft
 ## 2026-10-16 — TAKATAK master PR validated, session hardening under CI
 
 TAKATAK master draft [PR #195](https://github.com/takatakca/takatak-v1/pull/195) CI `38884205088` completed **successfully** at `c4e2ee001ebf5d2be8d1e1403aac83e2ccfaf18c`. Follow-up commit `5f76e0bee202162c9569b01ef0f52372211ab98b` requires fresh Supabase Auth on the private search proxy rather than a five-minute local cached session; latest CI not yet complete. A second open draft [PR #194](https://github.com/takatakca/takatak-v1/pull/194) implements an incompatible alternative KnowledgeAI grant table and issuer: DO NOT MERGE BOTH. Public KnowledgeAI Vercel was READY on `369ad44b9535ed2185b61dbd31fc265be14c9166`; private KnowledgeAI remains undeployed.
+
+## 2026-10-16 — JWKS network response size enforced before allocation
+
+Private verifier now reads remote JWKS in bounded chunks (maximum 65,536 bytes)
+rather than buffering unbounded HTTP content before checking size. Oversized
+responses and malformed JSON fail closed (HTTP 503). Synthetic adversarial
+regressions added. Private Knowledge Security CI #38941838399 **SUCCESS**,
+Knowledge Catalog CI #38941838409 **SUCCESS** including public HTTP smoke.
+This validates CODE ONLY: private service has NOT been deployed.
