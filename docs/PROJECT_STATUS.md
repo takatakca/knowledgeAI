@@ -89,3 +89,13 @@ workspace and mismatched URL approvals, plus restored approval state.
 Private KnowledgeAI is **still not deployed**; there is no real TAKATAK
 source approval authority or confidential PostgreSQL service configured.
 See `docs/PRIVATE-SOURCE-APPROVALS.md`.
+
+## 2026-10-15 — server-only TAKATAK issuer interoperability
+
+A reusable RS256 token issuer and public JWKS adapter for TAKATAK has been
+implemented under `private-knowledge/integrations/takatak-issuer.cjs`.
+End-to-end synthetic cryptographic round-trip tests pass against KnowledgeAI's
+actual private JWT verifier, including tenant/scope denial, fresh access checks
+and signing-key rotation. **This library is not installed as a live TAKATAK
+issuer route and does not issue real customer credentials.** See
+`docs/TAKATAK-ISSUER-INTEGRATION.md`.

@@ -67,3 +67,13 @@ TLS downgrade prevention: DONE IN CODE. PostgreSQL URLs with overriding SSL opti
 - STILL BLOCKED: approved TAKATAK administrative source-review/ownership and
   privacy classification workflow, real issuer, dedicated private DB and
   production ingestion/staging verification. No real confidential data loaded.
+
+### 2026-10-15 — central TAKATAK issuer adapter
+
+- DONE IN CODE/CI: production-gated RS256 60-second token signer, public-only
+  JWKS, exact KnowledgeAI claims, fail-closed server-side workspace/product/
+  permission callbacks, key rotation and synthetic verifier integration tests.
+- BLOCKED for live integration: actual TAKATAK KnowledgeAI product entitlement
+  definition and scoped permission policy, real server-side route and key/JWKS
+  secret provisioning, signed staging token and approved private PostgreSQL.
+- Never equate a passing issuer contract test with working client login.

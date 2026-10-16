@@ -1,5 +1,43 @@
 # Agent handoff — knowledgeAI
 
+## Newest checkpoint — 2026-10-15 TAKATAK issuance bridge
+
+- Repository: `takatakca/knowledgeAI`, public `main` (starting SHA
+  `1349bff4a1c41ccf0832cb64e0bb1931a5595b4c`).
+- Completed: isolated RS256 short-lived issuer + public JWKS adapter
+  in `private-knowledge/integrations/takatak-issuer.cjs`, tested against
+  the existing KnowledgeAI JWT verifier with synthetic centrally resolved
+  client-scoped access, fresh product/permission checks and key rotation.
+- Source commits: `f58cd7b3dae0384b7f3603566696e41b87b28cf7`
+  and `3792f8d8f9df2a94e55522aa3b4f5a9ec6cdb873`; documentation
+  commits/catalog regeneration can advance HEAD — recheck on resume.
+- Files changed: `private-knowledge/integrations/takatak-issuer.cjs`,
+  `private-knowledge/tests/takatak-issuer.test.cjs`,
+  `.github/workflows/private-knowledge-tests.yml`,
+  `docs/TAKATAK-ISSUER-INTEGRATION.md`, five required continuity docs,
+  private README and WORKLOG.
+- Verified: initial issuer contract source CI `38843731319` SUCCESS
+  (JWT unit tests, restricted PostgreSQL and audit/restore);
+  test extension CI `38843839373` pending final result at write time.
+  Catalog CI `38843731240` SUCCESS. Confirm final docs commit,
+  final GitHub SHA and Vercel READY separately before reporting.
+- Master investigation: `takatakca/takatak-v1` provides
+  `getServerAccessContext()` + `hasEffectivePermission()`; real
+  product-specific KnowledgeAI entitlement and production signing key/JWKS
+  route are NOT currently confirmed or provisioned. No master homepage
+  or other repository was modified in this session.
+- Deployment: KnowledgeAI PUBLIC search is on Vercel; PRIVATE backend
+  and issuer remain NOT DEPLOYED, with no real tenant data or secrets.
+  Three unrelated PRs #3/#4/#5 preserved.
+- Blockers: master product entitlement/permission policy, secret-backed
+  signing-key deployment, dedicated confidential PostgreSQL/TLS, governed
+  client-source approvals, encrypted recovery and live tenant staging proof.
+- NEXT EXACT ACTION: implement dedicated KnowledgeAI provisioning and
+  authenticated token/JWKS routes in TAKATAK using the tested adapter,
+  check true memberships and per-scope rights on every issue, then stage
+  two-client cross-tenant access against an approved separate private DB
+  with migrations 001–006, backup/restore and live release evidence.
+
 ## Most recent continuation — 2026-10-15 source approval gate
 
 - Repo: `takatakca/knowledgeAI`, PUBLIC, `main`. Session starting SHA

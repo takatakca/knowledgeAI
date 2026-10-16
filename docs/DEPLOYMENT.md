@@ -126,3 +126,14 @@ TAKATAK operator must separately manage source approval, expiry and
 confidentiality classifications, never via an unauthenticated client form.
 Verify synthetic tests in CI, then real staging denial cases and restore.
 See `docs/PRIVATE-SOURCE-APPROVALS.md`. No live private deployment has occurred.
+
+## 2026-10-15 — TAKATAK issuer contract, not deployed
+
+The portable signing library `private-knowledge/integrations/takatak-issuer.cjs`
+was tested with synthetic TAKATAK-style active workspace access and validates
+with the existing private KnowledgeAI RS256 verifier. It is deliberately not
+imported by public Vercel code or exposed through an HTTP route.
+See `docs/TAKATAK-ISSUER-INTEGRATION.md` for exact server-only callback,
+secrets/JWKS, approved product entitlement and scope mapping prerequisites.
+Production private deployment remains blocked on dedicated DB, signer,
+encrypted backups and staging verification; do not flip flags without evidence.

@@ -106,3 +106,15 @@ The seven-table FORCE RLS preflight and staging restore checks now cover
 approval metadata. Removal of already stored versions remains an independent
 audited delete/retention operation; revoking an ingestion approval does not
 implicitly erase historical versions.
+
+## 2026-10-15 — bridge via TAKATAK rather than creating identity authority
+
+Keep TAKATAK as the unique user/workspace authority. Publish a reusable pure
+Node RS256 KnowledgeAI token/JWKS emitter that accepts only server-resolved
+`client_scoped` access plus two independent trusted callbacks: verified
+KnowledgeAI product entitlement and requested-scope authorization. Never
+create credentials, login pages or browser-controlled role grants inside
+KnowledgeAI. Dedicated RSA keys remain external, short-lived operation-scoped
+JWTs last 60 seconds, and the already-isolated private service revalidates
+database entitlements and revocation. Without an actual TAKATAK product grant
+or issuer route, production stays disabled.

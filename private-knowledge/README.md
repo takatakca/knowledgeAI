@@ -115,3 +115,14 @@ needs SELECT only on `source_approvals`, and startup verifies this along with
 seven FORCE RLS tables. Revocation blocks future writes; historical versions
 require separate authorized deletion. See `../docs/PRIVATE-SOURCE-APPROVALS.md`.
 **Private service is still not live; CI only uses synthetic approvals.**
+
+## TAKATAK central identity bridge — 2026-10-15
+
+`integrations/takatak-issuer.cjs` contains the server-only RS256 signing
+and JWKS representation intended for TAKATAK master integration. It is
+tested with `tests/takatak-issuer.test.cjs` against this service's real
+JWT verifier and deny-by-default access contract. It is **not** a new
+identity service and is **not deployed**; the actual TAKATAK server must
+validate selected workspace, membership, product grant, current permission,
+secure signing key and public JWKS. The standalone library itself exposes
+no HTTP endpoint. See `../docs/TAKATAK-ISSUER-INTEGRATION.md`.

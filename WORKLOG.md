@@ -3,7 +3,7 @@
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
-- 2026-10-15 | GPT-6 (TAKATAK bridge) | main | active | Build production-gated TAKATAK RS256 issuer/JWKS contract with real access-context requirements and verifier round-trip regression tests | next: CI, docs and production gating
+- 2026-10-15 | GPT-6 (TAKATAK bridge) | main | done | Added fail-closed RS256/JWKS TAKATAK issuer bridge, private verifier round-trip, key rotation and fresh authorization tests; source CI 38843731319 passed | next: master product entitlement and secure issuer route, approved private DB
 
 - 2026-10-15 | GPT-6 (source approval gate) | main | done | Added mandatory admin-approved tenant provenance gate, migration 006, JWT-scope ingestion denial and PostgreSQL RLS/restore tests; source CI 38841286380 green | next: TAKATAK source reviewer/issuer and dedicated private production infrastructure
 
