@@ -114,3 +114,15 @@ An authorized operator may execute bounded cleanup only with both
 external prerequisites. Synthetic PostgreSQL regression CI passed
 (`38839681826`). No production cleanup task or backup-retention schedule
 was enabled. Audit and customer documents are not in cleanup scope.
+
+## 2026-10-15 — private migration 006 approval gate
+
+Apply migrations **001 → 002 → 003 → 004 → 005 → 006** as an approved
+migration owner on the independent private database only. The regular
+KnowledgeAI runtime role requires SELECT, but never write privileges, on
+`knowledge_private.source_approvals`. Startup preflight requires its seventh
+FORCE RLS table, safe grants and a protected TLS connection. A trusted
+TAKATAK operator must separately manage source approval, expiry and
+confidentiality classifications, never via an unauthenticated client form.
+Verify synthetic tests in CI, then real staging denial cases and restore.
+See `docs/PRIVATE-SOURCE-APPROVALS.md`. No live private deployment has occurred.

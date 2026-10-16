@@ -78,3 +78,14 @@ audits nor live workspace entitlements are targeted. The synthetic PostgreSQL
 checks passed in Private Knowledge Security CI `38839681826`.
 **No production retention job, operator identity, or legal schedule is configured.**
 See `docs/PRIVATE-RETENTION.md`.
+
+## 2026-10-15 — approved-source ingestion boundary
+
+Migration `006_source_approvals.sql` adds a seventh tenant-protected FORCE RLS
+table, with admin-controlled source ID/URL, confidentiality classification and
+approval expiration. The private ingestion API now **refuses unapproved sources**.
+Tests on synthetic PostgreSQL 17 include missing, expired, denied, incorrect
+workspace and mismatched URL approvals, plus restored approval state.
+Private KnowledgeAI is **still not deployed**; there is no real TAKATAK
+source approval authority or confidential PostgreSQL service configured.
+See `docs/PRIVATE-SOURCE-APPROVALS.md`.

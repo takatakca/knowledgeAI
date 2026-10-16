@@ -104,3 +104,14 @@ HTTP request, does not run under the normal runtime role, and does not
 delete source documents, audit history or workspace entitlements.
 Evidence and commands: `../docs/PRIVATE-RETENTION.md`. No production
 retention schedule or legal policy has been authorized yet.
+
+## Approved provenance gate — migration 006
+
+Ingestion refuses any source without an active trusted approval matching the
+JWT workspace, `source_id` and exact HTTPS `source_url`. Approval rows have
+explicit confidentiality classifications and expiration; no browser/API
+control grants them. Apply migrations **001–006** in order. The runtime login
+needs SELECT only on `source_approvals`, and startup verifies this along with
+seven FORCE RLS tables. Revocation blocks future writes; historical versions
+require separate authorized deletion. See `../docs/PRIVATE-SOURCE-APPROVALS.md`.
+**Private service is still not live; CI only uses synthetic approvals.**

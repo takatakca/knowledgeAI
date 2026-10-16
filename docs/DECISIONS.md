@@ -95,3 +95,14 @@ Never allow the KnowledgeAI private runtime SQL role to run cleanup; never
 delete documents, audit logs or workspace entitlements from this operation.
 Expiry bounds used in synthetic tests are not substitutes for approved
 production retention and legal-hold policies.
+
+## 2026-10-15 — explicit provenance approval, not arbitrary HTTPS ingestion
+
+Signed write scopes and company entitlements alone do not grant authority
+to ingest arbitrary external or private documents. Require a separate
+admin-managed and expiring approval for the exact source ID and HTTPS URL
+inside the verified workspace; do not allow API runtime to edit approvals.
+The seven-table FORCE RLS preflight and staging restore checks now cover
+approval metadata. Removal of already stored versions remains an independent
+audited delete/retention operation; revoking an ingestion approval does not
+implicitly erase historical versions.

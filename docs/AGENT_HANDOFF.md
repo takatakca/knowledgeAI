@@ -1,5 +1,42 @@
 # Agent handoff — knowledgeAI
 
+## Most recent continuation — 2026-10-15 source approval gate
+
+- Repo: `takatakca/knowledgeAI`, PUBLIC, `main`. Session starting SHA
+  `6e09d79ce8ed05f01fa1f19a7c6d5abdad17c72f`.
+- Last completed task: fail-closed source provenance approval check in the
+  existing private ingestion route before anti-replay receipt/document insert.
+  Approval is admin-controlled, tenant-specific, exact-URL, expiring, and
+  stored in seventh FORCE RLS table `source_approvals` (migration 006).
+- Code commits: `ebe65b3fe6b3ab915d065d67956fe3984aa6d90b`,
+  `221db4fc962f178a5d93564d6f2b27cb4b833978` (fixture corrections),
+  `6e30a2f376f882b76f016a666d7a05246e9111fc` (RLS isolation tests).
+  Final docs + catalog bot change SHA; check current main HEAD.
+- Files changed: `private-knowledge/migrations/006_source_approvals.sql`,
+  `private-knowledge/src/{source-approval,service,preflight}.cjs`,
+  `private-knowledge/tests/{source-approval,private,preflight,postgres.integration}.test.cjs`,
+  `private-knowledge/tests/{rls,restore,access-controls}.sql`,
+  `.github/workflows/private-knowledge-tests.yml`,
+  `docs/PRIVATE-SOURCE-APPROVALS.md`, continuity documents and WORKLOG.
+- Verified commands/tests: GitHub Actions `38841286380` private security CI
+  succeeded (Node JWT/source-approval tests, PostgreSQL restricted-role
+  cross-tenant provenance, ingest denial/success, RLS and full restore).
+  Public catalog CI `38841286331` succeeded, including external HTTPS smoke.
+  Re-check final RLS commit and documentation/catalog-bot CI separately.
+- Production status: Vercel PUBLIC corpus only. Private server NOT DEPLOYED;
+  no TAKATAK real service JWT issuer or source approval control plane,
+  no approved confidential PostgreSQL DB, no private content or secrets.
+- Open PRs #3/#4/#5 were preserved and not merged. No paid Supabase project.
+- Blockers: trusted TAKATAK issuer and source-ownership approvals, protected
+  admin entitlement/approval workflows, approved private PostgreSQL + TLS,
+  backup retention and protected private deployment/staging verification.
+- NEXT EXACT ACTION: validate latest source-approval/RLS CI and public
+  Vercel SHA, establish authoritative TAKATAK signing and administrative
+  source-review contract, provision dedicated approved PostgreSQL, apply
+  migrations 001–006, verify seven-table RLS startup and two-tenant
+  denial/revocation/ingestion against real staging identities, then
+  only activate a separately protected private backend.
+
 ## Latest verified milestone — 2026-10-15 operational retention
 
 - Source repository `takatakca/knowledgeAI`, public `main`; starting SHA

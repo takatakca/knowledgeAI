@@ -58,3 +58,12 @@ TLS downgrade prevention: DONE IN CODE. PostgreSQL URLs with overriding SSL opti
 - BLOCKED IN PRODUCTION: agreed retention periods, legal holds, authorized
   operator/service account, protected run logs, encrypted backups and separately
   approved scheduling. **Audit/document erasure is NOT implemented.**
+
+### 2026-10-15 — private source approval gate
+
+- DONE IN CODE: explicit per-workspace source approval and exact HTTPS URL
+  validation before write, expiry checks, admin-only approval management,
+  FORCE RLS and private synthetic integration tests (migration 006).
+- STILL BLOCKED: approved TAKATAK administrative source-review/ownership and
+  privacy classification workflow, real issuer, dedicated private DB and
+  production ingestion/staging verification. No real confidential data loaded.
