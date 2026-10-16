@@ -118,6 +118,16 @@ jobs:
         shell: bash
         run: |
           rm -f "$RUNNER_TEMP/knowledge-private-rehearsal.dump"
+      - name: Seed synthetic expired and fresh retention artifacts
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/tests/retention-fixtures.sql
+      - name: Preview privileged retention without deleting any data
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/maintenance/retention.sql
+      - name: Assert default retention preview was non-destructive
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -v expect_pruned=false -U postgres -d knowledgeci < private-knowledge/tests/retention-assert.sql
+      - name: Apply explicitly approved bounded retention in disposable CI
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -v apply=true -v approved=true -U postgres -d knowledgeci < private-knowledge/maintenance/retention.sql
+      - name: Verify only old quota, replay and expired revocation records were pruned
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -v expect_pruned=true -U postgres -d knowledgeci < private-knowledge/tests/retention-assert.sql
       - name: Remove disposable DB
         if: always()
         run: docker rm -f knowledge-private-ci || true
