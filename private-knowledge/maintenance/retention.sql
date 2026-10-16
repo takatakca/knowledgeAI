@@ -75,7 +75,8 @@ SELECT 'revoked_tokens', count(*)
     ) SELECT 'revoked_tokens' AS artifact,count(*) AS removed FROM deleted;
   \else
     \echo 'DENIED: apply=true requires separate approved=true flag'
-    \quit 3
+    -- ON_ERROR_STOP makes an unapproved destructive invocation fail nonzero.
+    SELECT 1 / 0 AS denied_unapproved_retention;
   \endif
 \else
   \echo 'DRY RUN ONLY: no rows deleted'

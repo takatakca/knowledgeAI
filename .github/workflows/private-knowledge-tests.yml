@@ -124,6 +124,18 @@ jobs:
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -U postgres -d knowledgeci < private-knowledge/maintenance/retention.sql
       - name: Assert default retention preview was non-destructive
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -v expect_pruned=false -U postgres -d knowledgeci < private-knowledge/tests/retention-assert.sql
+      - name: Assert retention execution without approval fails safely
+        shell: bash
+        run: |
+          set -euo pipefail
+          if docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 \
+            -v apply=true -v approved=false -U postgres -d knowledgeci \
+            < private-knowledge/maintenance/retention.sql; then
+            echo "::error::Unapproved retention command unexpectedly succeeded"
+            exit 1
+          fi
+      - name: Confirm denied retention did not delete anything
+        run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -v expect_pruned=false -U postgres -d knowledgeci < private-knowledge/tests/retention-assert.sql
       - name: Apply explicitly approved bounded retention in disposable CI
         run: docker exec -i knowledge-private-ci psql -v ON_ERROR_STOP=1 -v apply=true -v approved=true -U postgres -d knowledgeci < private-knowledge/maintenance/retention.sql
       - name: Verify only old quota, replay and expired revocation records were pruned
