@@ -4,7 +4,7 @@
 // Never run private production as the migration owner, superuser, RLS bypass
 // or a role allowed to change its own tenant entitlements / revoked JTIs.
 const expected = Object.freeze([
-  "documents","write_receipts","audit","workspace_entitlements","revoked_tokens","request_windows"
+  "documents","write_receipts","audit","workspace_entitlements","revoked_tokens","request_windows","source_approvals"
 ]);
 function unsafe(reason) { throw new Error("Private database preflight failed: " + reason); }
 
@@ -26,11 +26,12 @@ async function assertDatabaseSafety(pool, { requireTLS = true } = {}) {
       unsafe("expected FORCE RLS tables are missing or owned by runtime");
     }
     const rights = await client.query(
-      "SELECT has_table_privilege(current_user,'knowledge_private.workspace_entitlements','SELECT') AS can_read_entitlements, has_table_privilege(current_user,'knowledge_private.revoked_tokens','SELECT') AS can_read_revocations, has_table_privilege(current_user,'knowledge_private.workspace_entitlements','INSERT,UPDATE,DELETE') AS can_edit_entitlements, has_table_privilege(current_user,'knowledge_private.revoked_tokens','INSERT,UPDATE,DELETE') AS can_edit_revocations, has_table_privilege(current_user,'knowledge_private.audit','SELECT') AS can_read_audit, has_table_privilege(current_user,'knowledge_private.request_windows','SELECT') AS can_read_quotas, has_table_privilege(current_user,'knowledge_private.request_windows','INSERT') AS can_insert_quotas, has_table_privilege(current_user,'knowledge_private.request_windows','UPDATE') AS can_update_quotas, has_table_privilege(current_user,'knowledge_private.request_windows','DELETE') AS can_delete_quotas");
+      "SELECT has_table_privilege(current_user,'knowledge_private.workspace_entitlements','SELECT') AS can_read_entitlements, has_table_privilege(current_user,'knowledge_private.revoked_tokens','SELECT') AS can_read_revocations, has_table_privilege(current_user,'knowledge_private.workspace_entitlements','INSERT,UPDATE,DELETE') AS can_edit_entitlements, has_table_privilege(current_user,'knowledge_private.revoked_tokens','INSERT,UPDATE,DELETE') AS can_edit_revocations, has_table_privilege(current_user,'knowledge_private.audit','SELECT') AS can_read_audit, has_table_privilege(current_user,'knowledge_private.request_windows','SELECT') AS can_read_quotas, has_table_privilege(current_user,'knowledge_private.request_windows','INSERT') AS can_insert_quotas, has_table_privilege(current_user,'knowledge_private.request_windows','UPDATE') AS can_update_quotas, has_table_privilege(current_user,'knowledge_private.request_windows','DELETE') AS can_delete_quotas, has_table_privilege(current_user,'knowledge_private.source_approvals','SELECT') AS can_read_sources, has_table_privilege(current_user,'knowledge_private.source_approvals','INSERT,UPDATE,DELETE') AS can_edit_sources");
     const p = rights.rows[0];
     if (!p?.can_read_entitlements || !p.can_read_revocations ||
       p.can_edit_entitlements || p.can_edit_revocations || p.can_read_audit ||
-      !p.can_read_quotas || !p.can_insert_quotas || !p.can_update_quotas || p.can_delete_quotas) {
+      !p.can_read_quotas || !p.can_insert_quotas || !p.can_update_quotas || p.can_delete_quotas ||
+      !p.can_read_sources || p.can_edit_sources) {
       unsafe("runtime SQL grants must be read-only on access controls and write-only on audit");
     }
     if (requireTLS) {

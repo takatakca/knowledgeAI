@@ -3,6 +3,7 @@ const { createHash } = require("node:crypto");
 const { AccessError } = require("./auth.cjs");
 const { assertWorkspaceAccess } = require("./access.cjs");
 const { consumeWorkspaceQuota } = require("./rate-limit.cjs");
+const { assertSourceApproved } = require("./source-approval.cjs");
 class InputError extends Error {
   constructor(message) { super(message); this.status = 400; }
 }
@@ -62,6 +63,7 @@ function createService(pool, verify) {
       const principal = await verify(token, "knowledge:write");
       const doc = validateDocument(body);
       return withTenant(pool, principal, async client => {
+        await assertSourceApproved(client, principal, doc);
         const receipt = await client.query(
           "INSERT INTO knowledge_private.write_receipts (workspace_id,jti,actor_id) VALUES ($1,$2,$3) ON CONFLICT DO NOTHING RETURNING jti",
           [principal.workspace,principal.jti,principal.actor]);

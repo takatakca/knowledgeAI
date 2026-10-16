@@ -64,6 +64,22 @@ test("private PostgreSQL adapter isolates two real tenants and replays", {
     // Revocation is workspace-scoped, not a global accidental block.
     assert.equal((await service.search(token("tenant-bbbb","knowledge:read",
       "ci-revoked-credential-000001"),{q:"",limit:"1"})).visibility,"private");
+    // A valid active workspace and a signed write token cannot authorize an
+    // unapproved, denied, expired, cross-tenant or URL-mismatched source.
+    for(const [source_id,source_url] of [
+      ["never-approved","https://example.org/unapproved"],
+      ["denied-source","https://example.org/denied"],
+      ["expired-source","https://example.org/expired"],
+      ["same-source","https://example.org/source-bravo"],
+      ["same-source","https://example.org/other-url"]
+    ]) {
+      await assert.rejects(service.ingest(token("tenant-aaaa"),{
+        source_id,title:"Unapproved",content:"must not persist",source_url
+      }),error=>error.status===403);
+    }
+    const deniedCount=await pool.query(
+      "SELECT count(*)::int AS total FROM knowledge_private.documents");
+    assert.equal(deniedCount.rows[0].total,0);
     const tokenA = token("tenant-aaaa");
     const first = await service.ingest(tokenA, {
       source_id:"same-source",title:"Alpha special", content:"highly private apple",

@@ -9,8 +9,8 @@ BEGIN
     FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
     WHERE n.nspname='knowledge_private' AND c.relkind='r'
       AND c.relrowsecurity AND c.relforcerowsecurity
-      AND c.relname IN ('documents','audit','write_receipts','workspace_entitlements','revoked_tokens','request_windows');
-  IF forced <> 6 THEN RAISE EXCEPTION 'Recovered RLS security controls incomplete (%/6)',forced; END IF;
+      AND c.relname IN ('documents','audit','write_receipts','workspace_entitlements','revoked_tokens','request_windows','source_approvals');
+  IF forced <> 7 THEN RAISE EXCEPTION 'Recovered RLS security controls incomplete (%/7)',forced; END IF;
 
   IF NOT EXISTS (SELECT 1 FROM knowledge_private.documents
       WHERE workspace_id='tenant-aaaa' AND source_id='doc-one') THEN
@@ -31,6 +31,11 @@ BEGIN
   IF NOT EXISTS (SELECT 1 FROM knowledge_private.revoked_tokens
       WHERE workspace_id='tenant-aaaa' AND jti='ci-revoked-credential-000001') THEN
     RAISE EXCEPTION 'Revoked token missing after restore';
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM knowledge_private.source_approvals
+      WHERE workspace_id='tenant-aaaa' AND source_id='same-source'
+        AND classification='internal' AND approved) THEN
+    RAISE EXCEPTION 'Tenant A trusted approval missing after restore';
   END IF;
   IF NOT EXISTS (SELECT 1 FROM knowledge_private.audit
       WHERE workspace_id='tenant-aaaa' AND operation='delete') THEN
@@ -53,6 +58,9 @@ BEGIN
   END IF;
   IF (SELECT count(*) FROM knowledge_private.revoked_tokens) <> 1 THEN
     RAISE EXCEPTION 'Recovered revocation isolation failed';
+  END IF;
+  IF (SELECT count(*) FROM knowledge_private.source_approvals) <> 1 THEN
+    RAISE EXCEPTION 'Recovered source approval tenant isolation failed';
   END IF;
   IF (SELECT count(*) FROM knowledge_private.request_windows) < 1 THEN
     RAISE EXCEPTION 'Recovered request quota state was lost';
