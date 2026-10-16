@@ -3,6 +3,8 @@
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
+- 2026-10-15 | GPT-6 (source approval gate) | main | active | Close unrestricted private ingestion: admin-controlled tenant source approvals, fail-closed URL/classification/expiry checks, RLS and CI verification | next: build, test, handoff
+
 - 2026-10-15 | GPT-6 (private retention) | main | done | Privileged preview-first bounded expired quota/receipt/JWT-revocation cleanup tested on synthetic PostgreSQL in CI 38839681826 | next: approved retention governance, TAKATAK issuer and private deployment
 
 - 2026-10-15 | GPT-6 (private quotas) | main | done | PostgreSQL-backed per-tenant scoped atomic quotas, HTTP 429, FORCE RLS migration 005, restore+real DB tests; private CI 38802621695 green | next: authorized TAKATAK issuer, private DB and quota retention
