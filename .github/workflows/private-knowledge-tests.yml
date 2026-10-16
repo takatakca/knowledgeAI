@@ -46,7 +46,6 @@ jobs:
             assert.equal(settings({...config,PRIVATE_BIND_HOST:'0.0.0.0',
               PRIVATE_ALLOW_CONTAINER_BIND:'1'}).bindHost,'0.0.0.0');
           "
-jobs:
   auth-and-tenant-tests:
     name: Signed JWT and private service unit tests
     runs-on: ubuntu-latest
