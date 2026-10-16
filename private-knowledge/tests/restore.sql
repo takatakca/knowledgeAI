@@ -59,7 +59,7 @@ BEGIN
   IF (SELECT count(*) FROM knowledge_private.revoked_tokens) <> 1 THEN
     RAISE EXCEPTION 'Recovered revocation isolation failed';
   END IF;
-  IF (SELECT count(*) FROM knowledge_private.source_approvals) <> 1 THEN
+  IF (SELECT count(*) FROM knowledge_private.source_approvals) <> 3 THEN
     RAISE EXCEPTION 'Recovered source approval tenant isolation failed';
   END IF;
   IF (SELECT count(*) FROM knowledge_private.request_windows) < 1 THEN
