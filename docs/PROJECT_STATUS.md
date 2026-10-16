@@ -104,3 +104,7 @@ issuer route and does not issue real customer credentials.** See
 ## TAKATAK integration checkpoint
 
 2026-10-16: TAKATAK master KnowledgeAI issuer integration is implemented in DRAFT PR #194 (https://github.com/takatakca/takatak-v1/pull/194). The new central product grant and RS256/JWKS routes remain off until reviewed and configured. No live private KnowledgeAI issuer/database was deployed.
+
+## 2026-10-16 — integration prepared in TAKATAK master (not live)
+
+The TAKATAK master branch `feat/knowledgeai-private-auth-20261016` has a **draft PR #195** with dedicated per-user/per-company KnowledgeAI grant schema/migration, a disabled-by-default RSA issuer/JWKS, and a same-origin bounded `/api/integrations/knowledgeai/search` server proxy. The bearer token remains on TAKATAK's server. The full TAKATAK PR CI is pending; neither schema migration nor token signing secrets nor confidential backend have been deployed. Public KnowledgeAI catalog remains independent. Source PR: https://github.com/takatakca/takatak-v1/pull/195.

@@ -123,3 +123,7 @@ or issuer route, production stays disabled.
 ## TAKATAK integration checkpoint
 
 2026-10-16: central master TAKATAK is the only KnowledgeAI user/organization authority. Dedicated default-off KnowledgeAiGrant rows control separate read/write/delete/export scopes in draft master PR #194; JWT signing remains server-only. Existing public KnowledgeAI Vercel content stays separate.
+
+## 2026-10-16 — master-owned, disabled-by-default private search proxy
+
+Prefer a TAKATAK-server-to-KnowledgeAI-backend read proxy rather than returning private JWTs to browser code. Gate on a current TAKATAK session, active company/profile/membership, active KnowledgeAI catalog product, and an explicitly enabled nonexpired profile+workspace+scope grant. Never inherit unrelated `ai_studio`, admin or demo permissions. Master PR #195 adds the code behind `TAKATAK_KNOWLEDGEAI_ENABLED=1`; no migration/grant/signing key is active yet. Independent KnowledgeAI private DB still validates its own seven-table RLS, entitlements, token revocation and source approvals.

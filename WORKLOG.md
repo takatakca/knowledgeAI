@@ -3,6 +3,8 @@
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
+- 2026-10-16 | GPT-6 (master integration) | knowledgeAI/main → TAKATAK draft PR #195 | code prepared / master CI pending | Implement master per-tenant/per-user product grants and server-side read proxy + short-lived JWT/JWKS without exposing tokens to browsers or enabling production | next: resolve full master CI, coordinator review, approved private staging and real identity tests
+
 - 2026-10-16 | GPT-6 (KnowledgeAI master integration) | takatak-v1/feature/knowledgeai-issuer-20261016 → PR #194 | draft PR | Implemented central default-deny grants + internal RS256 token/JWKS routes and CI; fixed first TS env typing error; no production secrets or DB | next: inspect fresh PR CI; retain draft until approved secure rollout
 
 - 2026-10-15 | GPT-6 (TAKATAK bridge) | main | done | Added fail-closed RS256/JWKS TAKATAK issuer bridge, private verifier round-trip, key rotation and fresh authorization tests; source CI 38843731319 passed | next: master product entitlement and secure issuer route, approved private DB

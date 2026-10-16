@@ -77,3 +77,7 @@ master authority, implement and validate its authenticated issuer/JWKS
 routes there without changing the TAKATAK homepage, install the approved
 signing key outside GitHub, verify two real staging memberships, and only
 then connect to a separately provisioned confidential KnowledgeAI backend.
+
+## 2026-10-16 — first proposed TAKATAK implementation
+
+The draft master [PR #195](https://github.com/takatakca/takatak-v1/pull/195) now implements a master-side `issuer.ts` and an explicit `KnowledgeAIWorkspaceGrant` model (separate from `ai_studio`). The proposed `POST /api/integrations/knowledgeai/search` route requires a real session, current per-scope grant, same-origin request and bounded payload; it signs a short-lived token **only on TAKATAK server** and proxies to an independent confidential KnowledgeAI endpoint. `GET /api/integrations/knowledgeai/jwks` returns only the public signing parameters when enabled. CI, migration review, secrets and actual staging tests are still pending. This is a proposal, not a deployed issuer.

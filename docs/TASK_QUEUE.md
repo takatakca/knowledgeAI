@@ -82,3 +82,9 @@ TLS downgrade prevention: DONE IN CODE. PostgreSQL URLs with overriding SSL opti
 ## TAKATAK integration checkpoint
 
 2026-10-16 P1 issuer: DRAFT TAKATAK PR #194 has explicit per-client/per-member grants, product initially planned, four scope flags, guarded signer and JWKS. Blocked on approved merge/migration, secrets, operator grant provisioning, real private DB and two-tenant staging. Must not auto-enable from CI alone.
+
+### 2026-10-16 — TAKATAK master integration under review
+
+- IMPLEMENTED IN DRAFT PR: [TAKATAK #195](https://github.com/takatakca/takatak-v1/pull/195) — dedicated master `knowledgeai_workspace_grants` model and migration (no default grants), explicit active product/membership/profile/client checks, 60s server-only RSA JWT, public JWKS, bounded same-origin read-only proxy (token never returned to browser), CI tests.
+- PENDING: GitHub PR CI/typecheck/Prisma generation, coordinator review and merge; no production migration or secrets were applied.
+- BLOCKED for private go-live: approved active product and scoped grant provisioning, independent confidential PostgreSQL+TLS (migrations 001–006), protected private deployment, authorized source approvals, backups/retention, real multi-tenant staging checks. No billable projects created.

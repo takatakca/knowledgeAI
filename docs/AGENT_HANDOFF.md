@@ -1,5 +1,16 @@
 # Agent handoff — knowledgeAI
 
+## Latest checkpoint — 2026-10-16, master bridge draft
+
+- KnowledgeAI GitHub repository: `takatakca/knowledgeAI`, `main`; starting head `2cc572174dc574d866807272492cebeffc5bcdd7`. This docs commit and public catalog bot may advance head; recheck GitHub.
+- External code delivered for review: TAKATAK master branch `feat/knowledgeai-private-auth-20261016`, [draft PR #195](https://github.com/takatakca/takatak-v1/pull/195). Last recorded feature commit `579067d36ac0e1d80ec39ca940638ac9c8f4a64a`. New `KnowledgeAIWorkspaceGrant` Prisma model and SQL migration (default deny, no seed), `src/lib/integrations/knowledgeai/issuer.ts`, two protected integration routes, `scripts/verify-knowledgeai-issuer.ts`, CI addition, master worklog and master handoff. No master homepage change.
+- Commands/verification: inspected both repositories, master existing session/membership/permission model and open PRs; GitHub branch commits and draft PR created. TAKATAK full PR CI **still pending at handoff write time**; do not mark green without fresh check. Earlier KnowledgeAI source CI `38844023448` SUCCESS, public CI `38844023283` SUCCESS; public Vercel previously READY on `2cc572174dc574d866807272492cebeffc5bcdd7`.
+- KnowledgeAI files changed this checkpoint: `docs/{PROJECT_STATUS,TASK_QUEUE,AGENT_HANDOFF,DEPLOYMENT,DECISIONS,TAKATAK-ISSUER-INTEGRATION}.md`, `WORKLOG.md`. No private service code/content mutated.
+- Real production state: public KnowledgeAI Vercel only; no live confidential KnowledgeAI database/service, no active TAKATAK JWT issuer, no signing keys, no customer grants, no new billable Supabase project. Master PR #195 is NOT merged or deployed; PRs #3/#4/#5 in KnowledgeAI unchanged.
+- Problems/blockers: TAKATAK PR CI/typecheck/Prisma migration review, approved explicit product grant and private authorized staging, verified TLS/JWKS, offsite backup/retention and source-review admin process. Full cross-tenant staging validation not yet possible without approved backend.
+- NEXT EXACT ACTION: review and fix PR #195 CI failures; have release coordinator review/merge only with migration plan. Provision independent private staging PostgreSQL and trusted RSA signing key off GitHub; apply KnowledgeAI migrations 001–006 as owner, configure restricted role/JWKS, provision test product/grants from TAKATAK control plane, verify two-company read denial/revocation and restore. Only then consider production activation.
+
+
 ## 2026-10-16 — TAKATAK master issuer draft PR
 
 - Assigned repo: takatakca/knowledgeAI, main. Starting SHA: 2cc572174dc574d866807272492cebeffc5bcdd7.
