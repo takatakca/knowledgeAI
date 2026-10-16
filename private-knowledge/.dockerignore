@@ -1,0 +1,16 @@
+# Build must not include actual sources, test fixtures, backups or secrets.
+.git
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.dump
+*.sql
+*.log
+node_modules
+tests
+migrations
+maintenance
+integrations
+README.md

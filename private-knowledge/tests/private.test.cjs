@@ -273,6 +273,15 @@ test("production configuration fails closed without independent database and ide
    KNOWLEDGE_JWT_AUDIENCE:"knowledge-private",
    KNOWLEDGE_JWKS_URL:"https://issuer.example.org/keys"};
  assert.equal(settings(good).port,8301);
+ assert.equal(settings(good).bindHost,"127.0.0.1");
+ assert.throws(()=>settings({...good,PRIVATE_BIND_HOST:"0.0.0.0"}),
+   /explicit protected-container opt-in/);
+ assert.throws(()=>settings({...good,PRIVATE_BIND_HOST:"localhost"}),
+   /explicit protected-container opt-in/);
+ assert.throws(()=>settings({...good,PRIVATE_BIND_HOST:"::"}),
+   /explicit protected-container opt-in/);
+ assert.equal(settings({...good,PRIVATE_BIND_HOST:"0.0.0.0",
+   PRIVATE_ALLOW_CONTAINER_BIND:"1"}).bindHost,"0.0.0.0");
  for(const suffix of ["?sslmode=disable","?sslmode=no-verify","?sslrootcert=/tmp/foo",
    "?sslcert=/tmp/cert"]) {
    assert.throws(()=>settings({...good,PRIVATE_DATABASE_URL:good.PRIVATE_DATABASE_URL+suffix}),

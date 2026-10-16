@@ -10,6 +10,13 @@ function settings(env = process.env) {
   if (required.some(key => !env[key])) throw new Error("Private KnowledgeAI configuration missing");
   const port = Number(env.PRIVATE_PORT || 8301);
   if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error("Invalid port");
+  // Safe loopback default. Container routing requires an *explicit* operator
+  // opt-in AND a network firewall/proxy that prevents public direct access.
+  const bindHost = env.PRIVATE_BIND_HOST || "127.0.0.1";
+  if (bindHost !== "127.0.0.1" &&
+      !(bindHost === "0.0.0.0" && env.PRIVATE_ALLOW_CONTAINER_BIND === "1")) {
+    throw new Error("Private HTTP bind requires explicit protected-container opt-in");
+  }
   // node-postgres may replace the explicit ssl object when sslmode/sslcert
   // parameters are embedded in the connection string. Do not allow clients
   // to override server-enforced peer verification through database URLs.
@@ -26,6 +33,7 @@ function settings(env = process.env) {
     issuer: env.KNOWLEDGE_JWT_ISSUER,
     audience: env.KNOWLEDGE_JWT_AUDIENCE,
     jwksUrl: jwksUrl.toString(),
+    bindHost,
     port
   };
 }
@@ -142,7 +150,7 @@ async function boot() {
   const verify = createVerifier({issuer:config.issuer,audience:config.audience,
     jwksUrl:config.jwksUrl});
   const server = createServer(createService(pool,verify),pool);
-  server.listen(config.port,"127.0.0.1");
+  server.listen(config.port,config.bindHost);
   const shutdown = () => server.close(() => { pool.end().catch(()=>{}); });
   process.once("SIGTERM",shutdown); process.once("SIGINT",shutdown);
 }

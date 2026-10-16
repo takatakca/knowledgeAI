@@ -16,6 +16,37 @@ permissions:
   contents: read
 
 jobs:
+  private-container-build:
+    name: Build rootless private container without publishing
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build minimal production image (no customer secrets)
+        run: docker build --pull -t knowledge-private-ci:local -f private-knowledge/Dockerfile private-knowledge
+      - name: Assert rootless image and no public activation without credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          runtime_user="$(docker image inspect knowledge-private-ci:local --format '{{.Config.User}}')"
+          test "$runtime_user" = 'node:node'
+          if docker run --rm knowledge-private-ci:local; then
+            echo '::error::Private image unexpectedly launched without database and TAKATAK issuer'
+            exit 1
+          fi
+          docker run --rm --entrypoint node knowledge-private-ci:local -e "
+            const assert=require('node:assert/strict');
+            const {settings}=require('./src/server.cjs');
+            const config={PRIVATE_DATABASE_URL:'postgresql://app@private-db.example.org/knowledge',
+              KNOWLEDGE_JWT_ISSUER:'https://takatak.example',
+              KNOWLEDGE_JWT_AUDIENCE:'knowledge-private',
+              KNOWLEDGE_JWKS_URL:'https://takatak.example/api/integrations/knowledgeai/jwks'};
+            assert.equal(settings(config).bindHost,'127.0.0.1');
+            assert.throws(()=>settings({...config,PRIVATE_BIND_HOST:'0.0.0.0'}));
+            assert.equal(settings({...config,PRIVATE_BIND_HOST:'0.0.0.0',
+              PRIVATE_ALLOW_CONTAINER_BIND:'1'}).bindHost,'0.0.0.0');
+          "
+jobs:
   auth-and-tenant-tests:
     name: Signed JWT and private service unit tests
     runs-on: ubuntu-latest
