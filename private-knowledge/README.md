@@ -94,3 +94,13 @@ and must NOT receive DELETE. The startup preflight verifies these grants.
 Migration order is 001, 002, 003, 004, 005. No production retention
 scheduler, gateway throttling or alerting is configured yet. Historical
 migration references to 001–004 in earlier notes are superseded by 001–005.
+
+## Operator-controlled retention preview — 2026-10-15
+
+`maintenance/retention.sql` offers default dry-run counts and explicitly
+approved bounded cleanup of expired quota windows, anti-replay receipts
+and old revoked JWT identifiers. It does not accept tenant data from an
+HTTP request, does not run under the normal runtime role, and does not
+delete source documents, audit history or workspace entitlements.
+Evidence and commands: `../docs/PRIVATE-RETENTION.md`. No production
+retention schedule or legal policy has been authorized yet.

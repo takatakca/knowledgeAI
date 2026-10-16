@@ -103,3 +103,14 @@ Quota buckets are not automatically purged; a privileged retention plan is
 required before live activation. The network gateway should rate-limit
 unauthenticated traffic separately. Evidence: private CI 38802621695.
 **The private service remains undeployed; Vercel hosts only public content.**
+
+## 2026-10-15 — manual retention, not scheduled
+
+See `docs/PRIVATE-RETENTION.md` and
+`private-knowledge/maintenance/retention.sql`.
+The script previews old operational-row counts without writing by default.
+An authorized operator may execute bounded cleanup only with both
+`apply=true` and `approved=true`; privileges and legal approval remain
+external prerequisites. Synthetic PostgreSQL regression CI passed
+(`38839681826`). No production cleanup task or backup-retention schedule
+was enabled. Audit and customer documents are not in cleanup scope.

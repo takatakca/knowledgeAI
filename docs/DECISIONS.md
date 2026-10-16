@@ -84,3 +84,14 @@ browser query parameters. Exceeded quotas throw 429 before protected reads
 or writes; the containing transaction rolls back. Hard-coded limits are abuse
 controls, not billing meters or a substitute for gateway-level throttling.
 Bucket retention and production alerting remain separately governed work.
+
+## 2026-10-15 — deny-by-default privileged retention
+
+Implement an unscheduled operator-only SQL maintenance script, not an API.
+Default to a non-destructive preview. Require explicit opt-in and independently
+authorized database credentials before bounded deletion of historical rate
+buckets, expired anti-replay receipts and revoked JWTs long after expiry.
+Never allow the KnowledgeAI private runtime SQL role to run cleanup; never
+delete documents, audit logs or workspace entitlements from this operation.
+Expiry bounds used in synthetic tests are not substitutes for approved
+production retention and legal-hold policies.

@@ -68,3 +68,13 @@ Verified: Private Knowledge Security CI run 38802621695 SUCCESS (including
 PostgreSQL quota exhaustion and restore); public catalog CI 38802621665 SUCCESS.
 **Not a production deployment**: the private service has no verified TAKATAK
 issuer, approved confidential PostgreSQL or gateway yet.
+
+## 2026-10-15 — manual operational retention (synthetic CI)
+
+An unscheduled privileged maintenance script now supports **preview-only by default**
+for aged private quota windows, replay receipts and expired JWT revocation records.
+Explicit approval is required to apply batches; neither customer documents nor
+audits nor live workspace entitlements are targeted. The synthetic PostgreSQL
+checks passed in Private Knowledge Security CI `38839681826`.
+**No production retention job, operator identity, or legal schedule is configured.**
+See `docs/PRIVATE-RETENTION.md`.

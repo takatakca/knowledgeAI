@@ -1,5 +1,35 @@
 # Agent handoff — knowledgeAI
 
+## Latest verified milestone — 2026-10-15 operational retention
+
+- Source repository `takatakca/knowledgeAI`, public `main`; starting SHA
+  `2eaf5f0b94eea6528e4d03f1a70d573e19a7ac6f`.
+- Last completed work: preview-first privileged SQL maintenance for
+  expired quota windows (48h), write receipts (24h), and JWT revocation
+  entries more than 24h after expiration, with bounded 500-row batches,
+  advisory transaction lock and explicit apply/approval switches.
+- Code commits `90f5c922ba86298038eef2dc292b2850e80593d8`,
+  `99fad2e497d10d6159bf231b65fb7f4cc1c27d6d`; documentation
+  commit and catalog bot may advance HEAD: inspect latest `main`.
+- Files changed: `private-knowledge/maintenance/retention.sql`,
+  `private-knowledge/tests/{retention-fixtures,retention-assert}.sql`,
+  `.github/workflows/private-knowledge-tests.yml`,
+  `docs/PRIVATE-RETENTION.md`, all five required continuity files,
+  private README, WORKLOG.
+- Tests: Private Knowledge Security CI `38839681826` passed the
+  synthetic PostgreSQL preview/apply/denial assertions as well as JWT,
+  scoped RLS, real DB query and restore checks; public catalog CI
+  `38839681785` is independent. Verify the final docs commit's own runs.
+- Deployment: public Vercel is production; **private KnowledgeAI remains
+  NOT DEPLOYED**. No new paid Supabase project or real tenant data touched.
+- Blockers: trusted TAKATAK issuer and operational entitlement control,
+  dedicated approved private DB+TLS, encrypted offsite backup, real legal
+  retention/scheduler, private gateway/monitoring and two-tenant staging.
+- NEXT ACTION: validate final CI + deployed public SHA, then implement
+  the approved TAKATAK identity and private infrastructure contract,
+  staging migration 001→005, proper backup/restore and monitored
+  maintenance under an authorized independent operator.
+
 ## Latest verified milestone — 2026-10-15 tenant quotas
 
 - Repository: `takatakca/knowledgeAI`, public `main`. Previous published

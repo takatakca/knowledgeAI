@@ -49,3 +49,12 @@ TLS downgrade prevention: DONE IN CODE. PostgreSQL URLs with overriding SSL opti
   gateway abuse protection and monitor agreed limits.
 - PENDING GOVERNANCE: approved expired-bucket retention and maintenance
   schedule (NO automatic deletion job exists). Do not use quotas as billing.
+
+### 2026-10-15 — retention maintenance
+
+- DONE IN CODE/CI: preview-first, privileged maintenance for aged quota buckets,
+  replay receipts and expired token revocations with explicit two-flag opt-in,
+  bounded batches, advisory locking and synthetic PostgreSQL regression tests.
+- BLOCKED IN PRODUCTION: agreed retention periods, legal holds, authorized
+  operator/service account, protected run logs, encrypted backups and separately
+  approved scheduling. **Audit/document erasure is NOT implemented.**
