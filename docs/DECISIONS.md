@@ -127,3 +127,7 @@ or issuer route, production stays disabled.
 ## 2026-10-16 — master-owned, disabled-by-default private search proxy
 
 Prefer a TAKATAK-server-to-KnowledgeAI-backend read proxy rather than returning private JWTs to browser code. Gate on a current TAKATAK session, active company/profile/membership, active KnowledgeAI catalog product, and an explicitly enabled nonexpired profile+workspace+scope grant. Never inherit unrelated `ai_studio`, admin or demo permissions. Master PR #195 adds the code behind `TAKATAK_KNOWLEDGEAI_ENABLED=1`; no migration/grant/signing key is active yet. Independent KnowledgeAI private DB still validates its own seven-table RLS, entitlements, token revocation and source approvals.
+
+## 2026-10-16 — no parallel KnowledgeAI identity contracts
+
+Protect TAKATAK as the sole customer and workspace authority. Two master drafts currently implement incompatible entitlements: PR #194 (`knowledgeai_grants`) and #195 (`knowledgeai_workspace_grants`). These must be reconciled into ONE approved schema/signing interface before any merge or provisioning. For any browser-facing private knowledge proxy, require fresh Supabase `getUser()` authentication (high-risk route), validated master per-user/per-company grant, fixed scope and server-only JWT; do not rely on a cached session or return the bearer to the browser. No production activation or auto-merge is permitted until a real two-company test and dedicated secured backend are verified.

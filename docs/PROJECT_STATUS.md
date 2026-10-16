@@ -108,3 +108,7 @@ issuer route and does not issue real customer credentials.** See
 ## 2026-10-16 — integration prepared in TAKATAK master (not live)
 
 The TAKATAK master branch `feat/knowledgeai-private-auth-20261016` has a **draft PR #195** with dedicated per-user/per-company KnowledgeAI grant schema/migration, a disabled-by-default RSA issuer/JWKS, and a same-origin bounded `/api/integrations/knowledgeai/search` server proxy. The bearer token remains on TAKATAK's server. The full TAKATAK PR CI is pending; neither schema migration nor token signing secrets nor confidential backend have been deployed. Public KnowledgeAI catalog remains independent. Source PR: https://github.com/takatakca/takatak-v1/pull/195.
+
+## 2026-10-16 — TAKATAK master PR validated, session hardening under CI
+
+TAKATAK master draft [PR #195](https://github.com/takatakca/takatak-v1/pull/195) CI `38884205088` completed **successfully** at `c4e2ee001ebf5d2be8d1e1403aac83e2ccfaf18c`. Follow-up commit `5f76e0bee202162c9569b01ef0f52372211ab98b` requires fresh Supabase Auth on the private search proxy rather than a five-minute local cached session; latest CI not yet complete. A second open draft [PR #194](https://github.com/takatakca/takatak-v1/pull/194) implements an incompatible alternative KnowledgeAI grant table and issuer: DO NOT MERGE BOTH. Public KnowledgeAI Vercel was READY on `369ad44b9535ed2185b61dbd31fc265be14c9166`; private KnowledgeAI remains undeployed.

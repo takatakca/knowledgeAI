@@ -1,5 +1,17 @@
 # Agent handoff — knowledgeAI
 
+## Latest checkpoint — 2026-10-16, conflicting master PRs and high-risk auth
+
+- SOURCE OF TRUTH: `takatakca/knowledgeAI` main previously `369ad44b9535ed2185b61dbd31fc265be14c9166` (public Vercel READY and catalog smoke passed). Current handoff/docs commit and auto catalog refresh can advance HEAD; verify current SHA at resume.
+- TAKATAK `takatak-v1` master source `main` inspected at `c6bdb9d17f00f18a341b6f787d1040444c0508bb`; NOT changed by this session. Draft [PR #195](https://github.com/takatakca/takatak-v1/pull/195) on `feat/knowledgeai-private-auth-20261016`; baseline commit `c4e2ee001ebf5d2be8d1e1403aac83e2ccfaf18c` full CI [38884205088](https://github.com/takatakca/takatak-v1/actions/runs/38884205088) SUCCESS.
+- LAST COMPLETED SECURITY CHANGE: commit `5f76e0bee202162c9569b01ef0f52372211ab98b` marked `/api/integrations/knowledgeai/search` a high-risk Auth path and tested that local cached sessions cannot authorize private search. Worklog commit `3bd6c1ef0bb6b2a49dd27325c37c600e907fae80`. Current CI runs `38941205419`, `38941386144` in progress at checkpoint; DO NOT claim final success until their conclusions are retrieved.
+- MASTER FILES modified: `src/lib/security/authenticated-identity.ts`, `scripts/identity-isolation-tests.ts`, `WORKLOG.md`; earlier in PR #195 dedicated `KnowledgeAIWorkspaceGrant` + migration, issuer/JWKS and server-only search proxy. PR #195 description updated with merge conflict.
+- MAJOR BLOCKER: separate [PR #194](https://github.com/takatakca/takatak-v1/pull/194) exists and is draft/unmerged. It defines `knowledgeai_grants` and a protected token route; PR #195 defines `knowledgeai_workspace_grants` and a private search proxy. Their schemas/JWKS/issuer paths overlap; **NEVER merge both as-is**. Coordinator must choose a single canonical schema, signing route and tests before merge.
+- KnowledgeAI FILES modified here: `docs/{PROJECT_STATUS,TASK_QUEUE,AGENT_HANDOFF,DEPLOYMENT,DECISIONS,TAKATAK-ISSUER-INTEGRATION}.md`, `WORKLOG.md` (no confidential customer content or private service code touched).
+- Verification performed: read latest PR descriptions, patches, GitHub CI logs, latest `main`, authenticated-identity cache guard, protected search proxy; master CI baseline success verified; follow-up identity CI pending. Deployment state: KnowledgeAI public Vercel READY; private service UNDEPLOYED, no approved private DB/JWKS secrets/grants/recovery or multi-tenant staging.
+- NEXT EXACT ACTION: inspect full TAKATAK CI for the final high-risk identity commit; fix errors only on draft branch. Coordinator reconcile PRs #194/#195 into one master authority before merge. Following explicit sign-off, migrate and deploy protected private PostgreSQL with seven FORCE RLS tables, source review, backups, protected gateway and two independent tenant test accounts.
+
+
 ## Follow-up — 2026-10-16 TAKATAK PR #195 security and CI corrections
 
 - Latest master PR branch `feat/knowledgeai-private-auth-20261016` commit: `c4e2ee001ebf5d2be8d1e1403aac83e2ccfaf18c`. Draft PR [#195](https://github.com/takatakca/takatak-v1/pull/195) OPEN, **not merged**.
