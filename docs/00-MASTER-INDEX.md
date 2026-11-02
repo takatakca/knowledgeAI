@@ -110,3 +110,13 @@ Record conflicts explicitly instead of silently merging incompatible versions.
 Client websites and applications must be designed as independently transferable products. TAKATAK-managed services attach through explicit contracts/adapters and must not silently turn the client application into an inseparable shell.
 
 See `docs/11-CLIENT-INDEPENDENCE-TRANSFER-ARCHITECTURE.md`.
+
+## NEWBUY — TAKATAK ecosystem add-ons
+
+Owner-assigned agent name: **NEWBUY** (2026-11-02), specializing in add-ons for the TAKATAK ecosystem. Current work: Website Monitoring in [takatak-v1 PR #243](https://github.com/takatakca/takatak-v1/pull/243). Continue that implementation; do not create a duplicate product or replace existing pages/services.
+
+Permanent working method for NEWBUY: read each repository's AGENTS.md, current main, worklog, open PRs, project 00 files and relevant master instructions before acting; leave signed notes before coding, during material steps and after verified completion in GitHub, the project's Drive dossier and the authorized coordination channel. Respect active task claims and preserve existing content. Keep confidential notes and all credentials outside public repositories. Distinguish code, CI, deployment and actual service activation.
+
+TAKATAK owns sign-in, workspace permissions and billing for the add-on; the monitoring worker deploys independently. Latest implementation revision at this checkpoint: `1d9f635634a9c623bca9ca173e3a379f0f56b582`; full application CI and monitoring container CI passed. Production deployment is not yet verified. Read current PR/Actions rather than treating this checkpoint as the latest state.
+
+Private operational links and the requested recurring coordination process are maintained in the project's authorized Drive dossier. User chose hourly follow-up because the available scheduler cannot run every 30 minutes. Signed: **NEWBUY** @ ChatGPT Work, 2026-11-02.
