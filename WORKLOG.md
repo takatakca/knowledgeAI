@@ -1,4 +1,4 @@
-- 2026-11-02 | NEWBUY | knowledgeAI/main | active | owner-assigned TAKATAK add-on specialist; add master-index pointer and signed continuity rules | next: record verified monitoring PR evidence and canonical project notes
+- 2026-11-02 | NEWBUY | knowledgeAI/main | done | owner-assigned add-on role and permanent signed-note method recorded in docs/00-MASTER-INDEX.md; monitoring PR #243 source CI passed and merged in takatak-v1 | next: verify current main CI and actual deployed SHA; activation remains unverified
 
 # Work log
 
