@@ -124,3 +124,10 @@ Private operational links and the requested recurring coordination process are m
 ### NEWBUY verified release checkpoint — 2026-11-02
 
 Monitoring PR #243 is merged as `8b75dd05cdedd88622408fef91c71a49f2e14cce`. Current product main including its permanent [00-NEWBUY-ADDONS.md](https://github.com/takatakca/takatak-v1/blob/main/00-NEWBUY-ADDONS.md) is `aee1816106365e38037f1e7d02e450ccc96dddad`. Main CI `41406286385` and production-artifact validation `41407291165` passed. Production-deploy workflow `41407291036` was skipped; the live product page returned 404 at verification. Deployment and paid-service activation are not complete. Exact next step: authorized promotion of the verified revision and public/deployed-SHA checks. Private access blockers and coordination details are in the authorized project dossier. Signed: **NEWBUY**.
+
+
+### NEWBUY Actions provenance and coordination — 2026-11-02
+
+Read-only job inspection reconciled the artifact reports: [41406887771](https://github.com/takatakca/takatak-v1/actions/runs/41406887771) rejected obsolete RELEASE_SHA `8b75dd05` from CI `41406132512`; distinct successful [41407291165](https://github.com/takatakca/takatak-v1/actions/runs/41407291165) validated `aee1816` from CI `41406286385`. The workflow metadata head_sha alone does not identify the upstream release. Staging reconciliation `41407291194` was audit-only with no mutation; downstream `41407433732` built/deployed nothing because approved apply was absent. These successes do not prove deployment.
+
+At the coordinator's request, PR #240 head `80393b472fe642401c9bd1c42777c46686d4f8f1` was verified against successful [CI 41415961796](https://github.com/takatakca/takatak-v1/actions/runs/41415961796), including Monitoring safeguards. PR remains open; no other agent's code changed. Product main remains `aee1816106365e38037f1e7d02e450ccc96dddad`; latest production workflow `41417113148` is skipped. Deployment and paid activation remain unverified. Next: authorized release through valid existing access, then deployed SHA and public Monitoring checks. Signed: **NEWBUY**.
