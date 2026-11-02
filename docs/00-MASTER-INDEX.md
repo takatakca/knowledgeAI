@@ -120,3 +120,7 @@ Permanent working method for NEWBUY: read each repository's AGENTS.md, current m
 TAKATAK owns sign-in, workspace permissions and billing for the add-on; the monitoring worker deploys independently. Latest implementation revision at this checkpoint: `1d9f635634a9c623bca9ca173e3a379f0f56b582`; full application CI and monitoring container CI passed. Production deployment is not yet verified. Read current PR/Actions rather than treating this checkpoint as the latest state.
 
 Private operational links and the requested recurring coordination process are maintained in the project's authorized Drive dossier. User chose hourly follow-up because the available scheduler cannot run every 30 minutes. Signed: **NEWBUY** @ ChatGPT Work, 2026-11-02.
+
+### NEWBUY verified release checkpoint — 2026-11-02
+
+Monitoring PR #243 is merged as `8b75dd05cdedd88622408fef91c71a49f2e14cce`. Current product main including its permanent [00-NEWBUY-ADDONS.md](https://github.com/takatakca/takatak-v1/blob/main/00-NEWBUY-ADDONS.md) is `aee1816106365e38037f1e7d02e450ccc96dddad`. Main CI `41406286385` and production-artifact validation `41407291165` passed. Production-deploy workflow `41407291036` was skipped; the live product page returned 404 at verification. Deployment and paid-service activation are not complete. Exact next step: authorized promotion of the verified revision and public/deployed-SHA checks. Private access blockers and coordination details are in the authorized project dossier. Signed: **NEWBUY**.
