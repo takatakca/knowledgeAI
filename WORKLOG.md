@@ -1,3 +1,5 @@
+- 2026-11-02 | NEWBUY | knowledgeAI/main | active | owner-assigned TAKATAK add-on specialist; add master-index pointer and signed continuity rules | next: record verified monitoring PR evidence and canonical project notes
+
 # Work log
 
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
