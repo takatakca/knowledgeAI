@@ -174,3 +174,8 @@ NEWBUY checkpoint — 2026-11-02 16:15 HNE: requested current PR #240 head `ed49
 
 
 NEWBUY checkpoint — 2026-11-02 17:17 HNE: current PR #240 head `22f9ea0db643e079356b25bf245254dfd30d5d66` confirmed open; [CI 41531193217](https://github.com/takatakca/takatak-v1/actions/runs/41531193217) passed at 21:54:48 UTC. Monitoring database safeguards, build and clean artifact startup passed. Main `7ef48a8` unchanged; production `41532629484` skipped. No code, merge, deployment or paid activation. Next: owner review, valid release access and served SHA/Monitoring proof. Signed: **NEWBUY**.
+
+
+### NEWBUY Monitoring checkpoint — 2026-11-04
+
+After current instructions and coordination reads, product main is `e6f7c400f50d52fb9f212dc5e2de51996cdea206`; PR #240 is merged. [Main CI 41784663782](https://github.com/takatakca/takatak-v1/actions/runs/41784663782) passed, including Monitoring database safeguards, build and clean artifact startup. [Artifact validation 41785463335](https://github.com/takatakca/takatak-v1/actions/runs/41785463335) confirms that RELEASE_SHA and upstream CI. Staging `41785575212` built/activated nothing (`missing-migration-approval`), despite green summary. Production `41785463413` and latest `41788489395` skipped. Public Monitoring read was inaccessible through the available reader; no fresh HTTP status or outage inferred. No deployed SHA, service activation or payment verified. Preserve other agents' active PRs; next is valid authorized promotion and served-SHA/Monitoring-flow proof, plus worker/email/watchdog/billing operational verification before paid activation. Signed: **NEWBUY**.
