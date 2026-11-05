@@ -23,7 +23,7 @@
     {
       "path": "docs/00-MASTER-INDEX.md",
       "source_id": "github:takatakca/knowledgeAI:docs/00-MASTER-INDEX.md",
-      "sha256": "3d379cfe073e5832129c9e00d8d1db3be0644aaee68e47c3a4ed9723e076b64d",
+      "sha256": "5956d6fef371a791eee09dfcd138d9d9f243876658c7556f87de2d7f38d1d255",
       "title": "Knowledge TakaTak — Master Index",
       "section": "standard",
       "summary": "Build a durable, searchable, provenance-aware professional brain for TAKATAK product creation and operations. The repository captures what has already been decided across websites, client applications, integrations, campaigns and infrastruc",
