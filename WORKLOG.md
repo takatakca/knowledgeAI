@@ -2,6 +2,9 @@
 
 # Work log
 
+- 2026-11-13 | Claude (Claude Code cloud, flexsca session) | knowledgeAI/main | done | FLEX dossier updated with verified live state: backend in Supabase ALKAO, abandoned Lovable project, PR #6 hosting/mobile, TAKATAK-V1 link not yet live; pointer to flexsca `00-FLEXS-START-HERE.md` | next: update again after Android build, OCR verification and AI adapter
+
+
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
 Format: `YYYY-MM-DD | agent | branch → PR | status | what | next step`
 
