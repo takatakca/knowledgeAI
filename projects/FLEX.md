@@ -30,3 +30,12 @@ Source of truth for live state: [`00-FLEXS-START-HERE.md` on `main`](https://git
 - **Mobile:** Capacitor 8 Android/iOS projects, app ID `ca.flexs.app` (flexsca PR #6). Not yet in any store.
 - **TAKATAK-V1 link:** signed adapters exist on both sides (`takatak-v1` `/api/integrations/ads/flexs/events`; FLEXS `takatak-attribution-worker` and `takatak-opportunity-intake`). No secret is configured and no real event has been exchanged.
 - **AI:** none in FLEXS yet; intended route is the TAKATAK AI Nexus adapter, not provider keys inside FLEXS.
+
+### Update 2026-11-13 04:45 EST (signed: Claude, Claude Code cloud session on `takatakca/flexsca`)
+
+- **Android app compiles** (debug APK and unsigned release bundle, `ca.flexs.app`); not yet run on a device. iOS needs a Mac.
+- **In-app account deletion** is live (`delete-account` function); it refuses administrators and ALKAO ticketing-only logins.
+- **AI:** `ai-assist` function deployed in ALKAO, switched off until `ANTHROPIC_API_KEY` is set. It drafts a first quote message for an unlocked request (drafts only, 20 per day, no customer contact data). `takatak-v1` has no service-to-service AI endpoint for child apps yet; when TAKATAK AI Nexus exposes a versioned adapter, swap the provider call inside `ai-assist` and keep the FLEXS contract.
+- **TAKATAK-V1 attribution:** contract verified against `takatak-v1` code; not live (no shared `ADS_FLEXS_SERVICE_TOKEN`, no worker schedule). `takatak-v1` has no sender yet for FLEXS opportunity intake.
+- **Reusable tool:** `flexsca/scripts/ocr-screen-audit.mjs` screenshots every screen at phone size, reads it back with OCR and compares it with the page text. It can be copied to other TAKATAK web apps.
+- ALKAO now holds 52 FLEXS migrations and 6 FLEXS Edge Functions.

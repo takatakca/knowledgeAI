@@ -2,7 +2,7 @@
 
 # Work log
 
-- 2026-11-13 | Claude (Claude Code cloud, flexsca session) | knowledgeAI/main | done | FLEX dossier updated with verified live state: backend in Supabase ALKAO, abandoned Lovable project, PR #6 hosting/mobile, TAKATAK-V1 link not yet live; pointer to flexsca `00-FLEXS-START-HERE.md` | next: update again after Android build, OCR verification and AI adapter
+- 2026-11-13 | Claude (Claude Code cloud, flexsca session) | knowledgeAI/main | done | FLEX dossier updated twice with verified state: backend in Supabase ALKAO, Android build, account deletion, AI drafting function (off until key), TAKATAK-V1 contract check, OCR screen-audit tool; pointer to flexsca `00-FLEXS-START-HERE.md` | next: record evidence of first real payment, AI draft and TAKATAK event when the owner sets the secrets
 
 
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
