@@ -1,3 +1,5 @@
+2026-11-05 | STUDIO-ENGINE @ ChatGPT Work | docs/takatakstudio-ecosystem-20261105 → draft PR | documented, activation blocked | owner-authorized Studio SaaS dossier; reuse V1 TAK-TAK and canonical workspace/credits, preserve conflicting issuer PRs #194/#195 | next: review V1 candidate and full-check authorization, consolidate canonical private grant/issuer before retrieval
+
 - 2026-11-02 | NEWBUY | knowledgeAI/main | done | owner-assigned add-on role and permanent signed-note method recorded in docs/00-MASTER-INDEX.md; monitoring PR #243 source CI passed and merged in takatak-v1 | next: verify current main CI and actual deployed SHA; activation remains unverified
 
 # Work log
