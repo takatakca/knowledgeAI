@@ -365,3 +365,18 @@ LIMITES : le sélecteur FR / EN n’a pas été exercé dans une session authent
 PROCHAIN GESTE : smoke authentifié sur tenant contrôlé pour basculer FR puis EN et vérifier persistance, titre et isolation du profil; poursuivre ensuite les preuves opérationnelles Monitoring avant toute activation payante. Aucun identifiant Coolify rejeté n’a été réessayé.
 
 — NEWBUY
+
+
+### NEWBUY — Main 681f143 : mobile v2 et Claude multi-workspace, SHA servi prouvé — 2026-11-21 12:18 EST
+
+APRÈS VÉRIFICATION : `main` est passé de `3a480220` à `681f143ef98c5e6e8783b61decef47734ffe0246`. La PR #378 (merge `8df3ee34`) ajoute les écrans mobiles Demandes reçues, Sites/domaines et Équipe ainsi que les routes `/api/mobile/v1/leads`, `/web` et `/team`, réutilisant l’identité, le tenant et les permissions TAKATAK; son head exact a les runs [CI 44925683652](https://github.com/takatakca/takatak-v1/actions/runs/44925683652) et [natif 44925683643](https://github.com/takatakca/takatak-v1/actions/runs/44925683643) réussis. La PR #379 ajoute l’en-tête optionnel `ANTHROPIC_WORKSPACE_ID` pour TAK-TAK, AI Studio et le test de clé; son head exact a la [CI 44925529736](https://github.com/takatakca/takatak-v1/actions/runs/44925529736) réussie. Aucune valeur secrète n’est consignée.
+
+CI / RELEASE : la CI exact-main [44926972622](https://github.com/takatakca/takatak-v1/actions/runs/44926972622), la validation d’artefact [44927995894](https://github.com/takatakca/takatak-v1/actions/runs/44927995894) et la réconciliation staging [44927995899](https://github.com/takatakca/takatak-v1/actions/runs/44927995899) sont réussies; l’application humaine staging est sautée. L’échec staging [44926980768](https://github.com/takatakca/takatak-v1/actions/runs/44926980768) était le garde « stale main »; toutes les étapes de build/déploiement étaient sautées. Le run ultérieur [44928083695](https://github.com/takatakca/takatak-v1/actions/runs/44928083695) est un succès de garde seulement : configuration build indisponible, build/téléversement/activation/santé sautés. Coolify [44927995900](https://github.com/takatakca/takatak-v1/actions/runs/44927995900) est sauté.
+
+PREUVE PUBLIQUE : `/api/health/ready` répond 200 avec `x-takatak-release: 681f143ef98c5e6e8783b61decef47734ffe0246` et process/database/supabase à ok. Les trois nouvelles routes mobiles répondent `401 not_authenticated` sans session, ce qui prouve leur présence et leur refus anonyme, pas leur fonctionnement authentifié. `/monitoring` reste en préparation et inscription payante fermée.
+
+LIMITES : aucune session mobile contrôlée n’a validé les données réelles, la portée tenant ou les permissions. `ANTHROPIC_WORKSPACE_ID` n’a pas été configuré ni testé en production; Claude n’est pas déclaré connecté. Les PR #380 et #381 restent ouvertes et n’ont pas été touchées. Worker/alertes/SMTP/watchdog/Stripe Monitoring restent non prouvés.
+
+PROCHAIN GESTE : un opérateur autorisé configure l’identifiant d’espace Claude côté serveur sans l’exposer, puis redéploie par la voie autorisée et prouve le catalogue/test de clé; en parallèle, smoke mobile authentifié sur tenant contrôlé des trois écrans et permissions. Garder Monitoring payant fermé jusqu’aux preuves opérationnelles. Aucun identifiant Coolify rejeté n’a été réessayé.
+
+— NEWBUY
