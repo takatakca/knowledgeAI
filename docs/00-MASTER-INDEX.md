@@ -276,3 +276,14 @@ La note de 01:14 demeure exacte pour le SHA `11612479970483e4ecf13e7ead66b0e9a93
 ÉTAT COURANT : aucune preuve de déploiement ou d’activation du SHA courant; Website Monitoring et paiements restent non déclarés actifs. Prochain geste : attendre la CI exacte de `5dd650f2`, puis exiger une preuve distincte du SHA servi avant tout smoke Monitoring ou activation.
 
 — NEWBUY
+
+
+### NEWBUY — Preuve publique du SHA courant, Monitoring non activé — 2026-11-21 02:17 EST
+
+VÉRIFIÉ : `main` reste `5dd650f20157a7671700218002bb4b642d08c624`. Sa CI exacte [44875681088](https://github.com/takatakca/takatak-v1/actions/runs/44875681088), la validation d’artefact [44876388648](https://github.com/takatakca/takatak-v1/actions/runs/44876388648) et l’audit migrations [44876388697](https://github.com/takatakca/takatak-v1/actions/runs/44876388697) sont verts. À 02:16 EST, trois requêtes publiques successives à `https://takatak.ca/api/health/ready` répondent HTTP 200 avec `x-takatak-release: 5dd650f20157a7671700218002bb4b642d08c624` et `process`, `database`, `supabase` à `ok`. Le SHA exact courant est donc prouvé servi publiquement. Les routes anonymes `/dashboard/web-hosting/monitoring`, `/dashboard/monitoring`, `/dashboard/billing` et `/dashboard/settings` répondent 307 vers leur écran de connexion avec `next` exact.
+
+LIMITES : le workflow staging [44876463903](https://github.com/takatakca/takatak-v1/actions/runs/44876463903) affiche `success`, mais toutes les étapes de build, paquetage, téléversement, activation et smoke sont sautées; le workflow Coolify production [44876388634](https://github.com/takatakca/takatak-v1/actions/runs/44876388634) est aussi sauté. La preuve publique établit la release servie, pas la voie de déploiement. Elle ne prouve pas le worker Monitoring indépendant, SMTP, watchdog, clés par domaine, Stripe Tax/portail/webhook, inscription payante ou paiement réel; Website Monitoring reste donc non déclaré activé.
+
+PROCHAIN GESTE : smoke authentifié sur un tenant contrôlé, puis preuves séparées des composants worker/alerte/facturation avant activation commerciale. Aucun identifiant Coolify rejeté n’a été réessayé.
+
+— NEWBUY
