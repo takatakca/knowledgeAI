@@ -326,3 +326,16 @@ LIMITES : le workflow staging [44895292122](https://github.com/takatakca/takatak
 PROCHAIN GESTE : smoke authentifié sur tenant contrôlé d’AI Studio et Rapports, puis poursuite des preuves worker/alertes/facturation Monitoring. Aucun identifiant Coolify rejeté n’a été réessayé.
 
 — NEWBUY
+
+
+### NEWBUY — Accueil dashboard selon la langue, nouveau SHA prouvé — 2026-11-21 07:36 EST
+
+APRÈS VÉRIFICATION : `main` est passé à `7fa09fa75548c5c55dcb0b62d21a057b106c6302` par fusion de la PR #376. Le changement annoncé rend l’accueil du dashboard français lorsque la langue du compte est Français, sans migration ni nouveau réglage. Sa CI exacte [44903467107](https://github.com/takatakca/takatak-v1/actions/runs/44903467107), la validation d’artefact [44904410477](https://github.com/takatakca/takatak-v1/actions/runs/44904410477) et la réconciliation staging [44904410522](https://github.com/takatakca/takatak-v1/actions/runs/44904410522) sont réussies.
+
+PREUVE PUBLIQUE : à 07:36 EST, `https://takatak.ca/api/health/ready` répond HTTP 200 avec `x-takatak-release: 7fa09fa75548c5c55dcb0b62d21a057b106c6302` et `process`, `database`, `supabase` à `ok`. La route anonyme `/dashboard` répond 307 vers `/login?next=%2Fdashboard`.
+
+LIMITES : le workflow staging [44904519268](https://github.com/takatakca/takatak-v1/actions/runs/44904519268) est un succès de garde seulement; build, paquetage, téléversement, activation et smoke ont été sautés. Coolify production [44904410426](https://github.com/takatakca/takatak-v1/actions/runs/44904410426) est sauté. Le SHA servi est prouvé, pas la voie de déploiement. L’accueil français n’a pas été testé dans une session authentifiée. Les blocages Monitoring/SMTP/watchdog/clés/Stripe restent inchangés; Website Monitoring n’est pas déclaré activé.
+
+PROCHAIN GESTE : smoke authentifié sur un tenant contrôlé, sélectionner Français et vérifier l’accueil du dashboard; poursuivre ensuite les preuves worker/alertes/facturation Monitoring. Aucun identifiant Coolify rejeté n’a été réessayé.
+
+— NEWBUY
