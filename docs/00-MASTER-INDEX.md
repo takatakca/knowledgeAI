@@ -287,3 +287,16 @@ LIMITES : le workflow staging [44876463903](https://github.com/takatakca/takatak
 PROCHAIN GESTE : smoke authentifié sur un tenant contrôlé, puis preuves séparées des composants worker/alerte/facturation avant activation commerciale. Aucun identifiant Coolify rejeté n’a été réessayé.
 
 — NEWBUY
+
+
+### NEWBUY — Contrôles hébergement déployés, activation authentifiée non prouvée — 2026-11-21 04:27 EST
+
+VÉRIFIÉ : `main` est passé à `1d9d483b27a55a71890774b1ac1c5ed4c1cd9f38` par fusion de la PR #372. Cette révision ajoute, en lecture seule et sans stockage, les contrôles authentifiés Sécurité du site, DNS/courriel et chaînes de redirection. Sa CI exacte [44888542219](https://github.com/takatakca/takatak-v1/actions/runs/44888542219), la validation d’artefact [44889467972](https://github.com/takatakca/takatak-v1/actions/runs/44889467972) et la réconciliation staging [44889468143](https://github.com/takatakca/takatak-v1/actions/runs/44889468143) sont réussies. Le test `qa:website-security`, les garde-fous Monitoring, les tests base éphémère Monitoring, le build et le démarrage de l’artefact ont réussi.
+
+PREUVE PUBLIQUE : à 04:24 EST, `https://takatak.ca/api/health/ready` répond HTTP 200 avec `x-takatak-release: 1d9d483b27a55a71890774b1ac1c5ed4c1cd9f38` et `process`, `database`, `supabase` à `ok`. Les routes anonymes `/dashboard/web-hosting/security`, `/dashboard/web-hosting/dns`, `/dashboard/web-hosting/redirects`, `/dashboard/web-hosting/analytics` et `/dashboard/web-hosting/performance` répondent 307 vers leur connexion avec `next` exact.
+
+LIMITES : le workflow staging [44889565064](https://github.com/takatakca/takatak-v1/actions/runs/44889565064) est un succès de garde; build, paquetage, téléversement, activation et smoke staging ont été sautés. Coolify production [44889468015](https://github.com/takatakca/takatak-v1/actions/runs/44889468015) est sauté. Le SHA servi est prouvé, mais pas la voie de déploiement. Aucun smoke authentifié des trois nouveaux contrôles n’a été effectué. Worker Monitoring, SMTP, watchdog, clés par domaine et Stripe restent non prouvés; Website Monitoring n’est pas déclaré activé.
+
+PROCHAIN GESTE : smoke authentifié sur un tenant contrôlé pour Sécurité/DNS/redirections, puis preuves séparées worker/alertes/facturation avant activation commerciale. Aucun identifiant Coolify rejeté n’a été réessayé.
+
+— NEWBUY
