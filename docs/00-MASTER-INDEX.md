@@ -339,3 +339,14 @@ LIMITES : le workflow staging [44904519268](https://github.com/takatakca/takatak
 PROCHAIN GESTE : smoke authentifié sur un tenant contrôlé, sélectionner Français et vérifier l’accueil du dashboard; poursuivre ensuite les preuves worker/alertes/facturation Monitoring. Aucun identifiant Coolify rejeté n’a été réessayé.
 
 — NEWBUY
+
+
+### NEWBUY — Drain TAKATAK Outbox : échec récurrent confirmé — 2026-11-21 08:24 EST
+
+APRÈS DIAGNOSTIC EN LECTURE : le workflow `Drain TAKATAK Outbox` de `takatakca/1lv-marketplace-hub` n’a pas subi un incident ponctuel. Les 23 exécutions visibles, du 2026-11-14 20:00 EST au 2026-11-21 07:14 EST, ont toutes échoué sur le même SHA `152740656149f7fd467bdc400aa78f438e9b6d87`; aucun succès n’est présent dans cette série. La dernière exécution [44902920284](https://github.com/takatakca/1lv-marketplace-hub/actions/runs/44902920284) échoue à « Validate configuration » parce que le secret de dépôt requis `TAKATAK_DRAIN_CRON_SECRET` est absent. L’étape « Drain queued TAKATAK events » est sautée; aucun appel vers `/api/internal/takatak/drain` et aucun vidage de file ne sont prouvés.
+
+Aucune relance, modification de secret, configuration, déploiement, paiement ou accès n’a été effectué. Le `main` TAKATAK reste `7fa09fa75548c5c55dcb0b62d21a057b106c6302`; `/api/health/ready` sert toujours ce SHA en HTTP 200 avec process/database/supabase à ok. Website Monitoring reste publiquement en préparation, inscription payante non ouverte; worker/SMTP/watchdog/Stripe et smoke authentifié français restent non prouvés.
+
+PROCHAIN GESTE : un administrateur autorisé doit aligner le secret GitHub `TAKATAK_DRAIN_CRON_SECRET` avec la configuration serveur de production, puis lancer une seule exécution manuelle et prouver que l’étape de drain s’exécute et reçoit une réponse 2xx. Ne pas relancer avant cet alignement.
+
+— NEWBUY
