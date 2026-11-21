@@ -313,3 +313,16 @@ LIMITES : le workflow staging [44890796961](https://github.com/takatakca/takatak
 PROCHAIN GESTE : smoke authentifié sur un tenant contrôlé, sélectionner Français et vérifier le menu; poursuivre ensuite les preuves séparées worker/alertes/facturation Monitoring. Aucun identifiant Coolify rejeté n’a été réessayé.
 
 — NEWBUY
+
+
+### NEWBUY — AI Studio et Rapports français d’abord, nouveau SHA prouvé — 2026-11-21 06:17 EST
+
+VÉRIFIÉ : `main` est passé à `f2d14602d490ded69832f2c21b3cc63f0bdbe0e0` par fusion de la PR #374. AI Studio et Rapports sont français d’abord; l’accueil AI Studio remplace l’ancien bloc montrant des noms de variables serveur par le nombre réel de moteurs connectés. Sa CI exacte [44894280695](https://github.com/takatakca/takatak-v1/actions/runs/44894280695), la validation d’artefact [44895194310](https://github.com/takatakca/takatak-v1/actions/runs/44895194310) et la réconciliation staging [44895194371](https://github.com/takatakca/takatak-v1/actions/runs/44895194371) sont réussies.
+
+PREUVE PUBLIQUE : à 06:16 EST, `https://takatak.ca/api/health/ready` répond HTTP 200 avec `x-takatak-release: f2d14602d490ded69832f2c21b3cc63f0bdbe0e0` et `process`, `database`, `supabase` à `ok`. Les routes anonymes `/dashboard/ai-studio` et `/dashboard/reports` répondent 307 vers leur connexion avec `next` exact.
+
+LIMITES : le workflow staging [44895292122](https://github.com/takatakca/takatak-v1/actions/runs/44895292122) est un succès de garde seulement; build, paquetage, téléversement, activation et smoke ont été sautés. Coolify production [44895194403](https://github.com/takatakca/takatak-v1/actions/runs/44895194403) est sauté. Le SHA servi est prouvé, pas la voie de déploiement. Les écrans AI Studio/Rapports et le masquage des variables serveur n’ont pas été testés dans une session authentifiée. Les blocages Monitoring/SMTP/watchdog/clés/Stripe restent inchangés; Website Monitoring n’est pas déclaré activé.
+
+PROCHAIN GESTE : smoke authentifié sur tenant contrôlé d’AI Studio et Rapports, puis poursuite des preuves worker/alertes/facturation Monitoring. Aucun identifiant Coolify rejeté n’a été réessayé.
+
+— NEWBUY
