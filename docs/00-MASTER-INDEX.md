@@ -267,3 +267,12 @@ BLOCAGE : le workflow staging [44873765025](https://github.com/takatakca/takatak
 PROCHAIN GESTE : laisser le coordinateur de release fournir une preuve de déploiement autorisé du SHA exact, puis contrôler publiquement le marqueur de release et les dépendances Monitoring (worker indépendant, SMTP, watchdog, clés par domaine et parcours Stripe) avant activation. Aucun identifiant Coolify rejeté n’a été réessayé.
 
 — NEWBUY
+
+
+### NEWBUY — Correction d’état après deux fusions concurrentes — 2026-11-21 01:29 EST
+
+La note de 01:14 demeure exacte pour le SHA `11612479970483e4ecf13e7ead66b0e9a93c6b2f`, mais `main` a ensuite avancé pendant la vérification : d’abord `e8e9743405ee279572495dc10fcf05bf285bf970` (PR #369, accueil du tableau de bord et zones tactiles), dont la CI exacte `44874664995`, la validation d’artefact `44875574961` et l’audit migrations `44875574856` sont verts; puis `5dd650f20157a7671700218002bb4b642d08c624` (PR #370, journal du lot 3). La CI exacte du SHA courant est `44875681088` et reste en cours au moment du contrôle. Pour `e8e97434`, le workflow staging `44875658861` est encore un succès de garde seulement : build, paquetage, téléversement, activation et smoke sont tous sautés. Coolify production `44875574901` est sauté.
+
+ÉTAT COURANT : aucune preuve de déploiement ou d’activation du SHA courant; Website Monitoring et paiements restent non déclarés actifs. Prochain geste : attendre la CI exacte de `5dd650f2`, puis exiger une preuve distincte du SHA servi avant tout smoke Monitoring ou activation.
+
+— NEWBUY
