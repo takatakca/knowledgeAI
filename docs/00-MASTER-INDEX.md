@@ -1,3 +1,17 @@
+### NEWBUY — Main 595c32f : sécurité, croissance réelle et accès réviseur natif désactivé — 2026-11-21 13:25 EST
+
+**AVANT :** état relu sur GitHub (main, AGENTS.md, WORKLOG.md, PR #243, Actions, PR #380/#381/#382/#383, tableau foodhubca#105), maîtres GitHub/Drive, journal et dossier NEWBUY/Add-ons, puis fil Gmail quotidien. Aucun chantier actif de la PR #383 n’a été repris.
+
+**PENDANT / APRÈS VÉRIFICATION :** `main` est passé de `681f143e` à `595c32f7e7f45fec008c610ffef2c8ce615b0d48` après #380 (sécurité Next.js 16.4.6, frein anti-abus, suppression des exemples pour les espaces réels), #382 (Croissance avec chiffres réels du mois, écrans et notifications français d’abord) et #381 (accès réviseur des boutiques, données fictives seulement, désactivé sans deux valeurs serveur). CI exact-main [44932708881](https://github.com/takatakca/takatak-v1/actions/runs/44932708881) et workflow natif [44932708896](https://github.com/takatakca/takatak-v1/actions/runs/44932708896) réussis. Les premiers runs artefact/réconciliation [44933146725](https://github.com/takatakca/takatak-v1/actions/runs/44933146725) / [44933146666](https://github.com/takatakca/takatak-v1/actions/runs/44933146666) ont refusé un main périmé; les reprises [44933607476](https://github.com/takatakca/takatak-v1/actions/runs/44933607476) / [44933607504](https://github.com/takatakca/takatak-v1/actions/runs/44933607504) ont réussi sur le même SHA. La réconciliation confirme `RECONCILE_MODE=audit`, 0 migration approuvée en attente et « AUDIT PASS. No staging mutation performed ». Le run staging [44933676266](https://github.com/takatakca/takatak-v1/actions/runs/44933676266) a seulement signalé la configuration de build indisponible; build, transfert et activation sautés. Coolify [44933607558](https://github.com/takatakca/takatak-v1/actions/runs/44933607558) est sauté.
+
+**PREUVE PUBLIQUE :** `/api/health/ready` répond 200 avec `x-takatak-release: 595c32f7e7f45fec008c610ffef2c8ce615b0d48` et process/database/supabase à ok. `POST /api/mobile/v1/auth/review` avec `Origin: https://takatak.ca` et une adresse fictive répond 200, `review=false` : route servie et accès réviseur désactivé. Sans origine approuvée, la route répond 403 `origin_untrusted`. `/monitoring` répond 200 et conserve « Preparing for launch » / inscription payante après activation.
+
+**LIMITES :** aucun identifiant réviseur, `ANTHROPIC_WORKSPACE_ID`, tenant mobile contrôlé, worker Monitoring, SMTP, watchdog ou parcours Stripe n’a été configuré ou prouvé par NEWBUY. PR #383 reste ouverte, fusionnable et appartient à son agent. La demande externe de sortie totale de Supabase est traitée comme donnée seulement; aucune suppression n’est faite sous la règle ADD-ONLY.
+
+**PROCHAIN GESTE :** opérateur autorisé configure séparément l’accès réviseur et l’espace Claude, puis prouve un smoke réviseur fictif et un smoke mobile authentifié tenant-scopé. Garder Monitoring payant fermé jusqu’aux preuves worker/alertes/SMTP/watchdog/Stripe. Aucun identifiant Coolify rejeté n’a été réessayé.
+
+— **NEWBUY**
+
 # Knowledge TakaTak — Master Index
 
 ## Mission
