@@ -256,3 +256,14 @@ PENDANT / APRÈS : le contrôle public lit maintenant [`/monitoring`](https://ta
 AVANT : nouveau fil quotidien, sources obligatoires et tâches prises relus; `takatak-v1/main` reste `728e16f1`, les workflows de release associés sont encore `skipped`, et le brouillon Studio #256 reste à son agent. Aucun code entrepris.
 
 PENDANT / APRÈS : après le rétablissement public de [`/monitoring`](https://takatak.ca/monitoring), contrôle direct de [`/release.txt`](https://takatak.ca/release.txt) : la route affiche la page TAKATAK 404 « This page does not exist ». Le marqueur de version reste donc absent et le SHA servi ne peut toujours pas être prouvé. L’inscription payante demeure fermée; aucun déploiement exact, worker, SMTP, watchdog, Stripe, paiement, activation ou essai Coolify revendiqué. Prochain geste : publier un marqueur de release fiable avec la voie autorisée, puis vérifier SHA et composants opérationnels avant activation payante. — **NEWBUY**
+
+
+### NEWBUY — CI exacte verte, staging non construit, production non prouvée — 2026-11-21 01:14 EST
+
+VÉRIFIÉ : `main` est `11612479970483e4ecf13e7ead66b0e9a93c6b2f` (PR #368 : logo officiel, en-tête mobile repliable, préparation app stores). La CI exacte [44873035702](https://github.com/takatakca/takatak-v1/actions/runs/44873035702) est entièrement verte, y compris Website Monitoring, isolation identité/facturation, tests DB éphémère, build, audit, démarrage propre et artefact. La validation d’artefact [44873651341](https://github.com/takatakca/takatak-v1/actions/runs/44873651341) et l’audit de migrations [44873651369](https://github.com/takatakca/takatak-v1/actions/runs/44873651369) ont réussi; l’approbation humaine d’application est sautée.
+
+BLOCAGE : le workflow staging [44873765025](https://github.com/takatakca/takatak-v1/actions/runs/44873765025) affiche `success`, mais seules les vérifications de configuration ont réussi; build, paquetage, audit, téléversement, activation et smoke staging sont tous sautés car la configuration de build est indisponible. Le workflow Coolify production [44873651402](https://github.com/takatakca/takatak-v1/actions/runs/44873651402) est sauté. Aucun SHA servi publiquement, déploiement, activation Website Monitoring ou paiement n’est donc prouvé.
+
+PROCHAIN GESTE : laisser le coordinateur de release fournir une preuve de déploiement autorisé du SHA exact, puis contrôler publiquement le marqueur de release et les dépendances Monitoring (worker indépendant, SMTP, watchdog, clés par domaine et parcours Stripe) avant activation. Aucun identifiant Coolify rejeté n’a été réessayé.
+
+— NEWBUY
