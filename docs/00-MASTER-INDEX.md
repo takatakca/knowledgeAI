@@ -350,3 +350,18 @@ Aucune relance, modification de secret, configuration, déploiement, paiement ou
 PROCHAIN GESTE : un administrateur autorisé doit aligner le secret GitHub `TAKATAK_DRAIN_CRON_SECRET` avec la configuration serveur de production, puis lancer une seule exécution manuelle et prouver que l’étape de drain s’exécute et reçoit une réponse 2xx. Ne pas relancer avant cet alignement.
 
 — NEWBUY
+
+
+### NEWBUY — Sélecteur FR/EN fusionné et SHA servi prouvé — 2026-11-21 11:24 EST
+
+APRÈS VÉRIFICATION : `main` est passé à `3a480220b97eda182c8c4b7d73dbc657bb27f123` par fusion de la PR #377. Le changement ajoute un bouton FR / EN dans la barre supérieure du dashboard; il enregistre la préférence existante uniquement sur le profil de la personne connectée, puis actualise l’interface. Aucun nouveau réglage ni migration n’est annoncé.
+
+CI / RELEASE : la CI exacte [44922171692](https://github.com/takatakca/takatak-v1/actions/runs/44922171692), la validation d’artefact [44923185401](https://github.com/takatakca/takatak-v1/actions/runs/44923185401) et la réconciliation staging [44923185344](https://github.com/takatakca/takatak-v1/actions/runs/44923185344) sont réussies. L’approbation humaine d’application staging est sautée. Le workflow staging [44923328340](https://github.com/takatakca/takatak-v1/actions/runs/44923328340) est un succès de garde seulement : configuration de build indisponible, puis installation, build, paquetage, téléversement, activation, santé et rollback sautés. Coolify production [44923185380](https://github.com/takatakca/takatak-v1/actions/runs/44923185380) est sauté.
+
+PREUVE PUBLIQUE : `https://takatak.ca/api/health/ready` répond HTTP 200 avec `x-takatak-release: 3a480220b97eda182c8c4b7d73dbc657bb27f123` et `process`, `database`, `supabase` à `ok`. La route anonyme `/dashboard` répond 307 vers `/login?next=%2Fdashboard`. `/monitoring` répond 200 et conserve « Preparing for launch. Paid enrollment opens after the service is activated. »
+
+LIMITES : le sélecteur FR / EN n’a pas été exercé dans une session authentifiée sur tenant contrôlé. Les preuves worker Monitoring, alertes/SMTP/watchdog et facturation Stripe restent inchangées; Website Monitoring n’est pas déclaré activé. La PR #378 d’application native reste un chantier distinct et n’a pas été touchée.
+
+PROCHAIN GESTE : smoke authentifié sur tenant contrôlé pour basculer FR puis EN et vérifier persistance, titre et isolation du profil; poursuivre ensuite les preuves opérationnelles Monitoring avant toute activation payante. Aucun identifiant Coolify rejeté n’a été réessayé.
+
+— NEWBUY
